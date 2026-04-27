@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .forms import ScheduleSlotForm
 from .models import Player, ScheduleSlot
@@ -11,42 +12,10 @@ def get_current_player(user):
     return Player.objects.filter(user=user).first()
 
 
+@ensure_csrf_cookie
 @login_required
 def schedule_view(request):
-    players = Player.objects.prefetch_related('slots')
-    current_player = get_current_player(request.user)
-    days = [{'value': value, 'label': label} for value, label in ScheduleSlot.DAY_CHOICES]
-    grid = []
-
-    for player in players:
-        cells = []
-        player_slots = list(player.slots.all())
-
-        for day in days:
-            day_slots = [
-                slot for slot in player_slots
-                if slot.day_of_week == day['value']
-            ]
-            unavailable_slots = [slot for slot in day_slots if slot.is_unavailable]
-
-            cells.append({
-                'day': day,
-                'slots': [slot for slot in day_slots if slot.is_available],
-                'unavailable_slots': unavailable_slots,
-                'is_unavailable': bool(unavailable_slots),
-            })
-
-        grid.append({
-            'player': player,
-            'cells': cells,
-            'can_edit': current_player == player,
-        })
-
-    return render(request, 'scheduler/schedule.html', {
-        'current_player': current_player,
-        'days': days,
-        'grid': grid,
-    })
+    return render(request, 'scheduler/app.html')
 
 
 @login_required

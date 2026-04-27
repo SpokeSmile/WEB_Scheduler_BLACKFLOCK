@@ -15,6 +15,11 @@ class ScheduleSlotForm(forms.ModelForm):
         label='Тип',
         choices=ScheduleSlot.SLOT_TYPE_CHOICES,
     )
+    event_type = forms.ChoiceField(
+        label='Событие',
+        choices=[('', 'Выберите событие')] + ScheduleSlot.EVENT_TYPE_CHOICES,
+        required=False,
+    )
     day_of_week = forms.TypedChoiceField(
         label='День',
         choices=ScheduleSlot.DAY_CHOICES,
@@ -37,7 +42,14 @@ class ScheduleSlotForm(forms.ModelForm):
 
     class Meta:
         model = ScheduleSlot
-        fields = ['slot_type', 'day_of_week', 'start_time_minutes', 'end_time_minutes', 'note']
+        fields = [
+            'slot_type',
+            'event_type',
+            'day_of_week',
+            'start_time_minutes',
+            'end_time_minutes',
+            'note',
+        ]
         widgets = {
             'note': forms.TextInput(attrs={'placeholder': 'Например: тренировка, матч, свободен'}),
         }
@@ -45,13 +57,18 @@ class ScheduleSlotForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         slot_type = cleaned_data.get('slot_type')
+        event_type = cleaned_data.get('event_type')
         start_time = cleaned_data.get('start_time_minutes')
         end_time = cleaned_data.get('end_time_minutes')
 
         if slot_type == ScheduleSlot.UNAVAILABLE:
+            cleaned_data['event_type'] = ''
             cleaned_data['start_time_minutes'] = None
             cleaned_data['end_time_minutes'] = None
             return cleaned_data
+
+        if not event_type:
+            self.add_error('event_type', 'Выберите тип события.')
 
         if start_time is None:
             self.add_error('start_time_minutes', 'Выберите время начала.')

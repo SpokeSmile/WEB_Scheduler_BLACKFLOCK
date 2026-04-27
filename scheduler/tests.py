@@ -10,6 +10,7 @@ class ScheduleFormTests(TestCase):
     def test_allows_end_time_2400(self):
         form = ScheduleSlotForm(data={
             'slot_type': ScheduleSlot.AVAILABLE,
+            'event_type': ScheduleSlot.SCRIM,
             'day_of_week': ScheduleSlot.MONDAY,
             'start_time_minutes': 1380,
             'end_time_minutes': 1440,
@@ -21,6 +22,7 @@ class ScheduleFormTests(TestCase):
     def test_rejects_end_before_or_equal_start(self):
         form = ScheduleSlotForm(data={
             'slot_type': ScheduleSlot.AVAILABLE,
+            'event_type': ScheduleSlot.PRACTICE,
             'day_of_week': ScheduleSlot.MONDAY,
             'start_time_minutes': 1080,
             'end_time_minutes': 1080,
@@ -29,6 +31,18 @@ class ScheduleFormTests(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn('end_time_minutes', form.errors)
+
+    def test_rejects_available_without_event_type(self):
+        form = ScheduleSlotForm(data={
+            'slot_type': ScheduleSlot.AVAILABLE,
+            'day_of_week': ScheduleSlot.MONDAY,
+            'start_time_minutes': 1080,
+            'end_time_minutes': 1200,
+            'note': '',
+        })
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('event_type', form.errors)
 
     def test_allows_unavailable_without_time(self):
         form = ScheduleSlotForm(data={
@@ -59,10 +73,18 @@ class ScheduleAccessTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn(reverse('login'), response.url)
 
+    def test_schedule_shows_player_role(self):
+        self.player_one.role = 'Leader'
+        self.player_one.save()
+        self.client.login(username='player1', password='secret-pass')
+        response = self.client.get(reverse('api_bootstrap'))
+        self.assertContains(response, 'Leader')
+
     def test_player_can_create_own_slot(self):
         self.client.login(username='player1', password='secret-pass')
         response = self.client.post(reverse('slot_create'), {
             'slot_type': ScheduleSlot.AVAILABLE,
+            'event_type': ScheduleSlot.SCRIM,
             'day_of_week': ScheduleSlot.TUESDAY,
             'start_time_minutes': 540,
             'end_time_minutes': 1080,
@@ -96,8 +118,11 @@ class ScheduleAccessTests(TestCase):
         self.client.login(username='player1', password='secret-pass')
         response = self.client.get(reverse('schedule'))
 
-        self.assertContains(response, 'is-unavailable')
-        self.assertContains(response, 'Не могу в этот день')
+        self.assertContains(response, 'root')
+        response = self.client.get(reverse('api_bootstrap'))
+        data = response.json()
+        self.assertTrue(any(slot['slotType'] == ScheduleSlot.UNAVAILABLE for slot in data['slots']))
+        self.assertTrue(any(slot['label'] == 'Не могу в этот день' for slot in data['slots']))
 
     def test_player_cannot_edit_another_players_slot(self):
         slot = ScheduleSlot.objects.create(
@@ -109,6 +134,7 @@ class ScheduleAccessTests(TestCase):
         self.client.login(username='player1', password='secret-pass')
         response = self.client.post(reverse('slot_edit', args=[slot.pk]), {
             'slot_type': ScheduleSlot.AVAILABLE,
+            'event_type': ScheduleSlot.PRACTICE,
             'day_of_week': ScheduleSlot.THURSDAY,
             'start_time_minutes': 720,
             'end_time_minutes': 840,
@@ -129,6 +155,7 @@ class ScheduleAccessTests(TestCase):
         self.client.login(username='player1', password='secret-pass')
         response = self.client.post(reverse('slot_edit', args=[slot.pk]), {
             'slot_type': ScheduleSlot.AVAILABLE,
+            'event_type': ScheduleSlot.PRACTICE,
             'day_of_week': ScheduleSlot.SUNDAY,
             'start_time_minutes': 720,
             'end_time_minutes': 840,
@@ -139,5 +166,108 @@ class ScheduleAccessTests(TestCase):
         slot.refresh_from_db()
         self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
         self.assertIsNone(slot.start_time_minutes)
+
+
+class ScheduleApiTests(TestCase):
+    def setUp(self):
+        self.player_one = Player.objects.get(name='Игрок 1')
+        self.player_two = Player.objects.get(name='Игрок 2')
+        self.user_one = User.objects.create_user(username='player1', password='secret-pass')
+        self.user_two = User.objects.create_user(username='player2', password='secret-pass')
+        self.player_one.user = self.user_one
+        self.player_one.role = 'Leader'
+        self.player_one.save()
+        self.player_two.user = self.user_two
+        self.player_two.save()
+
+    def post_json(self, url_name, payload, args=None):
+        return self.client.post(
+            reverse(url_name, args=args or []),
+            data=payload,
+            content_type='application/json',
+        )
+
+    def patch_json(self, url_name, payload, args=None):
+        return self.client.patch(
+            reverse(url_name, args=args or []),
+            data=payload,
+            content_type='application/json',
+        )
+
+    def test_bootstrap_returns_roster_data(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.client.get(reverse('api_bootstrap'))
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['user']['username'], 'player1')
+        self.assertTrue(any(player['role'] == 'Leader' for player in data['players']))
+        self.assertTrue(any(event_type['value'] == ScheduleSlot.SCRIM for event_type in data['eventTypes']))
+
+    def test_api_creates_typed_event(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.post_json('api_slot_create', {
+            'slotType': ScheduleSlot.AVAILABLE,
+            'eventType': ScheduleSlot.MATCH,
+            'dayOfWeek': ScheduleSlot.SATURDAY,
+            'startTimeMinutes': 1200,
+            'endTimeMinutes': 1380,
+            'note': '',
+        })
+
+        self.assertEqual(response.status_code, 201)
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.SATURDAY)
+        self.assertEqual(slot.event_type, ScheduleSlot.MATCH)
+        self.assertEqual(response.json()['slot']['eventLabel'], 'Матч')
+
+    def test_api_rejects_typed_event_without_event_type(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.post_json('api_slot_create', {
+            'slotType': ScheduleSlot.AVAILABLE,
+            'dayOfWeek': ScheduleSlot.SATURDAY,
+            'startTimeMinutes': 1200,
+            'endTimeMinutes': 1380,
+            'note': '',
+        })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('event_type', response.json()['errors'])
+
+    def test_api_creates_unavailable_day(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.post_json('api_slot_create', {
+            'slotType': ScheduleSlot.UNAVAILABLE,
+            'dayOfWeek': ScheduleSlot.FRIDAY,
+            'note': 'Не могу',
+        })
+
+        self.assertEqual(response.status_code, 201)
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.FRIDAY)
+        self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
+        self.assertEqual(slot.event_type, '')
+        self.assertIsNone(slot.start_time_minutes)
+
+    def test_api_prevents_editing_another_players_slot(self):
+        slot = ScheduleSlot.objects.create(
+            player=self.player_two,
+            slot_type=ScheduleSlot.AVAILABLE,
+            event_type=ScheduleSlot.PRACTICE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='player1', password='secret-pass')
+        response = self.patch_json('api_slot_update', {
+            'slotType': ScheduleSlot.AVAILABLE,
+            'eventType': ScheduleSlot.MATCH,
+            'dayOfWeek': ScheduleSlot.MONDAY,
+            'startTimeMinutes': 720,
+            'endTimeMinutes': 840,
+            'note': '',
+        }, args=[slot.pk])
+
+        self.assertEqual(response.status_code, 404)
+        slot.refresh_from_db()
+        self.assertEqual(slot.event_type, ScheduleSlot.PRACTICE)
 
 # Create your tests here.

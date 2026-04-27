@@ -7,19 +7,36 @@
     <div class="hero-copy">
         <div class="section-kicker">Black Flock squad</div>
         <h1>Weekly roster</h1>
+        <p>Расписание команды на неделю</p>
     </div>
 
     {% if current_player %}
-        <a class="button button-primary" href="{% url 'slot_create' %}">Добавить время</a>
+        <a class="button button-primary" href="{% url 'slot_create' %}">
+            <span class="button-icon">+</span>
+            <span>Добавить время</span>
+        </a>
     {% else %}
         <span class="status-pill">Аккаунт не привязан к игроку</span>
     {% endif %}
 </section>
 
-<section class="roster-board">
+<section class="roster-board animated-border">
+    <div class="roster-grid" role="table" aria-label="Weekly roster">
+        <div class="roster-head player-head" role="columnheader">
+            <span class="head-icon" aria-hidden="true"></span>
+            <span>Игроки</span>
+        </div>
+
+        {% for day in days %}
+            <div class="roster-head day-head" role="columnheader">
+                <strong>{{ day.label }}</strong>
+                <span>{{ day.date }}</span>
+            </div>
+        {% endfor %}
+
     {% for row in grid %}
-        <article class="roster-row animated-border">
-            <aside class="player-card">
+        <div class="player-cell" role="rowheader">
+            <div class="player-card">
                 {% if row.player.avatar %}
                     <img class="player-avatar" src="{{ row.player.avatar.url }}" alt="{{ row.player.name }}">
                 {% else %}
@@ -28,69 +45,78 @@
 
                 <div class="player-meta">
                     <h2>{{ row.player.name }}</h2>
-                    {% if row.can_edit %}
-                        <span class="status-dot">Вы</span>
-                    {% else %}
-                        <span class="status-dot muted">Squad</span>
-                    {% endif %}
+                    <div class="player-badges">
+                        {% if row.player.role %}
+                            <span class="player-role">{{ row.player.role }}</span>
+                        {% endif %}
+                        {% if row.can_edit %}
+                            <span class="status-dot">Вы</span>
+                        {% endif %}
+                    </div>
                 </div>
-            </aside>
+            </div>
+        </div>
 
-            <div class="days-grid">
-                {% for cell in row.cells %}
-                    <section class="day-panel{% if cell.is_unavailable %} is-unavailable{% endif %}">
-                        <div class="day-panel-head">
-                            <span>{{ cell.day.label }}</span>
-                            {% if cell.is_unavailable %}
-                                <span class="unavailable-badge">Не могу</span>
+        {% for cell in row.cells %}
+            <section class="day-panel{% if cell.is_unavailable %} is-unavailable{% endif %}" role="cell">
+                <div class="mobile-day">
+                    <strong>{{ cell.day.label }}</strong>
+                    <span>{{ cell.day.date }}</span>
+                </div>
+
+                <div class="slot-stack">
+                    {% for slot in cell.unavailable_slots %}
+                        <article class="slot-card unavailable-card">
+                            <div class="slot-time">{{ slot.label }}</div>
+                            {% if slot.note %}
+                                <p>{{ slot.note }}</p>
                             {% endif %}
-                        </div>
 
-                        <div class="slot-stack">
-                            {% for slot in cell.unavailable_slots %}
-                                <article class="slot-card unavailable-card">
-                                    <div class="slot-time">{{ slot.label }}</div>
-                                    {% if slot.note %}
-                                        <p>{{ slot.note }}</p>
-                                    {% endif %}
-
-                                    {% if row.can_edit %}
-                                        <div class="slot-actions">
-                                            <a href="{% url 'slot_edit' slot.pk %}">Изменить</a>
-                                            <a class="danger-link" href="{% url 'slot_delete' slot.pk %}">Удалить</a>
-                                        </div>
-                                    {% endif %}
-                                </article>
-                            {% endfor %}
-
-                            {% for slot in cell.slots %}
-                                <article class="slot-card">
-                                    <div class="slot-time">{{ slot.start_label }} - {{ slot.end_label }}</div>
-                                    {% if slot.note %}
-                                        <p>{{ slot.note }}</p>
-                                    {% endif %}
-
-                                    {% if row.can_edit %}
-                                        <div class="slot-actions">
-                                            <a href="{% url 'slot_edit' slot.pk %}">Изменить</a>
-                                            <a class="danger-link" href="{% url 'slot_delete' slot.pk %}">Удалить</a>
-                                        </div>
-                                    {% endif %}
-                                </article>
-                            {% endfor %}
-
-                            {% if not cell.slots and not cell.unavailable_slots %}
-                                <div class="empty-slot">Свободно</div>
+                            {% if row.can_edit %}
+                                <div class="slot-actions">
+                                    <a href="{% url 'slot_edit' slot.pk %}">Изменить</a>
+                                    <a class="danger-link" href="{% url 'slot_delete' slot.pk %}">Удалить</a>
+                                </div>
                             {% endif %}
-                        </div>
+                        </article>
+                    {% endfor %}
 
+                    {% for slot in cell.slots %}
+                        <article class="slot-card">
+                            <div class="slot-time">{{ slot.start_label }} - {{ slot.end_label }}</div>
+                            {% if slot.note %}
+                                <p>{{ slot.note }}</p>
+                            {% endif %}
+
+                            {% if row.can_edit %}
+                                <div class="slot-actions">
+                                    <a href="{% url 'slot_edit' slot.pk %}">Изменить</a>
+                                    <a class="danger-link" href="{% url 'slot_delete' slot.pk %}">Удалить</a>
+                                </div>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                </div>
+
+                {% if not cell.slots and not cell.unavailable_slots %}
+                    {% if row.can_edit %}
+                        <a class="empty-add" href="{% url 'slot_create' %}?day={{ cell.day.value }}">+</a>
+                    {% else %}
+                        <span class="empty-add is-muted">+</span>
+                    {% endif %}
+                {% else %}
                         {% if row.can_edit %}
                             <a class="mini-add" href="{% url 'slot_create' %}?day={{ cell.day.value }}">+ запись</a>
                         {% endif %}
-                    </section>
-                {% endfor %}
-            </div>
-        </article>
+                {% endif %}
+            </section>
+        {% endfor %}
     {% endfor %}
+    </div>
+
+    <footer class="roster-footer">
+        <span>Все время указано по часовому поясу UTC+3</span>
+        <span>Последнее обновление: {{ last_updated }}</span>
+    </footer>
 </section>
 {% endblock %}

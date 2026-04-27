@@ -6,6 +6,7 @@ from django.db.models import Q
 
 class Player(models.Model):
     name = models.CharField('имя игрока', max_length=80)
+    role = models.CharField('роль', max_length=80, blank=True)
     avatar = models.FileField('аватар', upload_to='avatars/', blank=True)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -33,10 +34,45 @@ class ScheduleSlot(models.Model):
     AVAILABLE = 'available'
     UNAVAILABLE = 'unavailable'
 
+    PRACTICE = 'practice'
+    SCRIM = 'scrim'
+    VOD_REVIEW = 'vod_review'
+    MATCH = 'match'
+
     SLOT_TYPE_CHOICES = [
         (AVAILABLE, 'Диапазон времени'),
         (UNAVAILABLE, 'Не могу в этот день'),
     ]
+
+    EVENT_TYPE_CHOICES = [
+        (PRACTICE, 'Практика'),
+        (SCRIM, 'Scrim'),
+        (VOD_REVIEW, 'VOD Review'),
+        (MATCH, 'Матч'),
+    ]
+
+    EVENT_TYPE_META = {
+        PRACTICE: {
+            'label': 'Практика',
+            'description': 'Тренировка команды',
+            'tone': 'orange',
+        },
+        SCRIM: {
+            'label': 'Scrim',
+            'description': 'Тренировочный матч',
+            'tone': 'blue',
+        },
+        VOD_REVIEW: {
+            'label': 'VOD Review',
+            'description': 'Разбор игр',
+            'tone': 'purple',
+        },
+        MATCH: {
+            'label': 'Матч',
+            'description': 'Официальный матч',
+            'tone': 'red',
+        },
+    }
 
     MONDAY = 0
     TUESDAY = 1
@@ -67,6 +103,13 @@ class ScheduleSlot(models.Model):
         max_length=16,
         choices=SLOT_TYPE_CHOICES,
         default=AVAILABLE,
+    )
+    event_type = models.CharField(
+        'тип события',
+        max_length=24,
+        choices=EVENT_TYPE_CHOICES,
+        blank=True,
+        default='',
     )
     day_of_week = models.PositiveSmallIntegerField('день недели', choices=DAY_CHOICES)
     start_time_minutes = models.PositiveSmallIntegerField('начало', blank=True, null=True)
@@ -137,13 +180,53 @@ class ScheduleSlot(models.Model):
     def label(self):
         if self.is_unavailable:
             return 'Не могу в этот день'
+        return self.event_label or 'Событие'
+
+    @property
+    def event_label(self):
+        return self.EVENT_TYPE_META.get(self.event_type, {}).get('label', '')
+
+    @property
+    def event_description(self):
+        return self.EVENT_TYPE_META.get(self.event_type, {}).get('description', '')
+
+    @property
+    def event_tone(self):
+        return self.EVENT_TYPE_META.get(self.event_type, {}).get('tone', 'orange')
+
+    @classmethod
+    def event_types_payload(cls):
+        return [
+            {
+                'value': value,
+                'label': cls.EVENT_TYPE_META[value]['label'],
+                'description': cls.EVENT_TYPE_META[value]['description'],
+                'tone': cls.EVENT_TYPE_META[value]['tone'],
+            }
+            for value, _label in cls.EVENT_TYPE_CHOICES
+        ]
+
+    @classmethod
+    def valid_event_type_values(cls):
+        return {value for value, _label in cls.EVENT_TYPE_CHOICES}
+
+    @property
+    def display_note(self):
+        if self.note:
+            return self.note
+        if self.is_available:
+            return self.label
         return self.time_range
 
     def clean(self):
         if self.slot_type == self.UNAVAILABLE:
             self.start_time_minutes = None
             self.end_time_minutes = None
+            self.event_type = ''
             return
+
+        if self.event_type not in self.valid_event_type_values():
+            raise ValidationError({'event_type': 'Выберите тип события.'})
 
         if self.start_time_minutes is None or self.end_time_minutes is None:
             raise ValidationError('Для диапазона времени нужно выбрать начало и конец.')
