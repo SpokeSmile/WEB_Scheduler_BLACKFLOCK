@@ -12,8 +12,8 @@
     --line-strong: rgba(232, 216, 201, 0.18);
     --danger: #e0474f;
     --danger-deep: #2a1117;
-    --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
-    --soft-glow: 0 0 36px rgba(243, 112, 30, 0.12);
+    --shadow: 0 12px 34px rgba(0, 0, 0, 0.24);
+    --soft-glow: 0 0 14px rgba(243, 112, 30, 0.08);
 }
 
 * {
@@ -56,10 +56,10 @@ select {
 .form-panel {
     border: 1px solid rgba(232, 216, 201, 0.13);
     background:
-        linear-gradient(145deg, rgba(75, 96, 127, 0.16), transparent 44%),
-        linear-gradient(180deg, rgba(14, 21, 33, 0.95), rgba(9, 14, 23, 0.96));
-    box-shadow: var(--shadow), inset 0 0 0 1px rgba(75, 96, 127, 0.18);
-    backdrop-filter: blur(18px);
+        linear-gradient(145deg, rgba(75, 96, 127, 0.1), transparent 44%),
+        linear-gradient(180deg, rgba(14, 21, 33, 0.9), rgba(9, 14, 23, 0.93));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
 }
 
 .topbar {
@@ -85,38 +85,14 @@ select {
 }
 
 .brand-mark {
-    position: relative;
     width: 50px;
     height: 50px;
     flex: 0 0 50px;
     border: 1px solid rgba(232, 216, 201, 0.12);
     border-radius: 50%;
-    background:
-        radial-gradient(circle at 50% 58%, rgba(232, 216, 201, 0.12), transparent 42%),
-        linear-gradient(145deg, #0b111b, #171f2f);
-    box-shadow: inset 0 0 0 1px rgba(75, 96, 127, 0.28);
-}
-
-.brand-mark::before {
-    content: "";
-    position: absolute;
-    left: 10px;
-    top: 9px;
-    width: 30px;
-    height: 34px;
-    background: var(--cream);
-    clip-path: polygon(0 72%, 22% 6%, 42% 70%, 50% 18%, 58% 70%, 78% 6%, 100% 72%, 68% 60%, 50% 100%, 32% 60%);
-}
-
-.brand-mark::after {
-    content: "";
-    position: absolute;
-    left: 21px;
-    top: 5px;
-    width: 8px;
-    height: 38px;
-    background: var(--orange);
-    clip-path: polygon(50% 0, 100% 74%, 50% 100%, 0 74%);
+    object-fit: cover;
+    background: rgba(0, 0, 0, 0.24);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .clock-strip {
@@ -134,7 +110,6 @@ select {
     border: 1px solid rgba(232, 216, 201, 0.13);
     border-radius: 16px;
     background: rgba(8, 13, 22, 0.64);
-    box-shadow: inset 0 0 0 1px rgba(75, 96, 127, 0.16);
 }
 
 .clock-pill span {
@@ -246,12 +221,12 @@ select {
 
 .button-primary {
     color: #160b05;
-    background: linear-gradient(180deg, #ff9346, var(--orange));
-    box-shadow: 0 14px 30px rgba(243, 112, 30, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    background: var(--orange);
+    box-shadow: 0 8px 18px rgba(243, 112, 30, 0.16);
 }
 
 .button-primary:hover {
-    box-shadow: 0 18px 40px rgba(243, 112, 30, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    box-shadow: 0 10px 22px rgba(243, 112, 30, 0.2);
 }
 
 .button-icon {
@@ -273,7 +248,7 @@ select {
 .button-danger {
     color: #fff;
     background: var(--danger);
-    box-shadow: 0 14px 30px rgba(224, 71, 79, 0.22);
+    box-shadow: 0 8px 18px rgba(224, 71, 79, 0.14);
 }
 
 .button-wide {
@@ -321,25 +296,18 @@ select {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 58% 52%, rgba(243, 112, 30, 0.36), transparent 5%),
-        radial-gradient(circle at 55% 48%, rgba(243, 112, 30, 0.24), transparent 9%),
-        linear-gradient(90deg, rgba(9, 14, 23, 0.98) 0%, rgba(10, 16, 26, 0.88) 36%, rgba(8, 13, 22, 0.56) 58%, rgba(10, 16, 26, 0.95) 100%);
+        linear-gradient(90deg, rgba(9, 14, 23, 0.98) 0%, rgba(10, 16, 26, 0.78) 40%, rgba(8, 13, 22, 0.28) 72%),
+        url("/static/design_assets/Header.png") right center / auto 112% no-repeat;
 }
 
 .hero-strip::after {
     content: "";
     position: absolute;
-    left: 45%;
-    top: -16px;
-    width: 360px;
-    height: 230px;
-    opacity: 0.7;
+    inset: 0;
+    opacity: 1;
     background:
-        linear-gradient(115deg, transparent 9%, rgba(232, 216, 201, 0.08) 10%, transparent 14%),
-        linear-gradient(40deg, transparent 10%, rgba(243, 112, 30, 0.36) 11%, transparent 13%),
-        linear-gradient(145deg, #121a27, #05070b);
-    clip-path: polygon(4% 66%, 34% 12%, 54% 6%, 91% 0, 76% 34%, 100% 43%, 68% 50%, 82% 72%, 50% 62%, 38% 100%, 30% 66%);
-    filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.68));
+        linear-gradient(180deg, rgba(232, 216, 201, 0.04), transparent 48%),
+        linear-gradient(90deg, transparent 0%, rgba(243, 112, 30, 0.18) 100%);
 }
 
 .hero-copy,
@@ -524,7 +492,7 @@ h2 {
     border-radius: 50%;
     object-fit: cover;
     background: var(--panel-2);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
 }
 
 .avatar-fallback {
@@ -563,7 +531,6 @@ h2 {
     background:
         linear-gradient(145deg, rgba(224, 71, 79, 0.3), rgba(42, 17, 23, 0.88)),
         var(--danger-deep);
-    box-shadow: inset 0 0 0 1px rgba(224, 71, 79, 0.4);
 }
 
 .mobile-day {

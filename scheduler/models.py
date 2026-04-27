@@ -69,7 +69,7 @@ class ScheduleSlot(models.Model):
         },
         MATCH: {
             'label': 'Матч',
-            'description': 'Официальный матч',
+            'description': 'Турнир',
             'tone': 'red',
         },
     }
@@ -103,13 +103,6 @@ class ScheduleSlot(models.Model):
         max_length=16,
         choices=SLOT_TYPE_CHOICES,
         default=AVAILABLE,
-    )
-    event_type = models.CharField(
-        'тип события',
-        max_length=24,
-        choices=EVENT_TYPE_CHOICES,
-        blank=True,
-        default='',
     )
     day_of_week = models.PositiveSmallIntegerField('день недели', choices=DAY_CHOICES)
     start_time_minutes = models.PositiveSmallIntegerField('начало', blank=True, null=True)
@@ -180,19 +173,7 @@ class ScheduleSlot(models.Model):
     def label(self):
         if self.is_unavailable:
             return 'Не могу в этот день'
-        return self.event_label or 'Событие'
-
-    @property
-    def event_label(self):
-        return self.EVENT_TYPE_META.get(self.event_type, {}).get('label', '')
-
-    @property
-    def event_description(self):
-        return self.EVENT_TYPE_META.get(self.event_type, {}).get('description', '')
-
-    @property
-    def event_tone(self):
-        return self.EVENT_TYPE_META.get(self.event_type, {}).get('tone', 'orange')
+        return 'Событие'
 
     @classmethod
     def event_types_payload(cls):
@@ -222,14 +203,45 @@ class ScheduleSlot(models.Model):
         if self.slot_type == self.UNAVAILABLE:
             self.start_time_minutes = None
             self.end_time_minutes = None
-            self.event_type = ''
             return
-
-        if self.event_type not in self.valid_event_type_values():
-            raise ValidationError({'event_type': 'Выберите тип события.'})
 
         if self.start_time_minutes is None or self.end_time_minutes is None:
             raise ValidationError('Для диапазона времени нужно выбрать начало и конец.')
 
         if self.end_time_minutes <= self.start_time_minutes:
             raise ValidationError({'end_time_minutes': 'Время окончания должно быть позже начала.'})
+
+
+class DayEventType(models.Model):
+    day_of_week = models.PositiveSmallIntegerField(
+        'день недели',
+        choices=ScheduleSlot.DAY_CHOICES,
+        unique=True,
+    )
+    event_type = models.CharField(
+        'тип события',
+        max_length=24,
+        choices=[('', 'Без события')] + ScheduleSlot.EVENT_TYPE_CHOICES,
+        blank=True,
+        default='',
+    )
+
+    class Meta:
+        ordering = ['day_of_week']
+        verbose_name = 'тип события дня'
+        verbose_name_plural = 'типы событий по дням'
+
+    def __str__(self):
+        return f'{self.get_day_of_week_display()} - {self.event_label or "Без события"}'
+
+    @property
+    def event_label(self):
+        return ScheduleSlot.EVENT_TYPE_META.get(self.event_type, {}).get('label', '')
+
+    @property
+    def event_description(self):
+        return ScheduleSlot.EVENT_TYPE_META.get(self.event_type, {}).get('description', '')
+
+    @property
+    def event_tone(self):
+        return ScheduleSlot.EVENT_TYPE_META.get(self.event_type, {}).get('tone', 'orange')

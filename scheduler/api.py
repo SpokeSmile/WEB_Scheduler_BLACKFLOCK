@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from .forms import ScheduleSlotForm
-from .models import Player, ScheduleSlot
+from .models import DayEventType, Player, ScheduleSlot
 from .views import get_current_player
 
 
@@ -45,24 +45,55 @@ def serialize_player(player, current_player):
     }
 
 
-def serialize_slot(slot, current_player):
+def serialize_day_event(day_event):
+    return {
+        'dayOfWeek': day_event.day_of_week,
+        'eventType': day_event.event_type,
+        'eventLabel': day_event.event_label,
+        'eventDescription': day_event.event_description,
+        'eventTone': day_event.event_tone,
+    }
+
+
+def event_meta_for_day(day_of_week, day_event_map):
+    day_event = day_event_map.get(day_of_week)
+    if not day_event or not day_event.event_type:
+        return {
+            'eventType': '',
+            'eventLabel': 'Событие',
+            'eventDescription': '',
+            'eventTone': 'orange',
+        }
+
+    return {
+        'eventType': day_event.event_type,
+        'eventLabel': day_event.event_label,
+        'eventDescription': day_event.event_description,
+        'eventTone': day_event.event_tone,
+    }
+
+
+def serialize_slot(slot, current_player, day_event_map=None):
+    day_event_map = day_event_map or {}
+    event_meta = event_meta_for_day(slot.day_of_week, day_event_map)
+
     return {
         'id': slot.id,
         'playerId': slot.player_id,
         'slotType': slot.slot_type,
-        'eventType': slot.event_type,
-        'eventLabel': slot.event_label,
-        'eventDescription': slot.event_description,
-        'eventTone': slot.event_tone,
+        'eventType': '' if slot.is_unavailable else event_meta['eventType'],
+        'eventLabel': 'Не могу в этот день' if slot.is_unavailable else event_meta['eventLabel'],
+        'eventDescription': '' if slot.is_unavailable else event_meta['eventDescription'],
+        'eventTone': 'red' if slot.is_unavailable else event_meta['eventTone'],
         'dayOfWeek': slot.day_of_week,
         'startTimeMinutes': slot.start_time_minutes,
         'endTimeMinutes': slot.end_time_minutes,
         'startLabel': slot.start_label,
         'endLabel': slot.end_label,
         'timeRange': slot.time_range if slot.is_available else '',
-        'label': slot.label,
+        'label': slot.label if slot.is_unavailable else event_meta['eventLabel'],
         'note': slot.note,
-        'displayNote': slot.display_note,
+        'displayNote': slot.note or (slot.label if slot.is_unavailable else event_meta['eventLabel']),
         'canEdit': current_player == slot.player,
     }
 
@@ -80,7 +111,6 @@ def parse_body(request):
 def form_data_from_payload(payload):
     return {
         'slot_type': payload.get('slotType') or ScheduleSlot.AVAILABLE,
-        'event_type': payload.get('eventType') or '',
         'day_of_week': payload.get('dayOfWeek'),
         'start_time_minutes': payload.get('startTimeMinutes'),
         'end_time_minutes': payload.get('endTimeMinutes'),
@@ -101,6 +131,8 @@ def bootstrap(request):
     current_player = get_current_player(request.user)
     players = list(Player.objects.prefetch_related('slots'))
     slots = ScheduleSlot.objects.select_related('player').all()
+    day_events = list(DayEventType.objects.all())
+    day_event_map = {day_event.day_of_week: day_event for day_event in day_events}
 
     return JsonResponse({
         'csrfToken': get_token(request),
@@ -112,7 +144,8 @@ def bootstrap(request):
         },
         'days': build_days(),
         'players': [serialize_player(player, current_player) for player in players],
-        'slots': [serialize_slot(slot, current_player) for slot in slots],
+        'slots': [serialize_slot(slot, current_player, day_event_map) for slot in slots],
+        'dayEventTypes': [serialize_day_event(day_event) for day_event in day_events],
         'eventTypes': ScheduleSlot.event_types_payload(),
         'lastUpdated': timezone.localtime().strftime('%d.%m.%Y %H:%M'),
     })
@@ -137,8 +170,9 @@ def slot_create(request):
     slot.player = current_player
     slot.full_clean()
     slot.save()
+    day_event_map = {slot.day_of_week: DayEventType.objects.filter(day_of_week=slot.day_of_week).first()}
 
-    return JsonResponse({'slot': serialize_slot(slot, current_player)}, status=201)
+    return JsonResponse({'slot': serialize_slot(slot, current_player, day_event_map)}, status=201)
 
 
 @require_http_methods(['PATCH', 'POST'])
@@ -161,8 +195,9 @@ def slot_update(request, pk):
     slot.player = current_player
     slot.full_clean()
     slot.save()
+    day_event_map = {slot.day_of_week: DayEventType.objects.filter(day_of_week=slot.day_of_week).first()}
 
-    return JsonResponse({'slot': serialize_slot(slot, current_player)})
+    return JsonResponse({'slot': serialize_slot(slot, current_player, day_event_map)})
 
 
 @require_http_methods(['DELETE', 'POST'])

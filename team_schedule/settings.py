@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-v1(_f)jx+)nc1m9t@mcf_)=0q(j9b8r-^vjsq_mth=n1$w+qv8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['owruteam.pythonanywhere.com']
 
 
 # Application definition
@@ -116,7 +116,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATIC_ROOT = '/home/owruteam/WEB_Scheduler_BLACKFLOCK/static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    ('design_assets', BASE_DIR / 'design_assets'),
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

@@ -7,14 +7,14 @@ export default {
         bf: {
           bg: '#0B0F1A',
           bg2: '#0F172A',
-          orange: '#FF7A00',
+          orange: '#F3701E',
           cream: '#E8D8C9',
           steel: '#4B607F',
         },
       },
       boxShadow: {
-        glow: '0 0 32px rgba(255, 122, 0, 0.22)',
-        panel: '0 26px 80px rgba(0, 0, 0, 0.42)',
+        glow: '0 0 16px rgba(243, 112, 30, 0.12)',
+        panel: '0 12px 34px rgba(0, 0, 0, 0.24)',
       },
     },
   },

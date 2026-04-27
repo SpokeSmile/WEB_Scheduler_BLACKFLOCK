@@ -4,16 +4,12 @@ import {
   AlertTriangle,
   CalendarPlus,
   Clock3,
-  Gamepad2,
   LogOut,
   MonitorPlay,
   Pencil,
-  Plus,
   RefreshCw,
   Save,
-  Search,
   Settings,
-  Shield,
   Swords,
   Trash2,
   Trophy,
@@ -29,42 +25,42 @@ const EVENT_STYLES = {
     border: 'border-orange-500/45',
     bg: 'bg-orange-500/10',
     text: 'text-orange-300',
-    glow: 'shadow-[0_0_34px_rgba(255,122,0,0.16)]',
+    glow: 'shadow-[0_0_12px_rgba(243,112,30,0.08)]',
   },
   scrim: {
     icon: Swords,
     border: 'border-blue-400/45',
     bg: 'bg-blue-500/10',
     text: 'text-blue-300',
-    glow: 'shadow-[0_0_34px_rgba(59,130,246,0.16)]',
+    glow: 'shadow-[0_0_12px_rgba(59,130,246,0.08)]',
   },
   vod_review: {
     icon: MonitorPlay,
     border: 'border-purple-400/45',
     bg: 'bg-purple-500/10',
     text: 'text-purple-300',
-    glow: 'shadow-[0_0_34px_rgba(168,85,247,0.16)]',
+    glow: 'shadow-[0_0_12px_rgba(168,85,247,0.08)]',
   },
   match: {
     icon: Trophy,
     border: 'border-red-400/45',
     bg: 'bg-red-500/10',
     text: 'text-red-300',
-    glow: 'shadow-[0_0_34px_rgba(239,68,68,0.16)]',
+    glow: 'shadow-[0_0_12px_rgba(239,68,68,0.08)]',
   },
   unavailable: {
     icon: AlertTriangle,
     border: 'border-red-300/45',
     bg: 'bg-red-500/20',
     text: 'text-red-200',
-    glow: 'shadow-[0_0_34px_rgba(239,68,68,0.18)]',
+    glow: 'shadow-[0_0_12px_rgba(239,68,68,0.1)]',
   },
   fallback: {
     icon: Clock3,
     border: 'border-orange-500/35',
     bg: 'bg-orange-500/10',
     text: 'text-orange-200',
-    glow: 'shadow-[0_0_28px_rgba(255,122,0,0.1)]',
+    glow: 'shadow-[0_0_10px_rgba(243,112,30,0.06)]',
   },
 };
 
@@ -112,6 +108,14 @@ function timeChoices(startHour, endHour) {
   });
 }
 
+function buildDayEventMap(dayEventTypes = []) {
+  const map = new Map();
+  dayEventTypes.forEach((dayEvent) => {
+    map.set(Number(dayEvent.dayOfWeek), dayEvent);
+  });
+  return map;
+}
+
 function Header({ user }) {
   const clocks = useClocks();
 
@@ -121,21 +125,21 @@ function Header({ user }) {
   }
 
   return (
-    <header className="glass-panel grid min-h-20 grid-cols-[minmax(220px,1fr)_auto_minmax(220px,1fr)] items-center gap-5 rounded-[22px] px-5 py-3 max-lg:grid-cols-1">
+    <header className="glass-panel grid min-h-16 grid-cols-[minmax(220px,1fr)_auto_minmax(220px,1fr)] items-center gap-5 rounded-[20px] px-5 py-2 max-lg:grid-cols-1">
       <a className="flex w-max items-center gap-3 font-black uppercase tracking-normal text-slate-100" href="/">
-        <span className="brand-emblem" aria-hidden="true" />
+        <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
         <span>Black Flock</span>
       </a>
 
-      <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
+      <div className="grid grid-cols-3 gap-3 max-sm:grid-cols-1">
         {[
           ['UTC', clocks.utc],
           ['GMT+3', clocks.gmt3],
           ['CEST', clocks.cest],
         ].map(([label, value]) => (
-          <div key={label} className="min-w-32 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-2 shadow-inner">
+          <div key={label} className="min-w-28 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-2">
             <div className="text-xs font-bold uppercase text-bf-cream/55">{label}</div>
-            <div className="text-lg font-black text-slate-100">{value}</div>
+            <div className="text-base font-black text-slate-100">{value}</div>
           </div>
         ))}
       </div>
@@ -152,7 +156,7 @@ function Header({ user }) {
           <span className="max-w-28 truncate font-semibold text-bf-cream/80">{user.username}</span>
         </div>
         <button
-          className="inline-flex min-h-10 items-center gap-2 rounded-2xl border border-bf-orange px-4 font-black text-slate-100 transition hover:-translate-y-0.5 hover:shadow-[0_0_28px_rgba(255,122,0,0.25)]"
+          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-bf-orange px-4 font-black text-slate-100 transition hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(243,112,30,0.16)]"
           type="button"
           onClick={handleLogout}
         >
@@ -166,8 +170,7 @@ function Header({ user }) {
 
 function HeroBanner({ canAdd, onAdd }) {
   return (
-    <section className="glass-panel relative mt-5 min-h-44 overflow-hidden rounded-[22px] border-bf-orange/50 px-9 py-8">
-      <div className="hero-figure" aria-hidden="true" />
+    <section className="glass-panel hero-banner relative mt-4 min-h-40 overflow-hidden rounded-[20px] border-bf-orange/50 px-9 py-7">
       <div className="relative z-10 flex items-center justify-between gap-6 max-md:flex-col max-md:items-start">
         <div>
           <div className="text-sm font-black uppercase text-bf-orange">Black Flock squad</div>
@@ -178,7 +181,7 @@ function HeroBanner({ canAdd, onAdd }) {
         </div>
         {canAdd ? (
           <button
-            className="inline-flex min-h-12 items-center gap-3 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-6 font-black text-black shadow-[0_16px_42px_rgba(255,122,0,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_54px_rgba(255,122,0,0.38)]"
+            className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-black shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
             type="button"
             onClick={() => onAdd(null)}
           >
@@ -197,19 +200,19 @@ function HeroBanner({ canAdd, onAdd }) {
 
 function PlayerRow({ player }) {
   return (
-    <div className="flex h-full min-w-0 items-center gap-3 px-5 py-3">
+    <div className="flex h-full min-w-0 items-center gap-2.5 px-4 py-2">
       {player.avatarUrl ? (
-        <img className="h-12 w-12 rounded-full border border-bf-cream/15 object-cover" src={player.avatarUrl} alt={player.name} />
+        <img className="h-10 w-10 rounded-full border border-bf-cream/15 object-cover" src={player.avatarUrl} alt={player.name} />
       ) : (
-        <div className="grid h-12 w-12 place-items-center rounded-full border border-bf-cream/15 bg-gradient-to-br from-bf-orange/70 to-bf-steel/70 text-lg font-black text-bf-cream">
+        <div className="grid h-10 w-10 place-items-center rounded-full border border-bf-cream/15 bg-gradient-to-br from-bf-orange/70 to-bf-steel/70 text-base font-black text-bf-cream">
           {player.initial}
         </div>
       )}
       <div className="min-w-0">
-        <div className="truncate font-black text-slate-100">{player.name}</div>
+        <div className="truncate text-sm font-black text-slate-100">{player.name}</div>
         <div className="mt-1 flex flex-wrap gap-1.5">
           {player.role ? (
-            <span className="max-w-28 truncate rounded-full border border-bf-cream/10 bg-bf-steel/20 px-2 py-0.5 text-xs font-bold text-bf-cream/62">
+            <span className="max-w-28 truncate rounded-full border border-bf-cream/10 bg-bf-steel/20 px-2 py-0.5 text-[11px] font-bold text-bf-cream/62">
               {player.role}
             </span>
           ) : null}
@@ -231,28 +234,35 @@ function EventCard({ event, onEdit }) {
 
   return (
     <motion.article
-      whileHover={{ scale: 1.02 }}
-      className={`group rounded-xl border ${style.border} ${style.bg} ${style.glow} p-3 transition`}
+      whileHover={{ scale: 1.015 }}
+      className={`group relative max-w-full overflow-hidden rounded-lg border ${style.border} ${style.bg} ${style.glow} p-2 transition`}
     >
-      <div className="flex items-start gap-3">
-        <Icon className={`${style.text} mt-1 shrink-0`} size={20} />
+      <div className="flex min-w-0 items-center gap-2">
+        <Icon className={`${style.text} shrink-0`} size={isUnavailable ? 16 : 17} />
         <div className="min-w-0 flex-1">
           {isUnavailable ? (
-            <div className={`text-sm font-black ${style.text}`}>Не могу в этот день</div>
+            <>
+              <div className={`whitespace-normal break-words text-[11px] font-black uppercase leading-tight ${style.text}`}>
+                Не могу в этот день
+              </div>
+              {event.note ? <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p> : null}
+            </>
           ) : (
-            <div className={`text-sm font-black ${style.text}`}>{event.timeRange}</div>
+            <>
+              <div className={`text-[11px] font-black leading-tight ${style.text}`}>{event.timeRange}</div>
+              <div className="mt-0.5 truncate text-xs font-black leading-tight text-slate-100">{event.label}</div>
+              {event.note ? <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p> : null}
+            </>
           )}
-          <div className="mt-1 truncate text-sm font-black text-slate-100">{event.label}</div>
-          {event.note ? <p className="mt-1 line-clamp-2 text-xs font-medium text-bf-cream/60">{event.note}</p> : null}
         </div>
         {event.canEdit ? (
           <button
-            className="rounded-lg border border-bf-cream/10 p-1.5 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100"
+            className="absolute right-1 top-1 rounded-md border border-bf-cream/10 bg-black/40 p-1 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100"
             type="button"
             onClick={() => onEdit(event)}
             aria-label="Редактировать событие"
           >
-            <Pencil size={15} />
+            <Pencil size={13} />
           </button>
         ) : null}
       </div>
@@ -260,12 +270,17 @@ function EventCard({ event, onEdit }) {
   );
 }
 
-function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange, onAdd, onEdit, lastUpdated }) {
-  const filteredPlayers = useMemo(() => {
-    const query = filter.trim().toLowerCase();
-    if (!query) return players;
-    return players.filter((player) => `${player.name} ${player.role}`.toLowerCase().includes(query));
-  }, [filter, players]);
+function RosterTable({
+  days,
+  players,
+  slots,
+  eventTypes,
+  dayEventTypes,
+  onAdd,
+  onEdit,
+  lastUpdated,
+}) {
+  const dayEventMap = useMemo(() => buildDayEventMap(dayEventTypes), [dayEventTypes]);
 
   const slotsByCell = useMemo(() => {
     const grouped = new Map();
@@ -278,43 +293,52 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
   }, [slots]);
 
   return (
-    <section className="glass-panel mt-5 rounded-[22px] p-5">
-      <div className="mb-4 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+    <section className="glass-panel mt-4 rounded-[20px] p-4">
+      <div className="mb-3 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
         <div className="flex items-center gap-3 text-lg font-black uppercase text-slate-100">
           <Users className="text-bf-orange" size={22} />
           Игроки
         </div>
-        <label className="relative w-full max-w-xs max-md:max-w-none">
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-bf-cream/42" size={18} />
-          <input
-            className="h-11 w-full rounded-2xl border border-bf-cream/10 bg-black/30 pl-10 pr-4 text-sm font-semibold text-slate-100 outline-none transition placeholder:text-bf-cream/35 focus:border-bf-orange/50 focus:shadow-[0_0_0_4px_rgba(255,122,0,0.12)]"
-            value={filter}
-            onChange={(event) => onFilterChange(event.target.value)}
-            placeholder="Фильтр по нику или роли"
-          />
-        </label>
       </div>
 
       <div className="roster-scroll overflow-x-auto">
-        <div className="grid min-w-[1240px] grid-cols-[194px_repeat(7,minmax(150px,1fr))] overflow-hidden rounded-2xl border border-bf-cream/10 bg-black/20">
-          <div className="grid min-h-20 content-center border-b border-r border-bf-cream/10 bg-black/20 px-5">
+        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-2xl border border-bf-cream/10 bg-black/20">
+          <div className="grid min-h-16 content-center border-b border-r border-bf-cream/10 bg-black/20 px-4">
             <div className="flex items-center gap-2 font-black uppercase text-slate-100">
               <Users size={19} className="text-bf-orange" />
               Игроки
             </div>
           </div>
-          {days.map((day) => (
-            <div key={day.value} className="grid min-h-20 place-items-center border-b border-r border-bf-cream/10 bg-black/20 px-3 text-center last:border-r-0">
-              <div>
-                <div className="text-sm font-black text-slate-100">{day.label}</div>
-                <div className="mt-1 text-xs font-semibold text-bf-cream/52">{day.date}</div>
-              </div>
-            </div>
-          ))}
+          {days.map((day) => {
+            const dayEvent = dayEventMap.get(day.value);
+            const hasDayType = Boolean(dayEvent?.eventType);
+            const style = EVENT_STYLES[dayEvent?.eventType] || EVENT_STYLES.fallback;
+            const Icon = style.icon;
 
-          {filteredPlayers.map((player) => (
+            return (
+              <div key={day.value} className="grid min-h-16 place-items-center border-b border-r border-bf-cream/10 bg-black/20 px-2.5 text-center last:border-r-0">
+                <div className="grid justify-items-center gap-1">
+                  <div className="text-sm font-black text-slate-100">{day.label}</div>
+                  <div className="text-xs font-semibold text-bf-cream/52">{day.date}</div>
+                  <div
+                    className={`mt-0.5 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${
+                      hasDayType
+                        ? `${style.border} ${style.bg} ${style.text}`
+                        : 'border-bf-cream/10 bg-black/30 text-bf-cream/35'
+                    }`}
+                    title={hasDayType ? 'Тип события задан админом для всего дня' : 'Админ не выбрал тип события для этого дня'}
+                  >
+                    {hasDayType ? <Icon size={12} /> : <Clock3 size={12} />}
+                    <span className="truncate">{hasDayType ? dayEvent.eventLabel : 'Без типа'}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {players.map((player) => (
             <div key={player.id} className="contents">
-              <div className="min-h-[76px] border-b border-r border-bf-cream/10 bg-black/20">
+              <div className="min-h-[58px] border-b border-r border-bf-cream/10 bg-black/20">
                 <PlayerRow player={player} />
               </div>
               {days.map((day) => {
@@ -323,20 +347,20 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
                 return (
                   <div
                     key={`${player.id}-${day.value}`}
-                    className={`relative flex min-h-[76px] items-center border-b border-r border-bf-cream/10 p-2 last:border-r-0 ${
+                    className={`relative flex min-h-[58px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${
                       isUnavailable
-                        ? 'bg-red-950/45 shadow-[inset_0_0_0_1px_rgba(239,68,68,0.28)]'
-                        : 'bg-slate-950/42'
+                        ? 'bg-red-950/42'
+                        : 'bg-slate-950/36'
                     }`}
                   >
                     {cellSlots.length ? (
-                      <div className="grid w-full gap-2">
+                      <div className="grid w-full gap-1.5">
                         {cellSlots.map((slot) => (
                           <EventCard key={slot.id} event={slot} onEdit={onEdit} />
                         ))}
                         {player.canEdit ? (
                           <button
-                            className="justify-self-end text-xs font-black text-bf-cream/45 transition hover:text-bf-orange"
+                            className="justify-self-end text-[11px] font-black text-bf-cream/45 transition hover:text-bf-orange"
                             type="button"
                             onClick={() => onAdd(day.value)}
                           >
@@ -346,7 +370,7 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
                       </div>
                     ) : player.canEdit ? (
                       <button
-                        className="grid min-h-12 w-full place-items-center text-3xl font-light text-bf-cream/28 transition hover:scale-105 hover:text-bf-orange"
+                        className="grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/28 transition hover:scale-105 hover:text-bf-orange"
                         type="button"
                         onClick={() => onAdd(day.value)}
                         aria-label={`Добавить запись на ${day.label}`}
@@ -354,7 +378,7 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
                         +
                       </button>
                     ) : (
-                      <span className="grid min-h-12 w-full place-items-center text-3xl font-light text-bf-cream/18">+</span>
+                      <span className="grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/18">+</span>
                     )}
                   </div>
                 );
@@ -366,7 +390,7 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
 
       <Legend eventTypes={eventTypes} />
 
-      <footer className="mt-5 flex justify-between gap-4 border-t border-bf-cream/10 pt-5 text-sm text-bf-cream/48 max-md:flex-col">
+      <footer className="mt-4 flex justify-between gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/48 max-md:flex-col">
         <span>Все время указано по часовому поясу UTC+3</span>
         <span>Последнее обновление: {lastUpdated}</span>
       </footer>
@@ -376,18 +400,18 @@ function RosterTable({ days, players, slots, eventTypes, filter, onFilterChange,
 
 function Legend({ eventTypes }) {
   return (
-    <div className="mt-5 grid grid-cols-4 gap-4 border-t border-bf-cream/10 pt-5 max-lg:grid-cols-2 max-sm:grid-cols-1">
+    <div className="mt-4 grid grid-cols-4 gap-3 border-t border-bf-cream/10 pt-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
       {eventTypes.map((eventType) => {
         const style = EVENT_STYLES[eventType.value] || EVENT_STYLES.fallback;
         const Icon = style.icon;
         return (
           <div key={eventType.value} className="flex items-center gap-3 border-r border-bf-cream/10 last:border-r-0 max-sm:border-r-0">
-            <div className={`grid h-11 w-11 place-items-center rounded-xl border ${style.border} ${style.bg}`}>
-              <Icon className={style.text} size={20} />
+            <div className={`grid h-9 w-9 place-items-center rounded-lg border ${style.border} ${style.bg}`}>
+              <Icon className={style.text} size={17} />
             </div>
             <div>
-              <div className={`text-sm font-black ${style.text}`}>{eventType.label}</div>
-              <div className="text-xs text-bf-cream/52">{eventType.description}</div>
+              <div className={`text-xs font-black ${style.text}`}>{eventType.label}</div>
+              <div className="text-[11px] text-bf-cream/52">{eventType.description}</div>
             </div>
           </div>
         );
@@ -396,10 +420,9 @@ function Legend({ eventTypes }) {
   );
 }
 
-function EventModal({ event, day, days, eventTypes, onClose, onSaved, onDeleted }) {
+function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
   const isEditing = Boolean(event);
   const [slotType, setSlotType] = useState(event?.slotType || 'available');
-  const [eventType, setEventType] = useState(event?.eventType || eventTypes[0]?.value || 'practice');
   const [dayOfWeek, setDayOfWeek] = useState(event?.dayOfWeek ?? day ?? days[0]?.value ?? 0);
   const [startTimeMinutes, setStartTimeMinutes] = useState(event?.startTimeMinutes ?? 1140);
   const [endTimeMinutes, setEndTimeMinutes] = useState(event?.endTimeMinutes ?? 1260);
@@ -414,7 +437,6 @@ function EventModal({ event, day, days, eventTypes, onClose, onSaved, onDeleted 
 
     const payload = {
       slotType,
-      eventType,
       dayOfWeek,
       startTimeMinutes,
       endTimeMinutes,
@@ -422,7 +444,6 @@ function EventModal({ event, day, days, eventTypes, onClose, onSaved, onDeleted 
     };
 
     if (slotType === 'unavailable') {
-      payload.eventType = '';
       payload.startTimeMinutes = null;
       payload.endTimeMinutes = null;
     }
@@ -519,70 +540,42 @@ function EventModal({ event, day, days, eventTypes, onClose, onSaved, onDeleted 
                 </option>
               ))}
             </select>
+            {errors.day_of_week ? <span className="text-red-200">{errors.day_of_week.join(', ')}</span> : null}
           </label>
 
           {slotType === 'available' ? (
-            <>
-              <div>
-                <div className="mb-2 text-sm font-black text-bf-cream/70">Тип события</div>
-                <div className="grid grid-cols-4 gap-3 max-md:grid-cols-2">
-                  {eventTypes.map((type) => {
-                    const style = EVENT_STYLES[type.value] || EVENT_STYLES.fallback;
-                    const Icon = style.icon;
-                    const selected = eventType === type.value;
-                    return (
-                      <button
-                        key={type.value}
-                        className={`rounded-2xl border p-3 text-left transition ${
-                          selected ? `${style.border} ${style.bg} ${style.glow}` : 'border-bf-cream/10 bg-black/20'
-                        }`}
-                        type="button"
-                        onClick={() => setEventType(type.value)}
-                      >
-                        <Icon className={selected ? style.text : 'text-bf-cream/45'} size={20} />
-                        <div className={`mt-2 text-sm font-black ${selected ? style.text : 'text-bf-cream/62'}`}>
-                          {type.label}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-                {errors.event_type ? <div className="mt-2 text-sm text-red-200">{errors.event_type.join(', ')}</div> : null}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-                  С
-                  <select
-                    className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
-                    value={startTimeMinutes}
-                    onChange={(inputEvent) => setStartTimeMinutes(Number(inputEvent.target.value))}
-                  >
-                    {startChoices.map((choice) => (
-                      <option key={choice.value} value={choice.value}>
-                        {choice.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.start_time_minutes ? <span className="text-red-200">{errors.start_time_minutes.join(', ')}</span> : null}
-                </label>
-                <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-                  До
-                  <select
-                    className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
-                    value={endTimeMinutes}
-                    onChange={(inputEvent) => setEndTimeMinutes(Number(inputEvent.target.value))}
-                  >
-                    {endChoices.map((choice) => (
-                      <option key={choice.value} value={choice.value}>
-                        {choice.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.end_time_minutes ? <span className="text-red-200">{errors.end_time_minutes.join(', ')}</span> : null}
-                </label>
-              </div>
-            </>
+            <div className="grid grid-cols-2 gap-4">
+              <label className="grid gap-2 text-sm font-black text-bf-cream/70">
+                С
+                <select
+                  className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
+                  value={startTimeMinutes}
+                  onChange={(inputEvent) => setStartTimeMinutes(Number(inputEvent.target.value))}
+                >
+                  {startChoices.map((choice) => (
+                    <option key={choice.value} value={choice.value}>
+                      {choice.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.start_time_minutes ? <span className="text-red-200">{errors.start_time_minutes.join(', ')}</span> : null}
+              </label>
+              <label className="grid gap-2 text-sm font-black text-bf-cream/70">
+                До
+                <select
+                  className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
+                  value={endTimeMinutes}
+                  onChange={(inputEvent) => setEndTimeMinutes(Number(inputEvent.target.value))}
+                >
+                  {endChoices.map((choice) => (
+                    <option key={choice.value} value={choice.value}>
+                      {choice.label}
+                    </option>
+                  ))}
+                </select>
+                {errors.end_time_minutes ? <span className="text-red-200">{errors.end_time_minutes.join(', ')}</span> : null}
+              </label>
+            </div>
           ) : null}
 
           <label className="grid gap-2 text-sm font-black text-bf-cream/70">
@@ -619,7 +612,7 @@ function EventModal({ event, day, days, eventTypes, onClose, onSaved, onDeleted 
               Отмена
             </button>
             <button
-              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5"
+              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
               type="submit"
               disabled={isSaving}
             >
@@ -637,7 +630,6 @@ export default function App() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState('');
   const [modal, setModal] = useState(null);
 
   async function loadData() {
@@ -726,8 +718,7 @@ export default function App() {
         players={data.players}
         slots={data.slots}
         eventTypes={data.eventTypes}
-        filter={filter}
-        onFilterChange={setFilter}
+        dayEventTypes={data.dayEventTypes}
         onAdd={(day) => setModal({ day })}
         onEdit={(event) => setModal({ event })}
         lastUpdated={data.lastUpdated}
@@ -737,7 +728,6 @@ export default function App() {
           event={modal.event}
           day={modal.day}
           days={data.days}
-          eventTypes={data.eventTypes}
           onClose={() => setModal(null)}
           onSaved={upsertSlot}
           onDeleted={removeSlot}
