@@ -9,7 +9,7 @@ class PlayerInline(admin.StackedInline):
     model = Player
     extra = 0
     max_num = 1
-    fields = ('name', 'role', 'avatar')
+    fields = ('name', 'role', 'avatar', 'battle_tags', 'discord_tag')
     verbose_name = 'профиль игрока'
     verbose_name_plural = 'профиль игрока'
 
@@ -24,8 +24,9 @@ class PlayerUserAdmin(UserAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'role', 'user', 'avatar')
-    search_fields = ('name', 'role', 'user__username')
+    list_display = ('name', 'role', 'user', 'discord_tag', 'avatar')
+    search_fields = ('name', 'role', 'user__username', 'discord_tag', 'battle_tags')
+    fields = ('name', 'role', 'user', 'avatar', 'battle_tags', 'discord_tag')
 
 
 @admin.register(ScheduleSlot)

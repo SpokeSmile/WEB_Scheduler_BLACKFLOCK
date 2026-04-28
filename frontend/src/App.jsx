@@ -4,12 +4,12 @@ import {
   AlertTriangle,
   CalendarPlus,
   Clock3,
+  Crosshair,
   LogOut,
   MonitorPlay,
   Pencil,
   RefreshCw,
   Save,
-  Settings,
   Swords,
   Trash2,
   Trophy,
@@ -17,16 +17,16 @@ import {
   X,
 } from 'lucide-react';
 
-import { bootstrap, createSlot, deleteSlot, logout, updateSlot } from './api.js';
+import {
+  bootstrap,
+  createSlot,
+  deleteSlot,
+  logout,
+  updateProfile,
+  updateSlot,
+} from './api.js';
 
 const EVENT_STYLES = {
-  practice: {
-    icon: Settings,
-    border: 'border-orange-500/45',
-    bg: 'bg-orange-500/10',
-    text: 'text-orange-300',
-    glow: 'shadow-[0_0_12px_rgba(243,112,30,0.08)]',
-  },
   scrim: {
     icon: Swords,
     border: 'border-blue-400/45',
@@ -34,14 +34,21 @@ const EVENT_STYLES = {
     text: 'text-blue-300',
     glow: 'shadow-[0_0_12px_rgba(59,130,246,0.08)]',
   },
-  vod_review: {
+  competitive: {
+    icon: Crosshair,
+    border: 'border-orange-500/45',
+    bg: 'bg-orange-500/10',
+    text: 'text-orange-300',
+    glow: 'shadow-[0_0_12px_rgba(243,112,30,0.08)]',
+  },
+  review: {
     icon: MonitorPlay,
     border: 'border-purple-400/45',
     bg: 'bg-purple-500/10',
     text: 'text-purple-300',
     glow: 'shadow-[0_0_12px_rgba(168,85,247,0.08)]',
   },
-  match: {
+  tournament: {
     icon: Trophy,
     border: 'border-red-400/45',
     bg: 'bg-red-500/10',
@@ -57,10 +64,10 @@ const EVENT_STYLES = {
   },
   fallback: {
     icon: Clock3,
-    border: 'border-orange-500/35',
-    bg: 'bg-orange-500/10',
-    text: 'text-orange-200',
-    glow: 'shadow-[0_0_10px_rgba(243,112,30,0.06)]',
+    border: 'border-bf-cream/15',
+    bg: 'bg-bf-steel/10',
+    text: 'text-bf-cream/72',
+    glow: 'shadow-[0_0_10px_rgba(75,96,127,0.08)]',
   },
 };
 
@@ -77,7 +84,7 @@ function formatClock(timeZone) {
 function useClocks() {
   const [clocks, setClocks] = useState({
     utc: '--:--:--',
-    gmt3: '--:--:--',
+    moscow: '--:--:--',
     cest: '--:--:--',
   });
 
@@ -85,7 +92,7 @@ function useClocks() {
     const update = () => {
       setClocks({
         utc: formatClock('UTC'),
-        gmt3: formatClock('Europe/Moscow'),
+        moscow: formatClock('Europe/Moscow'),
         cest: formatClock('Etc/GMT-2'),
       });
     };
@@ -134,7 +141,7 @@ function Header({ user }) {
       <div className="grid grid-cols-3 gap-3 max-sm:grid-cols-1">
         {[
           ['UTC', clocks.utc],
-          ['GMT+3', clocks.gmt3],
+          ['Moscow', clocks.moscow],
           ['CEST', clocks.cest],
         ].map(([label, value]) => (
           <div key={label} className="min-w-28 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-2">
@@ -170,29 +177,32 @@ function Header({ user }) {
 
 function HeroBanner({ canAdd, onAdd }) {
   return (
-    <section className="glass-panel hero-banner relative mt-4 min-h-40 overflow-hidden rounded-[20px] border-bf-orange/50 px-9 py-7">
-      <div className="relative z-10 flex items-center justify-between gap-6 max-md:flex-col max-md:items-start">
-        <div>
+    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-[22px] border-bf-orange/45 px-6 py-6 lg:px-8">
+      <div className="relative z-10 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="grid gap-3 lg:max-w-[440px]">
           <div className="text-sm font-black uppercase text-bf-orange">Black Flock squad</div>
-          <h1 className="mt-3 text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl">
+          <h1 className="text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl">
             Weekly roster
           </h1>
-          <p className="mt-4 text-lg text-bf-cream/62">Расписание команды на неделю</p>
+          <p className="text-lg text-bf-cream/62">Расписание команды на неделю</p>
         </div>
-        {canAdd ? (
-          <button
-            className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-black shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
-            type="button"
-            onClick={() => onAdd(null)}
-          >
-            <CalendarPlus size={20} />
-            Добавить время
-          </button>
-        ) : (
-          <span className="rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70">
-            Аккаунт не привязан к игроку
-          </span>
-        )}
+
+        <div className="relative z-10 justify-self-start lg:justify-self-end">
+          {canAdd ? (
+            <button
+              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-black shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
+              type="button"
+              onClick={() => onAdd(null)}
+            >
+              <CalendarPlus size={20} />
+              Добавить время
+            </button>
+          ) : (
+            <span className="rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70">
+              Аккаунт не привязан к игроку
+            </span>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -228,7 +238,8 @@ function PlayerRow({ player }) {
 }
 
 function EventCard({ event, onEdit }) {
-  const style = EVENT_STYLES[event.slotType === 'unavailable' ? 'unavailable' : event.eventType] || EVENT_STYLES.fallback;
+  const style =
+    EVENT_STYLES[event.slotType === 'unavailable' ? 'unavailable' : event.eventType] || EVENT_STYLES.fallback;
   const Icon = style.icon;
   const isUnavailable = event.slotType === 'unavailable';
 
@@ -245,13 +256,17 @@ function EventCard({ event, onEdit }) {
               <div className={`whitespace-normal break-words text-[11px] font-black uppercase leading-tight ${style.text}`}>
                 Не могу в этот день
               </div>
-              {event.note ? <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p> : null}
+              {event.note ? (
+                <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
+              ) : null}
             </>
           ) : (
             <>
               <div className={`text-[11px] font-black leading-tight ${style.text}`}>{event.timeRange}</div>
               <div className="mt-0.5 truncate text-xs font-black leading-tight text-slate-100">{event.label}</div>
-              {event.note ? <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p> : null}
+              {event.note ? (
+                <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
+              ) : null}
             </>
           )}
         </div>
@@ -267,6 +282,28 @@ function EventCard({ event, onEdit }) {
         ) : null}
       </div>
     </motion.article>
+  );
+}
+
+function Legend({ eventTypes }) {
+  return (
+    <div className="mt-4 grid grid-cols-4 gap-3 border-t border-bf-cream/10 pt-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
+      {eventTypes.map((eventType) => {
+        const style = EVENT_STYLES[eventType.value] || EVENT_STYLES.fallback;
+        const Icon = style.icon;
+        return (
+          <div key={eventType.value} className="flex items-center gap-3 border-r border-bf-cream/10 pr-3 last:border-r-0 last:pr-0 max-sm:border-r-0 max-sm:pr-0">
+            <div className={`grid h-9 w-9 place-items-center rounded-lg border ${style.border} ${style.bg}`}>
+              <Icon className={style.text} size={17} />
+            </div>
+            <div>
+              <div className={`text-xs font-black ${style.text}`}>{eventType.label}</div>
+              <div className="text-[11px] text-bf-cream/52">{eventType.description}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -303,7 +340,7 @@ function RosterTable({
 
       <div className="roster-scroll overflow-x-auto">
         <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-2xl border border-bf-cream/10 bg-black/20">
-          <div className="grid min-h-16 content-center border-b border-r border-bf-cream/10 bg-black/20 px-4">
+          <div className="grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-black/20 px-4 py-4">
             <div className="flex items-center gap-2 font-black uppercase text-slate-100">
               <Users size={19} className="text-bf-orange" />
               Игроки
@@ -316,12 +353,15 @@ function RosterTable({
             const Icon = style.icon;
 
             return (
-              <div key={day.value} className="grid min-h-16 place-items-center border-b border-r border-bf-cream/10 bg-black/20 px-2.5 text-center last:border-r-0">
-                <div className="grid justify-items-center gap-1">
+              <div
+                key={day.value}
+                className="grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-black/20 px-2.5 pt-4 pb-3 text-center last:border-r-0"
+              >
+                <div className="grid justify-items-center gap-1.5">
                   <div className="text-sm font-black text-slate-100">{day.label}</div>
                   <div className="text-xs font-semibold text-bf-cream/52">{day.date}</div>
                   <div
-                    className={`mt-0.5 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${
+                    className={`mt-1 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${
                       hasDayType
                         ? `${style.border} ${style.bg} ${style.text}`
                         : 'border-bf-cream/10 bg-black/30 text-bf-cream/35'
@@ -338,7 +378,7 @@ function RosterTable({
 
           {players.map((player) => (
             <div key={player.id} className="contents">
-              <div className="min-h-[58px] border-b border-r border-bf-cream/10 bg-black/20">
+              <div className="min-h-[60px] border-b border-r border-bf-cream/10 bg-black/20">
                 <PlayerRow player={player} />
               </div>
               {days.map((day) => {
@@ -347,10 +387,8 @@ function RosterTable({
                 return (
                   <div
                     key={`${player.id}-${day.value}`}
-                    className={`relative flex min-h-[58px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${
-                      isUnavailable
-                        ? 'bg-red-950/42'
-                        : 'bg-slate-950/36'
+                    className={`relative flex min-h-[60px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${
+                      isUnavailable ? 'bg-red-950/42' : 'bg-slate-950/36'
                     }`}
                   >
                     {cellSlots.length ? (
@@ -390,33 +428,95 @@ function RosterTable({
 
       <Legend eventTypes={eventTypes} />
 
-      <footer className="mt-4 flex justify-between gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/48 max-md:flex-col">
-        <span>Все время указано по часовому поясу UTC+3</span>
-        <span>Последнее обновление: {lastUpdated}</span>
+      <footer className="mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/48">
+        <span>Дата последнего обновления: {lastUpdated}</span>
       </footer>
     </section>
   );
 }
 
-function Legend({ eventTypes }) {
+function PlayerProfiles({ players, onEdit }) {
   return (
-    <div className="mt-4 grid grid-cols-4 gap-3 border-t border-bf-cream/10 pt-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
-      {eventTypes.map((eventType) => {
-        const style = EVENT_STYLES[eventType.value] || EVENT_STYLES.fallback;
-        const Icon = style.icon;
-        return (
-          <div key={eventType.value} className="flex items-center gap-3 border-r border-bf-cream/10 last:border-r-0 max-sm:border-r-0">
-            <div className={`grid h-9 w-9 place-items-center rounded-lg border ${style.border} ${style.bg}`}>
-              <Icon className={style.text} size={17} />
+    <section className="glass-panel mt-4 rounded-[20px] p-4">
+      <div className="mb-4 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
+        <div>
+          <div className="text-sm font-black uppercase text-bf-orange">Player profiles</div>
+          <h2 className="mt-1 text-xl font-black uppercase text-slate-100">Актуальные игровые профили</h2>
+        </div>
+        <div className="text-sm text-bf-cream/56">BattleTag и Discord отображаются для всей команды прямо на странице расписания.</div>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        {players.map((player) => (
+          <article key={player.id} className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-3">
+                {player.avatarUrl ? (
+                  <img
+                    className="h-12 w-12 rounded-full border border-bf-cream/15 object-cover"
+                    src={player.avatarUrl}
+                    alt={player.name}
+                  />
+                ) : (
+                  <div className="grid h-12 w-12 place-items-center rounded-full border border-bf-cream/15 bg-gradient-to-br from-bf-orange/70 to-bf-steel/70 text-base font-black text-bf-cream">
+                    {player.initial}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <div className="truncate text-base font-black text-slate-100">{player.name}</div>
+                  <div className="mt-1 flex flex-wrap gap-1.5">
+                    {player.role ? (
+                      <span className="rounded-full border border-bf-cream/10 bg-bf-steel/20 px-2 py-0.5 text-[11px] font-bold text-bf-cream/62">
+                        {player.role}
+                      </span>
+                    ) : null}
+                    {player.canEdit ? (
+                      <span className="rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange">
+                        Ваш профиль
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              {player.canEdit ? (
+                <button
+                  className="rounded-xl border border-bf-orange/35 px-3 py-2 text-sm font-black text-bf-orange transition hover:bg-bf-orange/10"
+                  type="button"
+                  onClick={() => onEdit(player)}
+                >
+                  Редактировать
+                </button>
+              ) : null}
             </div>
-            <div>
-              <div className={`text-xs font-black ${style.text}`}>{eventType.label}</div>
-              <div className="text-[11px] text-bf-cream/52">{eventType.description}</div>
+
+            <div className="mt-4 grid gap-3 text-sm">
+              <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
+                <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Battle.net</div>
+                {player.battleTags.length ? (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {player.battleTags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-2 text-bf-cream/42">Не указано</div>
+                )}
+              </div>
+
+              <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
+                <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Discord</div>
+                <div className="mt-2 text-sm font-semibold text-slate-100">{player.discordTag || 'Не указано'}</div>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -451,8 +551,8 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
     try {
       const response = isEditing ? await updateSlot(event.id, payload) : await createSlot(payload);
       onSaved(response.slot);
-    } catch (error) {
-      setErrors(error.payload?.errors || { __all__: [error.message] });
+    } catch (saveError) {
+      setErrors(saveError.payload?.errors || { __all__: [saveError.message] });
     } finally {
       setIsSaving(false);
     }
@@ -464,8 +564,8 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
     try {
       await deleteSlot(event.id);
       onDeleted(event.id);
-    } catch (error) {
-      setErrors(error.payload?.errors || { __all__: [error.message] });
+    } catch (deleteError) {
+      setErrors(deleteError.payload?.errors || { __all__: [deleteError.message] });
     } finally {
       setIsSaving(false);
     }
@@ -484,9 +584,9 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-sm font-black uppercase text-bf-orange">Event editor</div>
+            <div className="text-sm font-black uppercase text-bf-orange">Availability editor</div>
             <h2 className="mt-1 text-2xl font-black uppercase text-slate-100">
-              {isEditing ? 'Редактировать событие' : 'Добавить событие'}
+              {isEditing ? 'Редактировать время' : 'Добавить время'}
             </h2>
           </div>
           <button
@@ -499,7 +599,11 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           </button>
         </div>
 
-        {errors.__all__ ? <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">{errors.__all__.join(', ')}</div> : null}
+        {errors.__all__ ? (
+          <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">
+            {errors.__all__.join(', ')}
+          </div>
+        ) : null}
 
         <div className="mt-6 grid gap-5">
           <div className="grid grid-cols-2 gap-3 max-sm:grid-cols-1">
@@ -544,7 +648,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           </label>
 
           {slotType === 'available' ? (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
               <label className="grid gap-2 text-sm font-black text-bf-cream/70">
                 С
                 <select
@@ -626,11 +730,104 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
   );
 }
 
+function ProfileModal({ player, onClose, onSaved }) {
+  const [battleTagsText, setBattleTagsText] = useState(player.battleTagsText || '');
+  const [discordTag, setDiscordTag] = useState(player.discordTag || '');
+  const [error, setError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+
+  async function handleSubmit(submitEvent) {
+    submitEvent.preventDefault();
+    setIsSaving(true);
+    setError('');
+    try {
+      const response = await updateProfile({ battleTagsText, discordTag });
+      onSaved(response.player);
+    } catch (saveError) {
+      setError(saveError.payload?.error || saveError.message);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm">
+      <motion.form
+        initial={{ opacity: 0, y: 24, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        className="w-full max-w-xl rounded-[24px] border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-sm font-black uppercase text-bf-orange">Profile editor</div>
+            <h2 className="mt-1 text-2xl font-black uppercase text-slate-100">Игровые профили</h2>
+          </div>
+          <button
+            className="rounded-xl border border-bf-cream/10 p-2 text-bf-cream/60 transition hover:border-bf-orange/40 hover:text-bf-orange"
+            type="button"
+            onClick={onClose}
+            aria-label="Закрыть"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {error ? (
+          <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">{error}</div>
+        ) : null}
+
+        <div className="mt-6 grid gap-5">
+          <label className="grid gap-2 text-sm font-black text-bf-cream/70">
+            BattleTag&apos;и
+            <textarea
+              className="min-h-32 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
+              value={battleTagsText}
+              onChange={(inputEvent) => setBattleTagsText(inputEvent.target.value)}
+              placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
+            />
+            <span className="text-xs font-medium text-bf-cream/45">Если аккаунтов несколько, указывай каждый BattleTag с новой строки.</span>
+          </label>
+
+          <label className="grid gap-2 text-sm font-black text-bf-cream/70">
+            Discord тег
+            <input
+              className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
+              value={discordTag}
+              onChange={(inputEvent) => setDiscordTag(inputEvent.target.value)}
+              placeholder="blackflock_player"
+            />
+          </label>
+        </div>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            className="min-h-11 rounded-2xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40"
+            type="button"
+            onClick={onClose}
+          >
+            Отмена
+          </button>
+          <button
+            className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+            type="submit"
+            disabled={isSaving}
+          >
+            <Save size={18} />
+            Сохранить
+          </button>
+        </div>
+      </motion.form>
+    </div>
+  );
+}
+
 export default function App() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [modal, setModal] = useState(null);
+  const [slotModal, setSlotModal] = useState(null);
+  const [profileModalPlayer, setProfileModalPlayer] = useState(null);
 
   async function loadData() {
     setIsLoading(true);
@@ -655,30 +852,24 @@ export default function App() {
       slots: current.slots.some((existing) => existing.id === slot.id)
         ? current.slots.map((existing) => (existing.id === slot.id ? slot : existing))
         : [...current.slots, slot],
-      lastUpdated: new Intl.DateTimeFormat('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date()),
     }));
-    setModal(null);
+    setSlotModal(null);
   }
 
   function removeSlot(id) {
     setData((current) => ({
       ...current,
       slots: current.slots.filter((slot) => slot.id !== id),
-      lastUpdated: new Intl.DateTimeFormat('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date()),
     }));
-    setModal(null);
+    setSlotModal(null);
+  }
+
+  function updatePlayerProfile(player) {
+    setData((current) => ({
+      ...current,
+      players: current.players.map((existing) => (existing.id === player.id ? player : existing)),
+    }));
+    setProfileModalPlayer(null);
   }
 
   if (isLoading) {
@@ -712,25 +903,33 @@ export default function App() {
   return (
     <main className="mx-auto min-h-screen w-[min(1500px,calc(100%_-_48px))] py-4 max-sm:w-[min(100%_-_20px,760px)]">
       <Header user={data.user} />
-      <HeroBanner canAdd={canAdd} onAdd={(day) => setModal({ day })} />
+      <HeroBanner canAdd={canAdd} onAdd={(day) => setSlotModal({ day })} />
       <RosterTable
         days={data.days}
         players={data.players}
         slots={data.slots}
         eventTypes={data.eventTypes}
         dayEventTypes={data.dayEventTypes}
-        onAdd={(day) => setModal({ day })}
-        onEdit={(event) => setModal({ event })}
+        onAdd={(day) => setSlotModal({ day })}
+        onEdit={(event) => setSlotModal({ event })}
         lastUpdated={data.lastUpdated}
       />
-      {modal ? (
+      <PlayerProfiles players={data.players} onEdit={setProfileModalPlayer} />
+      {slotModal ? (
         <EventModal
-          event={modal.event}
-          day={modal.day}
+          event={slotModal.event}
+          day={slotModal.day}
           days={data.days}
-          onClose={() => setModal(null)}
+          onClose={() => setSlotModal(null)}
           onSaved={upsertSlot}
           onDeleted={removeSlot}
+        />
+      ) : null}
+      {profileModalPlayer ? (
+        <ProfileModal
+          player={profileModalPlayer}
+          onClose={() => setProfileModalPlayer(null)}
+          onSaved={updatePlayerProfile}
         />
       ) : null}
     </main>

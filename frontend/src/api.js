@@ -52,6 +52,13 @@ export function deleteSlot(id) {
   });
 }
 
+export function updateProfile(payload) {
+  return request('/api/profile/', {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  });
+}
+
 export function logout() {
   return request('/api/logout/', { method: 'POST' });
 }

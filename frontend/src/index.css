@@ -73,9 +73,9 @@ textarea {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(6, 10, 18, 0.94) 0%, rgba(6, 10, 18, 0.72) 38%, rgba(6, 10, 18, 0.22) 72%),
-    url("/static/design_assets/Header.png") right center / auto 112% no-repeat;
-  opacity: 0.92;
+    linear-gradient(90deg, rgba(6, 10, 18, 0.96) 0%, rgba(6, 10, 18, 0.76) 32%, rgba(6, 10, 18, 0.28) 60%, rgba(6, 10, 18, 0.82) 100%),
+    url("/static/design_assets/Header.png") center center / auto 128% no-repeat;
+  opacity: 0.94;
 }
 
 .hero-banner::after {
@@ -86,6 +86,14 @@ textarea {
   background:
     linear-gradient(180deg, rgba(232, 216, 201, 0.04), transparent 48%),
     linear-gradient(90deg, transparent 0%, rgba(243, 112, 30, 0.18) 100%);
+}
+
+@media (max-width: 1024px) {
+  .hero-banner::before {
+    background:
+      linear-gradient(180deg, rgba(6, 10, 18, 0.9) 0%, rgba(6, 10, 18, 0.84) 38%, rgba(6, 10, 18, 0.92) 100%),
+      url("/static/design_assets/Header.png") center center / cover no-repeat;
+  }
 }
 
 .roster-scroll::-webkit-scrollbar {

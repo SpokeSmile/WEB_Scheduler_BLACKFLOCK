@@ -45,7 +45,7 @@ class ScheduleSlotForm(forms.ModelForm):
             'note',
         ]
         widgets = {
-            'note': forms.TextInput(attrs={'placeholder': 'Например: тренировка, матч, свободен'}),
+            'note': forms.TextInput(attrs={'placeholder': 'Например: турнирный блок, поздний старт'}),
         }
 
     def clean(self):

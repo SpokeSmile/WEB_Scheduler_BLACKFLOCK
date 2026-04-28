@@ -1,5 +1,6 @@
 import json
-from datetime import timedelta
+import os
+from datetime import datetime, timedelta
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -12,6 +13,19 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from .forms import ScheduleSlotForm
 from .models import DayEventType, Player, ScheduleSlot
 from .views import get_current_player
+
+
+def resolve_build_timestamp():
+    raw_value = os.environ.get('BUILD_TIMESTAMP')
+    if raw_value:
+        parsed = datetime.fromisoformat(raw_value.replace('Z', '+00:00'))
+        if timezone.is_naive(parsed):
+            return timezone.make_aware(parsed)
+        return parsed
+    return timezone.now()
+
+
+BUILD_TIMESTAMP = resolve_build_timestamp()
 
 
 def build_days():
@@ -41,6 +55,9 @@ def serialize_player(player, current_player):
         'role': player.role,
         'initial': player.initial,
         'avatarUrl': avatar_url(player),
+        'battleTags': player.battle_tags_list,
+        'battleTagsText': '\n'.join(player.battle_tags_list),
+        'discordTag': player.discord_tag,
         'canEdit': current_player == player,
     }
 
@@ -108,6 +125,15 @@ def parse_body(request):
         return None
 
 
+def cleaned_profile_payload(payload):
+    battle_tags_raw = payload.get('battleTagsText') or ''
+    battle_tags = [tag.strip() for tag in battle_tags_raw.splitlines() if tag.strip()]
+    return {
+        'battle_tags': '\n'.join(battle_tags),
+        'discord_tag': (payload.get('discordTag') or '').strip(),
+    }
+
+
 def form_data_from_payload(payload):
     return {
         'slot_type': payload.get('slotType') or ScheduleSlot.AVAILABLE,
@@ -147,8 +173,12 @@ def bootstrap(request):
         'slots': [serialize_slot(slot, current_player, day_event_map) for slot in slots],
         'dayEventTypes': [serialize_day_event(day_event) for day_event in day_events],
         'eventTypes': ScheduleSlot.event_types_payload(),
-        'lastUpdated': timezone.localtime().strftime('%d.%m.%Y %H:%M'),
+        'lastUpdated': build_timestamp_label(),
     })
+
+
+def build_timestamp_label():
+    return timezone.localtime(BUILD_TIMESTAMP).strftime('%d.%m.%Y %H:%M')
 
 
 @require_POST
@@ -211,6 +241,26 @@ def slot_delete(request, pk):
     slot.delete()
 
     return JsonResponse({'deleted': True})
+
+
+@require_http_methods(['PATCH', 'POST'])
+@login_required
+def profile_update(request):
+    current_player = get_current_player(request.user)
+    if current_player is None:
+        return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)
+
+    payload = parse_body(request)
+    if payload is None:
+        return JsonResponse({'error': 'Некорректный JSON.'}, status=400)
+
+    profile_data = cleaned_profile_payload(payload)
+    current_player.battle_tags = profile_data['battle_tags']
+    current_player.discord_tag = profile_data['discord_tag']
+    current_player.full_clean()
+    current_player.save(update_fields=['battle_tags', 'discord_tag'])
+
+    return JsonResponse({'player': serialize_player(current_player, current_player)})
 
 
 @require_POST

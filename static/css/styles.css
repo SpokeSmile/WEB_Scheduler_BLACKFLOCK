@@ -38,7 +38,8 @@ a {
 
 button,
 input,
-select {
+select,
+textarea {
     font: inherit;
 }
 
@@ -296,8 +297,8 @@ select {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(90deg, rgba(9, 14, 23, 0.98) 0%, rgba(10, 16, 26, 0.78) 40%, rgba(8, 13, 22, 0.28) 72%),
-        url("/static/design_assets/Header.png") right center / auto 112% no-repeat;
+        linear-gradient(90deg, rgba(9, 14, 23, 0.98) 0%, rgba(10, 16, 26, 0.8) 32%, rgba(8, 13, 22, 0.3) 60%, rgba(8, 13, 22, 0.84) 100%),
+        url("/static/design_assets/Header.png") center center / auto 126% no-repeat;
 }
 
 .hero-strip::after {
@@ -363,17 +364,25 @@ h2 {
     inset: -1px;
     z-index: -1;
     border-radius: inherit;
-    background: linear-gradient(110deg, transparent, rgba(243, 112, 30, 0.6), transparent 42%);
-    background-size: 220% 220%;
-    animation: border-flow 5s linear infinite;
+    background: linear-gradient(
+        110deg,
+        transparent 0%,
+        rgba(243, 112, 30, 0.04) 18%,
+        rgba(243, 112, 30, 0.34) 46%,
+        rgba(232, 216, 201, 0.14) 56%,
+        rgba(243, 112, 30, 0.08) 70%,
+        transparent 100%
+    );
+    background-size: 280% 100%;
+    animation: border-flow 6.5s linear infinite;
 }
 
 @keyframes border-flow {
     from {
-        background-position: 0% 50%;
+        background-position: -140% 50%;
     }
     to {
-        background-position: 220% 50%;
+        background-position: 140% 50%;
     }
 }
 
@@ -670,7 +679,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
     width: 100%;
     min-height: 46px;
     padding: 0 12px;
@@ -682,12 +692,14 @@ select {
     transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
-select {
+select,
+textarea {
     color: var(--ink);
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     border-color: var(--orange);
     background: rgba(8, 13, 22, 0.76);
     box-shadow: 0 0 0 4px rgba(243, 112, 30, 0.16);

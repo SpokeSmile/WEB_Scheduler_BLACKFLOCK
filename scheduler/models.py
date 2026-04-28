@@ -8,6 +8,12 @@ class Player(models.Model):
     name = models.CharField('имя игрока', max_length=80)
     role = models.CharField('роль', max_length=80, blank=True)
     avatar = models.FileField('аватар', upload_to='avatars/', blank=True)
+    battle_tags = models.TextField(
+        'battle tags',
+        blank=True,
+        help_text='Указывайте по одному BattleTag на строку.',
+    )
+    discord_tag = models.CharField('discord тег', max_length=120, blank=True)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         verbose_name='аккаунт',
@@ -29,15 +35,19 @@ class Player(models.Model):
     def initial(self):
         return (self.name.strip()[:1] or '?').upper()
 
+    @property
+    def battle_tags_list(self):
+        return [tag.strip() for tag in self.battle_tags.splitlines() if tag.strip()]
+
 
 class ScheduleSlot(models.Model):
     AVAILABLE = 'available'
     UNAVAILABLE = 'unavailable'
 
-    PRACTICE = 'practice'
     SCRIM = 'scrim'
-    VOD_REVIEW = 'vod_review'
-    MATCH = 'match'
+    COMPETITIVE = 'competitive'
+    REVIEW = 'review'
+    TOURNAMENT = 'tournament'
 
     SLOT_TYPE_CHOICES = [
         (AVAILABLE, 'Диапазон времени'),
@@ -45,31 +55,31 @@ class ScheduleSlot(models.Model):
     ]
 
     EVENT_TYPE_CHOICES = [
-        (PRACTICE, 'Практика'),
-        (SCRIM, 'Scrim'),
-        (VOD_REVIEW, 'VOD Review'),
-        (MATCH, 'Матч'),
+        (TOURNAMENT, 'Турнир'),
+        (SCRIM, 'Скрим'),
+        (COMPETITIVE, 'Компетитив'),
+        (REVIEW, 'Разбор игр'),
     ]
 
     EVENT_TYPE_META = {
-        PRACTICE: {
-            'label': 'Практика',
-            'description': 'Тренировка команды',
-            'tone': 'orange',
-        },
         SCRIM: {
-            'label': 'Scrim',
+            'label': 'Скрим',
             'description': 'Тренировочный матч',
             'tone': 'blue',
         },
-        VOD_REVIEW: {
-            'label': 'VOD Review',
-            'description': 'Разбор игр',
+        COMPETITIVE: {
+            'label': 'Компетитив',
+            'description': 'Соревновательная игра',
+            'tone': 'orange',
+        },
+        REVIEW: {
+            'label': 'Разбор игр',
+            'description': 'Разбор сыгранных карт и матчей',
             'tone': 'purple',
         },
-        MATCH: {
-            'label': 'Матч',
-            'description': 'Турнир',
+        TOURNAMENT: {
+            'label': 'Турнир',
+            'description': 'Официальные турнирные матчи',
             'tone': 'red',
         },
     }

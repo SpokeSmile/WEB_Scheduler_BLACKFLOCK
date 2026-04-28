@@ -25,7 +25,7 @@ class ScheduleFormTests(TestCase):
     def test_rejects_end_before_or_equal_start(self):
         DayEventType.objects.update_or_create(
             day_of_week=ScheduleSlot.MONDAY,
-            defaults={'event_type': ScheduleSlot.PRACTICE},
+            defaults={'event_type': ScheduleSlot.COMPETITIVE},
         )
         form = ScheduleSlotForm(data={
             'slot_type': ScheduleSlot.AVAILABLE,
@@ -206,6 +206,9 @@ class ScheduleApiTests(TestCase):
             day_of_week=ScheduleSlot.MONDAY,
             defaults={'event_type': ScheduleSlot.SCRIM},
         )
+        self.player_one.battle_tags = 'BlackFlock#1111\nAltBird#2222'
+        self.player_one.discord_tag = 'blackflock_main'
+        self.player_one.save()
         self.client.login(username='player1', password='secret-pass')
         response = self.client.get(reverse('api_bootstrap'))
 
@@ -213,13 +216,15 @@ class ScheduleApiTests(TestCase):
         data = response.json()
         self.assertEqual(data['user']['username'], 'player1')
         self.assertTrue(any(player['role'] == 'Leader' for player in data['players']))
+        self.assertTrue(any(player['discordTag'] == 'blackflock_main' for player in data['players']))
+        self.assertTrue(any(player['battleTags'] == ['BlackFlock#1111', 'AltBird#2222'] for player in data['players']))
         self.assertTrue(any(event_type['value'] == ScheduleSlot.SCRIM for event_type in data['eventTypes']))
         self.assertTrue(any(day_event['eventType'] == ScheduleSlot.SCRIM for day_event in data['dayEventTypes']))
 
     def test_api_creates_event_using_day_type(self):
         DayEventType.objects.update_or_create(
             day_of_week=ScheduleSlot.SATURDAY,
-            defaults={'event_type': ScheduleSlot.MATCH},
+            defaults={'event_type': ScheduleSlot.TOURNAMENT},
         )
         self.client.login(username='player1', password='secret-pass')
         response = self.post_json('api_slot_create', {
@@ -232,8 +237,8 @@ class ScheduleApiTests(TestCase):
 
         self.assertEqual(response.status_code, 201)
         slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.SATURDAY)
-        self.assertEqual(response.json()['slot']['eventType'], ScheduleSlot.MATCH)
-        self.assertEqual(response.json()['slot']['eventLabel'], 'Матч')
+        self.assertEqual(response.json()['slot']['eventType'], ScheduleSlot.TOURNAMENT)
+        self.assertEqual(response.json()['slot']['eventLabel'], 'Турнир')
 
     def test_api_rejects_available_without_day_event_type(self):
         self.client.login(username='player1', password='secret-pass')
@@ -281,5 +286,18 @@ class ScheduleApiTests(TestCase):
         self.assertEqual(response.status_code, 404)
         slot.refresh_from_db()
         self.assertEqual(slot.start_time_minutes, 600)
+
+    def test_api_updates_own_profile(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.patch_json('api_profile_update', {
+            'battleTagsText': 'BlackFlock#1111\nAltBird#2222',
+            'discordTag': 'blackflock_main',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.player_one.refresh_from_db()
+        self.assertEqual(self.player_one.battle_tags_list, ['BlackFlock#1111', 'AltBird#2222'])
+        self.assertEqual(self.player_one.discord_tag, 'blackflock_main')
+        self.assertEqual(response.json()['player']['discordTag'], 'blackflock_main')
 
 # Create your tests here.
