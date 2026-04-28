@@ -123,6 +123,7 @@ class StaffMember(models.Model):
 class ScheduleSlot(models.Model):
     AVAILABLE = 'available'
     UNAVAILABLE = 'unavailable'
+    FULL_DAY_AVAILABLE = 'full_day_available'
 
     SCRIM = 'scrim'
     COMPETITIVE = 'competitive'
@@ -131,6 +132,7 @@ class ScheduleSlot(models.Model):
 
     SLOT_TYPE_CHOICES = [
         (AVAILABLE, 'Диапазон времени'),
+        (FULL_DAY_AVAILABLE, 'Свободен весь день'),
         (UNAVAILABLE, 'Не могу в этот день'),
     ]
 
@@ -190,7 +192,7 @@ class ScheduleSlot(models.Model):
     )
     slot_type = models.CharField(
         'тип записи',
-        max_length=16,
+        max_length=24,
         choices=SLOT_TYPE_CHOICES,
         default=AVAILABLE,
     )
@@ -217,6 +219,11 @@ class ScheduleSlot(models.Model):
                         end_time_minutes__gte=60,
                         end_time_minutes__lte=1440,
                         end_time_minutes__gt=models.F('start_time_minutes'),
+                    )
+                    | Q(
+                        slot_type='full_day_available',
+                        start_time_minutes__isnull=True,
+                        end_time_minutes__isnull=True,
                     )
                     | Q(
                         slot_type='unavailable',
@@ -260,7 +267,13 @@ class ScheduleSlot(models.Model):
         return self.slot_type == self.UNAVAILABLE
 
     @property
+    def is_full_day_available(self):
+        return self.slot_type == self.FULL_DAY_AVAILABLE
+
+    @property
     def label(self):
+        if self.is_full_day_available:
+            return 'Свободен весь день'
         if self.is_unavailable:
             return 'Не могу в этот день'
         return 'Событие'
@@ -290,7 +303,7 @@ class ScheduleSlot(models.Model):
         return self.time_range
 
     def clean(self):
-        if self.slot_type == self.UNAVAILABLE:
+        if self.slot_type in {self.UNAVAILABLE, self.FULL_DAY_AVAILABLE}:
             self.start_time_minutes = None
             self.end_time_minutes = None
             return

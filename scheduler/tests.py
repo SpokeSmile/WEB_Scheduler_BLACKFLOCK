@@ -62,6 +62,17 @@ class ScheduleFormTests(TestCase):
         self.assertIsNone(form.cleaned_data['start_time_minutes'])
         self.assertIsNone(form.cleaned_data['end_time_minutes'])
 
+    def test_allows_full_day_available_without_time(self):
+        form = ScheduleSlotForm(data={
+            'slot_type': ScheduleSlot.FULL_DAY_AVAILABLE,
+            'day_of_week': ScheduleSlot.THURSDAY,
+            'note': 'Буду онлайн весь день',
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertIsNone(form.cleaned_data['start_time_minutes'])
+        self.assertIsNone(form.cleaned_data['end_time_minutes'])
+
 
 class ScheduleAccessTests(TestCase):
     def setUp(self):
@@ -116,6 +127,20 @@ class ScheduleAccessTests(TestCase):
         self.assertRedirects(response, reverse('schedule'))
         slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.FRIDAY)
         self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
+        self.assertIsNone(slot.start_time_minutes)
+        self.assertIsNone(slot.end_time_minutes)
+
+    def test_player_can_create_full_day_available(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.client.post(reverse('slot_create'), {
+            'slot_type': ScheduleSlot.FULL_DAY_AVAILABLE,
+            'day_of_week': ScheduleSlot.THURSDAY,
+            'note': 'Весь день свободен',
+        })
+
+        self.assertRedirects(response, reverse('schedule'))
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.THURSDAY)
+        self.assertEqual(slot.slot_type, ScheduleSlot.FULL_DAY_AVAILABLE)
         self.assertIsNone(slot.start_time_minutes)
         self.assertIsNone(slot.end_time_minutes)
 
@@ -291,6 +316,21 @@ class ScheduleApiTests(TestCase):
         slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.FRIDAY)
         self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
         self.assertIsNone(slot.start_time_minutes)
+
+    def test_api_creates_full_day_available(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.post_json('api_slot_create', {
+            'slotType': ScheduleSlot.FULL_DAY_AVAILABLE,
+            'dayOfWeek': ScheduleSlot.THURSDAY,
+            'note': 'Свободен',
+        })
+
+        self.assertEqual(response.status_code, 201)
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.THURSDAY)
+        self.assertEqual(slot.slot_type, ScheduleSlot.FULL_DAY_AVAILABLE)
+        self.assertIsNone(slot.start_time_minutes)
+        self.assertEqual(response.json()['slot']['label'], 'Свободен весь день')
+        self.assertEqual(response.json()['slot']['eventTone'], 'green')
 
     def test_api_prevents_editing_another_players_slot(self):
         slot = ScheduleSlot.objects.create(

@@ -54,7 +54,7 @@ class ScheduleSlotForm(forms.ModelForm):
         start_time = cleaned_data.get('start_time_minutes')
         end_time = cleaned_data.get('end_time_minutes')
 
-        if slot_type == ScheduleSlot.UNAVAILABLE:
+        if slot_type in {ScheduleSlot.UNAVAILABLE, ScheduleSlot.FULL_DAY_AVAILABLE}:
             cleaned_data['start_time_minutes'] = None
             cleaned_data['end_time_minutes'] = None
             return cleaned_data
