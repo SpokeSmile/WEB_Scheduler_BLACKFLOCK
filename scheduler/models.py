@@ -61,6 +61,11 @@ class Player(models.Model):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        super().clean()
+        if self.user and StaffMember.objects.filter(user=self.user).exclude(pk=getattr(self, 'pk', None)).exists():
+            raise ValidationError({'user': 'Этот аккаунт уже привязан к организаторскому составу.'})
+
     @property
     def initial(self):
         return (self.name.strip()[:1] or '?').upper()
@@ -106,6 +111,14 @@ class StaffMember(models.Model):
     )
     discord_tag = models.CharField('discord тег', max_length=120, blank=True)
     sort_order = models.PositiveSmallIntegerField('порядок в списке', default=0)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        verbose_name='аккаунт',
+        on_delete=models.SET_NULL,
+        related_name='staff_profile',
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ['sort_order', 'id']
@@ -114,6 +127,11 @@ class StaffMember(models.Model):
 
     def __str__(self):
         return f'{self.name} — {self.role}'
+
+    def clean(self):
+        super().clean()
+        if self.user and Player.objects.filter(user=self.user).exclude(pk=getattr(self, 'pk', None)).exists():
+            raise ValidationError({'user': 'Этот аккаунт уже привязан к игроку.'})
 
     @property
     def initial(self):

@@ -142,10 +142,10 @@ class PlayerAdmin(AvatarAdminMixin, admin.ModelAdmin):
 @admin.register(StaffMember)
 class StaffMemberAdmin(admin.ModelAdmin):
     form = StaffMemberAdminForm
-    list_display = ('name', 'sort_order', 'role', 'role_color', 'discord_tag')
+    list_display = ('name', 'sort_order', 'role', 'role_color', 'user', 'discord_tag')
     list_editable = ('sort_order', 'role_color')
-    search_fields = ('name', 'role', 'discord_tag')
-    fields = ('name', 'role', 'role_color', 'sort_order', 'discord_tag')
+    search_fields = ('name', 'role', 'discord_tag', 'user__username')
+    fields = ('name', 'role', 'role_color', 'sort_order', 'user', 'discord_tag')
 
 
 @admin.register(ScheduleSlot)

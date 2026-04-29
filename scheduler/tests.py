@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
@@ -433,6 +434,88 @@ class ScheduleApiTests(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertIn('oldPassword', response.json()['errors'])
+
+
+class StaffProfileTests(TestCase):
+    def setUp(self):
+        self.staff_user = User.objects.create_user(username='coach', password='secret-pass')
+        self.staff_member = StaffMember.objects.create(
+            name='Coach Raven',
+            role='Coach',
+            role_color='#f3701e',
+            discord_tag='coach_raven',
+            sort_order=1,
+            user=self.staff_user,
+        )
+
+    def patch_json(self, url_name, payload, args=None):
+        return self.client.patch(
+            reverse(url_name, args=args or []),
+            data=payload,
+            content_type='application/json',
+        )
+
+    def post_json(self, url_name, payload, args=None):
+        return self.client.post(
+            reverse(url_name, args=args or []),
+            data=payload,
+            content_type='application/json',
+        )
+
+    def test_bootstrap_returns_staff_profile_identity(self):
+        self.client.login(username='coach', password='secret-pass')
+
+        response = self.client.get(reverse('api_bootstrap'))
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['user']['profileType'], 'staff')
+        self.assertEqual(data['user']['staffMemberId'], self.staff_member.id)
+        serialized_staff = next(item for item in data['staffMembers'] if item['id'] == self.staff_member.id)
+        self.assertTrue(serialized_staff['canEdit'])
+
+    def test_staff_can_update_own_profile(self):
+        self.client.login(username='coach', password='secret-pass')
+
+        response = self.patch_json('api_profile_update', {
+            'name': 'Coach Nova',
+            'discordTag': 'coach_nova',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.staff_member.refresh_from_db()
+        self.assertEqual(self.staff_member.name, 'Coach Nova')
+        self.assertEqual(self.staff_member.discord_tag, 'coach_nova')
+        self.assertEqual(response.json()['profileType'], 'staff')
+        self.assertEqual(response.json()['profile']['discordTag'], 'coach_nova')
+
+    def test_staff_can_change_password(self):
+        self.client.login(username='coach', password='secret-pass')
+
+        response = self.post_json('api_profile_password', {
+            'oldPassword': 'secret-pass',
+            'newPassword': 'new-strong-secret-123',
+            'newPasswordConfirm': 'new-strong-secret-123',
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.staff_user.refresh_from_db()
+        self.assertTrue(self.staff_user.check_password('new-strong-secret-123'))
+
+    def test_staff_and_player_cannot_share_same_user(self):
+        shared_user = User.objects.create_user(username='shared-user', password='secret-pass')
+        player = Player.objects.get(name='Игрок 1')
+        player.user = shared_user
+        player.save()
+
+        staff_member = StaffMember(
+            name='Manager Crow',
+            role='Manager',
+            user=shared_user,
+        )
+
+        with self.assertRaises(ValidationError):
+            staff_member.full_clean()
 
 
 class PlayerAvatarTests(TestCase):

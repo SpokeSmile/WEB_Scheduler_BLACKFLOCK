@@ -530,6 +530,11 @@ function StaffDirectory({ staffMembers }) {
                   <div className="truncate text-base font-black text-slate-100">{staffMember.name}</div>
                   <div className="mt-1 flex flex-wrap gap-1.5">
                     <RoleBadge role={staffMember.role} color={staffMember.roleColor} />
+                    {staffMember.canEdit ? (
+                      <span className="rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange">
+                        Ваш профиль
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -628,10 +633,12 @@ function PlayerProfiles({ players, onEdit }) {
   );
 }
 
-function ProfilePage({ user, player, onSaved }) {
-  const [name, setName] = useState(player?.name || '');
-  const [battleTagsText, setBattleTagsText] = useState(player?.battleTagsText || '');
-  const [discordTag, setDiscordTag] = useState(player?.discordTag || '');
+function ProfilePage({ user, profile, profileType, onSaved }) {
+  const isPlayerProfile = profileType === 'player';
+  const isStaffProfile = profileType === 'staff';
+  const [name, setName] = useState(profile?.name || '');
+  const [battleTagsText, setBattleTagsText] = useState(profile?.battleTagsText || '');
+  const [discordTag, setDiscordTag] = useState(profile?.discordTag || '');
   const [profileErrors, setProfileErrors] = useState({});
   const [profileSuccess, setProfileSuccess] = useState('');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
@@ -644,10 +651,10 @@ function ProfilePage({ user, player, onSaved }) {
   const [isSavingPassword, setIsSavingPassword] = useState(false);
 
   useEffect(() => {
-    setName(player?.name || '');
-    setBattleTagsText(player?.battleTagsText || '');
-    setDiscordTag(player?.discordTag || '');
-  }, [player]);
+    setName(profile?.name || '');
+    setBattleTagsText(profile?.battleTagsText || '');
+    setDiscordTag(profile?.discordTag || '');
+  }, [profile]);
 
   async function handleProfileSubmit(submitEvent) {
     submitEvent.preventDefault();
@@ -655,8 +662,12 @@ function ProfilePage({ user, player, onSaved }) {
     setProfileErrors({});
     setProfileSuccess('');
     try {
-      const response = await updateProfile({ name, battleTagsText, discordTag });
-      onSaved(response.player);
+      const payload = { name, discordTag };
+      if (isPlayerProfile) {
+        payload.battleTagsText = battleTagsText;
+      }
+      const response = await updateProfile(payload);
+      onSaved(response.profile || response.player);
       setProfileSuccess('Профиль сохранен.')
     } catch (saveError) {
       setProfileErrors(saveError.payload?.errors || { __all__: [saveError.message] });
@@ -683,12 +694,12 @@ function ProfilePage({ user, player, onSaved }) {
     }
   }
 
-  if (!player) {
+  if (!profile) {
     return (
       <section className="glass-panel mt-4 rounded-[20px] p-6">
         <div className="text-sm font-black uppercase text-bf-orange">Profile</div>
         <h1 className="mt-1 text-3xl font-black uppercase text-slate-100">Профиль</h1>
-        <p className="mt-4 text-bf-cream/62">Аккаунт не привязан к игроку. Обратитесь к администратору.</p>
+        <p className="mt-4 text-bf-cream/62">Аккаунт не привязан ни к игроку, ни к организаторскому составу. Обратитесь к администратору.</p>
       </section>
     );
   }
@@ -698,7 +709,9 @@ function ProfilePage({ user, player, onSaved }) {
       <div className="mb-5 flex items-start justify-between gap-4 max-md:flex-col max-md:items-stretch">
         <div>
           <div className="text-sm font-black uppercase text-bf-orange">Profile</div>
-          <h1 className="mt-1 text-3xl font-black uppercase text-slate-100">Профиль игрока</h1>
+          <h1 className="mt-1 text-3xl font-black uppercase text-slate-100">
+            {isStaffProfile ? 'Профиль организатора' : 'Профиль игрока'}
+          </h1>
         </div>
         <a
           className="inline-flex min-h-10 items-center justify-center rounded-xl border border-bf-cream/12 px-4 font-black text-bf-cream/72 transition hover:border-bf-orange/35 hover:text-bf-orange"
@@ -710,7 +723,9 @@ function ProfilePage({ user, player, onSaved }) {
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <form className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-5" onSubmit={handleProfileSubmit}>
-          <div className="text-sm font-black uppercase text-bf-orange">Игровые данные</div>
+          <div className="text-sm font-black uppercase text-bf-orange">
+            {isStaffProfile ? 'Контактные данные' : 'Игровые данные'}
+          </div>
           {profileErrors.__all__ ? (
             <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">
               {profileErrors.__all__.join(', ')}
@@ -731,7 +746,7 @@ function ProfilePage({ user, player, onSaved }) {
               />
             </label>
             <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-              Имя игрока
+              {isStaffProfile ? 'Имя' : 'Имя игрока'}
               <input
                 className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
                 value={name}
@@ -739,15 +754,17 @@ function ProfilePage({ user, player, onSaved }) {
               />
               {profileErrors.name ? <span className="text-red-200">{profileErrors.name.join(', ')}</span> : null}
             </label>
-            <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-              BattleTag&apos;и
-              <textarea
-                className="min-h-36 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/45"
-                value={battleTagsText}
-                onChange={(inputEvent) => setBattleTagsText(inputEvent.target.value)}
-                placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
-              />
-            </label>
+            {isPlayerProfile ? (
+              <label className="grid gap-2 text-sm font-black text-bf-cream/70">
+                BattleTag&apos;и
+                <textarea
+                  className="min-h-36 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/45"
+                  value={battleTagsText}
+                  onChange={(inputEvent) => setBattleTagsText(inputEvent.target.value)}
+                  placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
+                />
+              </label>
+            ) : null}
             <label className="grid gap-2 text-sm font-black text-bf-cream/70">
               Discord тег
               <input
@@ -1073,7 +1090,7 @@ function ProfileModal({ player, onClose, onSaved }) {
     setError('');
     try {
       const response = await updateProfile({ battleTagsText, discordTag });
-      onSaved(response.player);
+      onSaved(response.profile || response.player);
     } catch (saveError) {
       setError(saveError.payload?.error || saveError.message);
     } finally {
@@ -1203,6 +1220,13 @@ export default function App() {
     setProfileModalPlayer(null);
   }
 
+  function updateStaffProfile(staffMember) {
+    setData((current) => ({
+      ...current,
+      staffMembers: current.staffMembers.map((existing) => (existing.id === staffMember.id ? staffMember : existing)),
+    }));
+  }
+
   if (isLoading) {
     return (
       <main className="grid min-h-screen place-items-center px-6">
@@ -1232,12 +1256,20 @@ export default function App() {
   const canAdd = Boolean(data.user.playerId);
   const isProfilePage = window.location.pathname.startsWith('/profile');
   const currentPlayer = data.players.find((player) => player.id === data.user.playerId) || null;
+  const currentStaffMember = data.staffMembers.find((staffMember) => staffMember.id === data.user.staffMemberId) || null;
+  const currentProfile = data.user.profileType === 'staff' ? currentStaffMember : currentPlayer;
+  const handleProfileSaved = data.user.profileType === 'staff' ? updateStaffProfile : updatePlayerProfile;
 
   return (
     <main className="mx-auto min-h-screen w-[min(1500px,calc(100%_-_48px))] py-4 max-sm:w-[min(100%_-_20px,760px)]">
       <Header user={data.user} />
       {isProfilePage ? (
-        <ProfilePage user={data.user} player={currentPlayer} onSaved={updatePlayerProfile} />
+        <ProfilePage
+          user={data.user}
+          profile={currentProfile}
+          profileType={data.user.profileType}
+          onSaved={handleProfileSaved}
+        />
       ) : (
         <>
           <HeroBanner canAdd={canAdd} onAdd={(day) => setSlotModal({ day })} />

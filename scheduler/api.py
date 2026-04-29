@@ -16,7 +16,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from .forms import ScheduleSlotForm
 from .models import DayEventType, Player, ScheduleSlot, StaffMember
 from .roster import ensure_current_roster_week
-from .views import get_current_player
+from .views import get_current_player, get_current_staff_member
 
 
 def resolve_build_timestamp():
@@ -65,7 +65,7 @@ def serialize_player(player, current_player):
     }
 
 
-def serialize_staff_member(staff_member):
+def serialize_staff_member(staff_member, current_staff_member=None):
     return {
         'id': staff_member.id,
         'name': staff_member.name,
@@ -73,6 +73,7 @@ def serialize_staff_member(staff_member):
         'roleColor': staff_member.role_color,
         'initial': staff_member.initial,
         'discordTag': staff_member.discord_tag,
+        'canEdit': current_staff_member == staff_member,
     }
 
 
@@ -176,6 +177,7 @@ def form_errors_payload(form):
 def bootstrap(request):
     ensure_current_roster_week()
     current_player = get_current_player(request.user)
+    current_staff_member = get_current_staff_member(request.user)
     players = list(Player.objects.prefetch_related('slots'))
     staff_members = list(StaffMember.objects.all())
     slots = ScheduleSlot.objects.select_related('player').all()
@@ -188,11 +190,13 @@ def bootstrap(request):
             'username': request.user.username,
             'isStaff': request.user.is_staff,
             'playerId': current_player.id if current_player else None,
+            'staffMemberId': current_staff_member.id if current_staff_member else None,
+            'profileType': 'player' if current_player else ('staff' if current_staff_member else ''),
             'avatarUrl': avatar_url(current_player) if current_player else '',
         },
         'days': build_days(),
         'players': [serialize_player(player, current_player) for player in players],
-        'staffMembers': [serialize_staff_member(staff_member) for staff_member in staff_members],
+        'staffMembers': [serialize_staff_member(staff_member, current_staff_member) for staff_member in staff_members],
         'slots': [serialize_slot(slot, current_player, day_event_map) for slot in slots],
         'dayEventTypes': [serialize_day_event(day_event) for day_event in day_events],
         'eventTypes': ScheduleSlot.event_types_payload(),
@@ -273,26 +277,42 @@ def slot_delete(request, pk):
 @login_required
 def profile_update(request):
     current_player = get_current_player(request.user)
-    if current_player is None:
-        return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)
+    current_staff_member = get_current_staff_member(request.user)
+    if current_player is None and current_staff_member is None:
+        return JsonResponse({'error': 'Аккаунт не привязан к профилю.'}, status=403)
 
     payload = parse_body(request)
     if payload is None:
         return JsonResponse({'error': 'Некорректный JSON.'}, status=400)
 
     profile_data = cleaned_profile_payload(payload)
-    if payload.get('name') is None:
+    if current_player is not None and payload.get('name') is None:
         profile_data['name'] = current_player.name
+    elif current_staff_member is not None and payload.get('name') is None:
+        profile_data['name'] = current_staff_member.name
     if not profile_data['name']:
-        return JsonResponse({'errors': {'name': ['Имя игрока не может быть пустым.']}}, status=400)
+        return JsonResponse({'errors': {'name': ['Имя не может быть пустым.']}}, status=400)
 
-    current_player.name = profile_data['name']
-    current_player.battle_tags = profile_data['battle_tags']
-    current_player.discord_tag = profile_data['discord_tag']
-    current_player.full_clean()
-    current_player.save(update_fields=['name', 'battle_tags', 'discord_tag'])
+    if current_player is not None:
+        current_player.name = profile_data['name']
+        current_player.battle_tags = profile_data['battle_tags']
+        current_player.discord_tag = profile_data['discord_tag']
+        current_player.full_clean()
+        current_player.save(update_fields=['name', 'battle_tags', 'discord_tag'])
+        return JsonResponse({
+            'profileType': 'player',
+            'profile': serialize_player(current_player, current_player),
+            'player': serialize_player(current_player, current_player),
+        })
 
-    return JsonResponse({'player': serialize_player(current_player, current_player)})
+    current_staff_member.name = profile_data['name']
+    current_staff_member.discord_tag = profile_data['discord_tag']
+    current_staff_member.full_clean()
+    current_staff_member.save(update_fields=['name', 'discord_tag'])
+    return JsonResponse({
+        'profileType': 'staff',
+        'profile': serialize_staff_member(current_staff_member, current_staff_member),
+    })
 
 
 @require_http_methods(['POST'])
