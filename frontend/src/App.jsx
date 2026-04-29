@@ -23,6 +23,7 @@ import {
   changePassword,
   createSlot,
   deleteSlot,
+  disconnectDiscord,
   logout,
   updateProfile,
   updateSlot,
@@ -136,6 +137,35 @@ function timeChoices(startHour, endHour) {
       label: `${String(hour).padStart(2, '0')}:00`,
     };
   });
+}
+
+function discordFeedbackFromUrl(search) {
+  const params = new URLSearchParams(search);
+  const status = params.get('discord');
+  const reason = params.get('reason');
+  if (!status) return null;
+
+  if (status === 'connected') {
+    return { tone: 'success', text: 'Discord успешно подключен.' };
+  }
+
+  if (status === 'disconnected') {
+    return { tone: 'success', text: 'Discord отвязан.' };
+  }
+
+  if (status === 'error') {
+    const messages = {
+      'already-linked': 'Этот Discord-аккаунт уже привязан к другому пользователю.',
+      'invalid-state': 'Не удалось подтвердить запрос подключения Discord.',
+      'missing-code': 'Discord не вернул код подключения.',
+      'oauth-failed': 'Не удалось получить данные Discord. Повторите попытку.',
+      'not-configured': 'Discord временно недоступен. Обратитесь к администратору.',
+      'access_denied': 'Подключение Discord было отменено.',
+    };
+    return { tone: 'error', text: messages[reason] || 'Не удалось подключить Discord.' };
+  }
+
+  return null;
 }
 
 function buildDayEventMap(dayEventTypes = []) {
@@ -523,9 +553,13 @@ function StaffDirectory({ staffMembers }) {
           {staffMembers.map((staffMember) => (
             <article key={staffMember.id} className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
               <div className="flex items-start gap-3">
-                <div className="grid h-12 w-12 place-items-center rounded-full border border-bf-cream/15 bg-gradient-to-br from-bf-orange/70 to-bf-steel/70 text-base font-black text-bf-cream">
-                  {staffMember.initial}
-                </div>
+                {staffMember.avatarUrl ? (
+                  <img className="h-12 w-12 rounded-full border border-bf-cream/15 object-cover" src={staffMember.avatarUrl} alt={staffMember.name} />
+                ) : (
+                  <div className="grid h-12 w-12 place-items-center rounded-full border border-bf-cream/15 bg-gradient-to-br from-bf-orange/70 to-bf-steel/70 text-base font-black text-bf-cream">
+                    {staffMember.initial}
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
                   <div className="truncate text-base font-black text-slate-100">{staffMember.name}</div>
                   <div className="mt-1 flex flex-wrap gap-1.5">
@@ -541,7 +575,10 @@ function StaffDirectory({ staffMembers }) {
 
               <div className="mt-4 rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
                 <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Discord</div>
-                <div className="mt-2 text-sm font-semibold text-slate-100">{staffMember.discordTag || 'Не указано'}</div>
+                <div className="mt-2 text-sm font-semibold text-slate-100">{staffMember.discordDisplayTag || 'Не подключен'}</div>
+                {staffMember.discordGlobalName ? (
+                  <div className="mt-1 text-xs text-bf-cream/48">{staffMember.discordGlobalName}</div>
+                ) : null}
               </div>
             </article>
           ))}
@@ -623,7 +660,10 @@ function PlayerProfiles({ players, onEdit }) {
 
               <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
                 <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Discord</div>
-                <div className="mt-2 text-sm font-semibold text-slate-100">{player.discordTag || 'Не указано'}</div>
+                <div className="mt-2 text-sm font-semibold text-slate-100">{player.discordDisplayTag || 'Не подключен'}</div>
+                {player.discordGlobalName ? (
+                  <div className="mt-1 text-xs text-bf-cream/48">{player.discordGlobalName}</div>
+                ) : null}
               </div>
             </div>
           </article>
@@ -638,10 +678,11 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
   const isStaffProfile = profileType === 'staff';
   const [name, setName] = useState(profile?.name || '');
   const [battleTagsText, setBattleTagsText] = useState(profile?.battleTagsText || '');
-  const [discordTag, setDiscordTag] = useState(profile?.discordTag || '');
   const [profileErrors, setProfileErrors] = useState({});
   const [profileSuccess, setProfileSuccess] = useState('');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [discordFeedback, setDiscordFeedback] = useState(() => discordFeedbackFromUrl(window.location.search));
+  const [isDisconnectingDiscord, setIsDisconnectingDiscord] = useState(false);
 
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -653,8 +694,12 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
   useEffect(() => {
     setName(profile?.name || '');
     setBattleTagsText(profile?.battleTagsText || '');
-    setDiscordTag(profile?.discordTag || '');
   }, [profile]);
+
+  useEffect(() => {
+    if (!discordFeedbackFromUrl(window.location.search)) return;
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }, []);
 
   async function handleProfileSubmit(submitEvent) {
     submitEvent.preventDefault();
@@ -662,17 +707,31 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
     setProfileErrors({});
     setProfileSuccess('');
     try {
-      const payload = { name, discordTag };
+      const payload = { name };
       if (isPlayerProfile) {
         payload.battleTagsText = battleTagsText;
       }
       const response = await updateProfile(payload);
-      onSaved(response.profile || response.player);
-      setProfileSuccess('Профиль сохранен.')
+      await onSaved(response.profile || response.player);
+      setProfileSuccess('Профиль сохранен.');
     } catch (saveError) {
       setProfileErrors(saveError.payload?.errors || { __all__: [saveError.message] });
     } finally {
       setIsSavingProfile(false);
+    }
+  }
+
+  async function handleDiscordDisconnect() {
+    setIsDisconnectingDiscord(true);
+    setDiscordFeedback(null);
+    try {
+      await disconnectDiscord();
+      await onSaved(null, { reload: true });
+      setDiscordFeedback({ tone: 'success', text: 'Discord отвязан.' });
+    } catch (disconnectError) {
+      setDiscordFeedback({ tone: 'error', text: disconnectError.message });
+    } finally {
+      setIsDisconnectingDiscord(false);
     }
   }
 
@@ -736,6 +795,17 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
               {profileSuccess}
             </div>
           ) : null}
+          {discordFeedback ? (
+            <div
+              className={`mt-4 rounded-xl p-3 text-sm ${
+                discordFeedback.tone === 'success'
+                  ? 'border border-emerald-400/25 bg-emerald-500/10 text-emerald-100'
+                  : 'border border-red-400/30 bg-red-500/10 text-red-100'
+              }`}
+            >
+              {discordFeedback.text}
+            </div>
+          ) : null}
           <div className="mt-5 grid gap-4">
             <label className="grid gap-2 text-sm font-black text-bf-cream/70">
               Логин
@@ -765,14 +835,52 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
                 />
               </label>
             ) : null}
-            <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-              Discord тег
-              <input
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
-                value={discordTag}
-                onChange={(inputEvent) => setDiscordTag(inputEvent.target.value)}
-              />
-            </label>
+            <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-4">
+              <div className="text-sm font-black uppercase text-bf-orange">Discord</div>
+              {profile.discordConnected ? (
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    {profile.avatarUrl ? (
+                      <img className="h-12 w-12 rounded-full border border-bf-cream/15 object-cover" src={profile.avatarUrl} alt={profile.discordDisplayTag} />
+                    ) : (
+                      <div className="grid h-12 w-12 place-items-center rounded-full border border-bf-cream/15 bg-bf-steel/45 text-base font-black text-bf-cream">
+                        {profile.initial}
+                      </div>
+                    )}
+                    <div>
+                      <div className="text-sm font-black text-slate-100">{profile.discordDisplayTag || '@unknown'}</div>
+                      <div className="mt-1 text-xs text-bf-cream/50">
+                        {profile.discordGlobalName || 'Подключенный аккаунт Discord'}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="inline-flex min-h-10 items-center rounded-xl border border-red-300/30 px-4 font-black text-red-100 transition hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-45"
+                    type="button"
+                    onClick={handleDiscordDisconnect}
+                    disabled={isDisconnectingDiscord}
+                  >
+                    Отвязать Discord
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-100">Не подключен</div>
+                    <div className="mt-1 text-xs text-bf-cream/50">Аватар и Discord handle подтянутся автоматически после подключения.</div>
+                  </div>
+                  <button
+                    className="inline-flex min-h-10 items-center rounded-xl bg-bf-orange px-4 font-black text-black transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.18)]"
+                    type="button"
+                    onClick={() => {
+                      window.location.href = '/api/discord/connect/';
+                    }}
+                  >
+                    Подключить Discord
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="mt-5 flex justify-end">
             <button
@@ -1080,7 +1188,6 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
 
 function ProfileModal({ player, onClose, onSaved }) {
   const [battleTagsText, setBattleTagsText] = useState(player.battleTagsText || '');
-  const [discordTag, setDiscordTag] = useState(player.discordTag || '');
   const [error, setError] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -1089,8 +1196,8 @@ function ProfileModal({ player, onClose, onSaved }) {
     setIsSaving(true);
     setError('');
     try {
-      const response = await updateProfile({ battleTagsText, discordTag });
-      onSaved(response.profile || response.player);
+      const response = await updateProfile({ battleTagsText });
+      await onSaved(response.profile || response.player);
     } catch (saveError) {
       setError(saveError.payload?.error || saveError.message);
     } finally {
@@ -1135,16 +1242,6 @@ function ProfileModal({ player, onClose, onSaved }) {
               placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
             />
             <span className="text-xs font-medium text-bf-cream/45">Если аккаунтов несколько, указывай каждый BattleTag с новой строки.</span>
-          </label>
-
-          <label className="grid gap-2 text-sm font-black text-bf-cream/70">
-            Discord тег
-            <input
-              className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
-              value={discordTag}
-              onChange={(inputEvent) => setDiscordTag(inputEvent.target.value)}
-              placeholder="blackflock_player"
-            />
           </label>
         </div>
 
@@ -1212,7 +1309,12 @@ export default function App() {
     setSlotModal(null);
   }
 
-  function updatePlayerProfile(player) {
+  async function updatePlayerProfile(player, options = {}) {
+    if (options.reload) {
+      await loadData();
+      setProfileModalPlayer(null);
+      return;
+    }
     setData((current) => ({
       ...current,
       players: current.players.map((existing) => (existing.id === player.id ? player : existing)),
@@ -1220,7 +1322,11 @@ export default function App() {
     setProfileModalPlayer(null);
   }
 
-  function updateStaffProfile(staffMember) {
+  async function updateStaffProfile(staffMember, options = {}) {
+    if (options.reload) {
+      await loadData();
+      return;
+    }
     setData((current) => ({
       ...current,
       staffMembers: current.staffMembers.map((existing) => (existing.id === staffMember.id ? staffMember : existing)),

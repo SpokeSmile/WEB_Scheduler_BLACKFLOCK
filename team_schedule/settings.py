@@ -168,6 +168,10 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+DISCORD_CLIENT_ID = os.environ.get('DISCORD_CLIENT_ID', '').strip()
+DISCORD_CLIENT_SECRET = os.environ.get('DISCORD_CLIENT_SECRET', '').strip()
+DISCORD_REDIRECT_URI = os.environ.get('DISCORD_REDIRECT_URI', '').strip()
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'schedule'
 LOGOUT_REDIRECT_URL = 'login'

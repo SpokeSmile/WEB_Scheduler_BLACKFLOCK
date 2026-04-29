@@ -1,5 +1,3 @@
-import mimetypes
-
 from django import forms
 from django.contrib import admin
 from django.contrib import messages
@@ -9,24 +7,11 @@ from django.http import HttpResponseRedirect
 from django.urls import path, reverse
 from django.utils.html import format_html
 
-from .models import DayEventType, Player, RosterState, ScheduleSlot, StaffMember
+from .models import DayEventType, DiscordConnection, Player, RosterState, ScheduleSlot, StaffMember
 from .roster import ensure_current_roster_week
 
 
-MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024
-
-
 class PlayerAdminForm(forms.ModelForm):
-    avatar_upload = forms.FileField(
-        label='аватар файлом',
-        required=False,
-        help_text='Загрузите изображение. Файл будет сохранен прямо в базе данных.',
-    )
-    remove_uploaded_avatar = forms.BooleanField(
-        label='удалить загруженный аватар',
-        required=False,
-    )
-
     class Meta:
         model = Player
         fields = '__all__'
@@ -34,49 +19,52 @@ class PlayerAdminForm(forms.ModelForm):
             'role_color': forms.TextInput(attrs={'type': 'color'}),
         }
 
-    def clean_avatar_upload(self):
-        avatar_upload = self.cleaned_data.get('avatar_upload')
-        if not avatar_upload:
-            return avatar_upload
 
-        content_type = (
-            getattr(avatar_upload, 'content_type', '')
-            or mimetypes.guess_type(getattr(avatar_upload, 'name', ''))[0]
-            or ''
-        )
-        if not content_type.startswith('image/'):
-            raise forms.ValidationError('Нужен файл изображения.')
-        if avatar_upload.size > MAX_AVATAR_SIZE_BYTES:
-            raise forms.ValidationError('Максимальный размер аватара 2 МБ.')
+class DiscordConnectionAdminMixin:
+    readonly_fields = (
+        'discord_status',
+        'discord_handle',
+        'discord_global_name_display',
+        'discord_connected_at_display',
+        'discord_avatar_preview',
+    )
 
-        return avatar_upload
+    def get_discord_connection(self, obj):
+        if obj is None:
+            return None
+        if isinstance(obj, DiscordConnection):
+            return obj
+        if hasattr(obj, 'discord_connection'):
+            return obj.discord_connection
+        return None
 
-    def save(self, commit=True):
-        player = super().save(commit=False)
+    @admin.display(description='статус Discord')
+    def discord_status(self, obj):
+        return 'Подключен' if self.get_discord_connection(obj) else 'Не подключен'
 
-        if self.cleaned_data.get('remove_uploaded_avatar'):
-            player.clear_embedded_avatar()
+    @admin.display(description='Discord handle')
+    def discord_handle(self, obj):
+        connection = self.get_discord_connection(obj)
+        return connection.display_tag if connection else '—'
 
-        avatar_upload = self.cleaned_data.get('avatar_upload')
-        if avatar_upload:
-            player.set_embedded_avatar(avatar_upload)
+    @admin.display(description='global name')
+    def discord_global_name_display(self, obj):
+        connection = self.get_discord_connection(obj)
+        return connection.global_name if connection and connection.global_name else '—'
 
-        if commit:
-            player.save()
-            self.save_m2m()
-        return player
+    @admin.display(description='подключено')
+    def discord_connected_at_display(self, obj):
+        connection = self.get_discord_connection(obj)
+        return connection.connected_at if connection else '—'
 
-
-class AvatarAdminMixin:
-    readonly_fields = ('avatar_preview',)
-
-    @admin.display(description='превью')
-    def avatar_preview(self, obj):
-        if not obj or not obj.resolved_avatar_url:
+    @admin.display(description='avatar preview')
+    def discord_avatar_preview(self, obj):
+        connection = self.get_discord_connection(obj)
+        if not connection or not connection.avatar_url:
             return '—'
         return format_html(
             '<img src="{}" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,.08);" />',
-            obj.resolved_avatar_url,
+            connection.avatar_url,
         )
 
 
@@ -89,7 +77,7 @@ class StaffMemberAdminForm(forms.ModelForm):
         }
 
 
-class PlayerInline(AvatarAdminMixin, admin.StackedInline):
+class PlayerInline(DiscordConnectionAdminMixin, admin.StackedInline):
     model = Player
     form = PlayerAdminForm
     extra = 0
@@ -99,12 +87,12 @@ class PlayerInline(AvatarAdminMixin, admin.StackedInline):
         'role',
         'role_color',
         'sort_order',
-        'avatar_preview',
-        'avatar_upload',
-        'remove_uploaded_avatar',
-        'avatar_link',
+        'discord_status',
+        'discord_handle',
+        'discord_global_name_display',
+        'discord_connected_at_display',
+        'discord_avatar_preview',
         'battle_tags',
-        'discord_tag',
     )
     verbose_name = 'профиль игрока'
     verbose_name_plural = 'профиль игрока'
@@ -119,33 +107,44 @@ class PlayerUserAdmin(UserAdmin):
 
 
 @admin.register(Player)
-class PlayerAdmin(AvatarAdminMixin, admin.ModelAdmin):
+class PlayerAdmin(DiscordConnectionAdminMixin, admin.ModelAdmin):
     form = PlayerAdminForm
-    list_display = ('name', 'sort_order', 'role', 'role_color', 'user', 'discord_tag', 'avatar_preview')
+    list_display = ('name', 'sort_order', 'role', 'role_color', 'user', 'discord_status', 'discord_handle')
     list_editable = ('sort_order', 'role_color')
-    search_fields = ('name', 'role', 'user__username', 'discord_tag', 'battle_tags')
+    search_fields = ('name', 'role', 'user__username', 'battle_tags', 'user__discord_connection__username', 'user__discord_connection__global_name')
     fields = (
         'name',
         'role',
         'role_color',
         'sort_order',
         'user',
-        'avatar_preview',
-        'avatar_upload',
-        'remove_uploaded_avatar',
-        'avatar_link',
+        'discord_status',
+        'discord_handle',
+        'discord_global_name_display',
+        'discord_connected_at_display',
+        'discord_avatar_preview',
         'battle_tags',
-        'discord_tag',
     )
 
 
 @admin.register(StaffMember)
-class StaffMemberAdmin(admin.ModelAdmin):
+class StaffMemberAdmin(DiscordConnectionAdminMixin, admin.ModelAdmin):
     form = StaffMemberAdminForm
-    list_display = ('name', 'sort_order', 'role', 'role_color', 'user', 'discord_tag')
+    list_display = ('name', 'sort_order', 'role', 'role_color', 'user', 'discord_status', 'discord_handle')
     list_editable = ('sort_order', 'role_color')
-    search_fields = ('name', 'role', 'discord_tag', 'user__username')
-    fields = ('name', 'role', 'role_color', 'sort_order', 'user', 'discord_tag')
+    search_fields = ('name', 'role', 'user__username', 'user__discord_connection__username', 'user__discord_connection__global_name')
+    fields = (
+        'name',
+        'role',
+        'role_color',
+        'sort_order',
+        'user',
+        'discord_status',
+        'discord_handle',
+        'discord_global_name_display',
+        'discord_connected_at_display',
+        'discord_avatar_preview',
+    )
 
 
 @admin.register(ScheduleSlot)

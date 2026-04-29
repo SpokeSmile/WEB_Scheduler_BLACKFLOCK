@@ -15,6 +15,38 @@ HEX_COLOR_VALIDATOR = RegexValidator(
 DEFAULT_ROLE_COLOR = '#4b607f'
 
 
+class DiscordConnection(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        verbose_name='аккаунт',
+        on_delete=models.CASCADE,
+        related_name='discord_connection',
+    )
+    discord_user_id = models.CharField('discord user id', max_length=32, unique=True)
+    username = models.CharField('discord username', max_length=80)
+    global_name = models.CharField('discord global name', max_length=80, blank=True)
+    avatar_hash = models.CharField('discord avatar hash', max_length=120, blank=True)
+    connected_at = models.DateTimeField('подключено', auto_now_add=True)
+    updated_at = models.DateTimeField('обновлено', auto_now=True)
+
+    class Meta:
+        verbose_name = 'подключение Discord'
+        verbose_name_plural = 'подключения Discord'
+
+    def __str__(self):
+        return f'@{self.username}'
+
+    @property
+    def display_tag(self):
+        return f'@{self.username}' if self.username else ''
+
+    @property
+    def avatar_url(self):
+        if not self.avatar_hash:
+            return ''
+        return f'https://cdn.discordapp.com/avatars/{self.discord_user_id}/{self.avatar_hash}.png?size=128'
+
+
 class Player(models.Model):
     name = models.CharField('имя игрока', max_length=80)
     role = models.CharField('роль', max_length=80, blank=True)
@@ -69,6 +101,15 @@ class Player(models.Model):
     @property
     def initial(self):
         return (self.name.strip()[:1] or '?').upper()
+
+    @property
+    def discord_connection(self):
+        if not self.user_id:
+            return None
+        try:
+            return self.user.discord_connection
+        except DiscordConnection.DoesNotExist:
+            return None
 
     @property
     def battle_tags_list(self):
@@ -136,6 +177,15 @@ class StaffMember(models.Model):
     @property
     def initial(self):
         return (self.name.strip()[:1] or '?').upper()
+
+    @property
+    def discord_connection(self):
+        if not self.user_id:
+            return None
+        try:
+            return self.user.discord_connection
+        except DiscordConnection.DoesNotExist:
+            return None
 
 
 class ScheduleSlot(models.Model):

@@ -66,6 +66,10 @@ export function changePassword(payload) {
   });
 }
 
+export function disconnectDiscord() {
+  return request('/api/discord/disconnect/', { method: 'POST' });
+}
+
 export function logout() {
   return request('/api/logout/', { method: 'POST' });
 }
