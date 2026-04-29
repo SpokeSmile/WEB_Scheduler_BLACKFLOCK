@@ -33,6 +33,13 @@ def profile_view(request):
     return render(request, 'scheduler/app.html')
 
 
+@ensure_csrf_cookie
+@login_required
+def team_view(request):
+    ensure_current_roster_week()
+    return render(request, 'scheduler/app.html')
+
+
 @login_required
 def slot_create(request):
     ensure_current_roster_week()

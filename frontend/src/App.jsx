@@ -11,6 +11,7 @@ import {
   Pencil,
   RefreshCw,
   Save,
+  Settings,
   Swords,
   Trash2,
   Trophy,
@@ -269,6 +270,66 @@ function Header({ user }) {
   );
 }
 
+function Sidebar({ pathname }) {
+  const items = [
+    {
+      href: '/',
+      label: 'Расписание',
+      icon: Clock3,
+      isActive: !pathname.startsWith('/team') && !pathname.startsWith('/profile'),
+    },
+    {
+      href: '/team/',
+      label: 'Состав',
+      icon: Users,
+      isActive: pathname.startsWith('/team'),
+    },
+    {
+      href: '/profile/',
+      label: 'Настройки',
+      icon: Settings,
+      isActive: pathname.startsWith('/profile'),
+    },
+  ];
+
+  return (
+    <aside className="app-sidebar glass-panel xl:sticky xl:top-4 xl:self-start">
+      <a className="sidebar-brand" href="/" aria-label="Black Flock">
+        <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
+        <div className="min-w-0">
+          <div className="truncate text-sm font-black uppercase tracking-[0.18em] text-slate-100">Black Flock</div>
+          <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-bf-orange/85">Overwatch Team</div>
+        </div>
+      </a>
+
+      <nav className="sidebar-nav" aria-label="Основная навигация">
+        {items.map((item) => {
+          const Icon = item.icon;
+          return (
+            <a
+              key={item.href}
+              className={`sidebar-nav-link ${item.isActive ? 'sidebar-nav-link-active' : ''}`}
+              href={item.href}
+              aria-current={item.isActive ? 'page' : undefined}
+            >
+              <Icon size={18} />
+              <span>{item.label}</span>
+            </a>
+          );
+        })}
+      </nav>
+
+      <div className="sidebar-footer">
+        <div className="sidebar-footer-mark">
+          <img src="/static/design_assets/Logo.png" alt="" />
+        </div>
+        <div className="text-sm font-black uppercase text-bf-orange">Black Flock</div>
+        <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-bf-cream/36">Together we strike</div>
+      </div>
+    </aside>
+  );
+}
+
 function HeroBanner({ canAdd, onAdd }) {
   return (
     <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-[22px] border-bf-orange/45 px-6 py-6 lg:px-8">
@@ -296,6 +357,20 @@ function HeroBanner({ canAdd, onAdd }) {
             </span>
           )}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function TeamBanner() {
+  return (
+    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-[22px] border-bf-orange/45 px-6 py-6 lg:px-8">
+      <div className="relative z-10 grid gap-3 lg:max-w-[460px]">
+        <div className="text-sm font-black uppercase text-bf-orange">Black Flock team</div>
+        <h1 className="text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl">
+          Состав команды
+        </h1>
+        <p className="text-sm font-medium text-bf-cream/62">Профили игроков команды Black Flock</p>
       </div>
     </section>
   );
@@ -592,13 +667,15 @@ function StaffDirectory({ staffMembers }) {
   );
 }
 
-function PlayerProfiles({ players, onEdit }) {
+function PlayerProfiles({ players, onEdit, showHeading = true }) {
   return (
     <section className="glass-panel mt-4 rounded-[20px] p-4">
-      <div className="mb-4">
-        <div className="text-sm font-black uppercase text-bf-orange">Player profiles</div>
-        <h2 className="mt-1 text-xl font-black uppercase text-slate-100">Актуальные игровые профили</h2>
-      </div>
+      {showHeading ? (
+        <div className="mb-4">
+          <div className="text-sm font-black uppercase text-bf-orange">Player profiles</div>
+          <h2 className="mt-1 text-xl font-black uppercase text-slate-100">Актуальные игровые профили</h2>
+        </div>
+      ) : null}
 
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {players.map((player) => (
@@ -670,6 +747,15 @@ function PlayerProfiles({ players, onEdit }) {
         ))}
       </div>
     </section>
+  );
+}
+
+function TeamPage({ players, onEdit }) {
+  return (
+    <>
+      <TeamBanner />
+      <PlayerProfiles players={players} onEdit={onEdit} showHeading={false} />
+    </>
   );
 }
 
@@ -1360,7 +1446,9 @@ export default function App() {
   }
 
   const canAdd = Boolean(data.user.playerId);
-  const isProfilePage = window.location.pathname.startsWith('/profile');
+  const pathname = window.location.pathname;
+  const isProfilePage = pathname.startsWith('/profile');
+  const isTeamPage = pathname.startsWith('/team');
   const currentPlayer = data.players.find((player) => player.id === data.user.playerId) || null;
   const currentStaffMember = data.staffMembers.find((staffMember) => staffMember.id === data.user.staffMemberId) || null;
   const currentProfile = data.user.profileType === 'staff' ? currentStaffMember : currentPlayer;
@@ -1368,31 +1456,37 @@ export default function App() {
 
   return (
     <main className="mx-auto min-h-screen w-[min(1500px,calc(100%_-_48px))] py-4 max-sm:w-[min(100%_-_20px,760px)]">
-      <Header user={data.user} />
-      {isProfilePage ? (
-        <ProfilePage
-          user={data.user}
-          profile={currentProfile}
-          profileType={data.user.profileType}
-          onSaved={handleProfileSaved}
-        />
-      ) : (
-        <>
-          <HeroBanner canAdd={canAdd} onAdd={(day) => setSlotModal({ day })} />
-          <RosterTable
-            days={data.days}
-            players={data.players}
-            slots={data.slots}
-            dayEventTypes={data.dayEventTypes}
-            onAdd={(day) => setSlotModal({ day })}
-            onEdit={(event) => setSlotModal({ event })}
-            lastUpdated={data.lastUpdated}
-          />
-          <StaffDirectory staffMembers={data.staffMembers} />
-          <Legend eventTypes={data.eventTypes} />
-          <PlayerProfiles players={data.players} onEdit={setProfileModalPlayer} />
-        </>
-      )}
+      <div className="grid gap-4 xl:grid-cols-[252px_minmax(0,1fr)]">
+        <Sidebar pathname={pathname} />
+        <div className="min-w-0">
+          <Header user={data.user} />
+          {isProfilePage ? (
+            <ProfilePage
+              user={data.user}
+              profile={currentProfile}
+              profileType={data.user.profileType}
+              onSaved={handleProfileSaved}
+            />
+          ) : isTeamPage ? (
+            <TeamPage players={data.players} onEdit={setProfileModalPlayer} />
+          ) : (
+            <>
+              <HeroBanner canAdd={canAdd} onAdd={(day) => setSlotModal({ day })} />
+              <RosterTable
+                days={data.days}
+                players={data.players}
+                slots={data.slots}
+                dayEventTypes={data.dayEventTypes}
+                onAdd={(day) => setSlotModal({ day })}
+                onEdit={(event) => setSlotModal({ event })}
+                lastUpdated={data.lastUpdated}
+              />
+              <StaffDirectory staffMembers={data.staffMembers} />
+              <Legend eventTypes={data.eventTypes} />
+            </>
+          )}
+        </div>
+      </div>
       {slotModal ? (
         <EventModal
           event={slotModal.event}

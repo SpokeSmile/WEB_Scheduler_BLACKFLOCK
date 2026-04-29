@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', views.schedule_view, name='schedule'),
+    path('team/', views.team_view, name='team'),
     path('profile/', views.profile_view, name='profile'),
     path('api/bootstrap/', api.bootstrap, name='api_bootstrap'),
     path('api/slots/', api.slot_create, name='api_slot_create'),
