@@ -11,5 +11,26 @@
 <body>
     <div id="root"></div>
     <script type="module" src="{% static 'frontend/app.js' %}"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const removeProfileEditButtons = () => {
+                document.querySelectorAll('button').forEach((button) => {
+                    if (button.textContent && button.textContent.trim() === 'Редактировать') {
+                        const card = button.closest('article');
+                        const section = button.closest('section');
+                        if (card && section && section.textContent && section.textContent.includes('Player profiles')) {
+                            button.remove();
+                        }
+                    }
+                });
+            };
+
+            removeProfileEditButtons();
+            new MutationObserver(removeProfileEditButtons).observe(document.getElementById('root'), {
+                childList: true,
+                subtree: true,
+            });
+        });
+    </script>
 </body>
 </html>
