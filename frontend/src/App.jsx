@@ -688,7 +688,7 @@ function StaffDirectory({ staffMembers }) {
   );
 }
 
-function PlayerProfiles({ players, onEdit, showHeading = true }) {
+function PlayerProfiles({ players, showHeading = true }) {
   return (
     <section className="glass-panel mt-4 rounded-[20px] p-4">
       {showHeading ? (
@@ -716,15 +716,6 @@ function PlayerProfiles({ players, onEdit, showHeading = true }) {
                   </div>
                 </div>
               </div>
-              {player.canEdit ? (
-                <button
-                  className="rounded-xl border border-bf-orange/35 px-3 py-2 text-sm font-black text-bf-orange transition hover:bg-bf-orange/10"
-                  type="button"
-                  onClick={() => onEdit(player)}
-                >
-                  Редактировать
-                </button>
-              ) : null}
             </div>
 
             <div className="mt-4 grid gap-3 text-sm">
@@ -758,11 +749,11 @@ function PlayerProfiles({ players, onEdit, showHeading = true }) {
   );
 }
 
-function TeamPage({ players, staffMembers, onEdit }) {
+function TeamPage({ players, staffMembers }) {
   return (
     <>
       <TeamBanner />
-      <PlayerProfiles players={players} onEdit={onEdit} showHeading={false} />
+      <PlayerProfiles players={players} showHeading={false} />
       <StaffDirectory staffMembers={staffMembers} />
     </>
   );
@@ -1471,7 +1462,7 @@ export default function App() {
               onSaved={handleProfileSaved}
             />
           ) : isTeamPage ? (
-            <TeamPage players={data.players} staffMembers={data.staffMembers} onEdit={setProfileModalPlayer} />
+            <TeamPage players={data.players} staffMembers={data.staffMembers} />
           ) : (
             <>
               <HeroBanner canAdd={canAdd} onAdd={(day) => setSlotModal({ day })} />
