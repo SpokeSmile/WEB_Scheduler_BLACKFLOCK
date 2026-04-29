@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -5,7 +7,8 @@ from django.urls import reverse
 
 from .admin import PlayerAdminForm
 from .forms import ScheduleSlotForm
-from .models import DayEventType, Player, ScheduleSlot, StaffMember
+from .models import DayEventType, Player, RosterState, ScheduleSlot, StaffMember
+from .roster import ensure_current_roster_week
 
 
 class ScheduleFormTests(TestCase):
@@ -67,6 +70,17 @@ class ScheduleFormTests(TestCase):
             'slot_type': ScheduleSlot.FULL_DAY_AVAILABLE,
             'day_of_week': ScheduleSlot.THURSDAY,
             'note': 'Буду онлайн весь день',
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertIsNone(form.cleaned_data['start_time_minutes'])
+        self.assertIsNone(form.cleaned_data['end_time_minutes'])
+
+    def test_allows_tentative_without_time(self):
+        form = ScheduleSlotForm(data={
+            'slot_type': ScheduleSlot.TENTATIVE,
+            'day_of_week': ScheduleSlot.WEDNESDAY,
+            'note': 'Пока не уверен',
         })
 
         self.assertTrue(form.is_valid(), form.errors)
@@ -141,6 +155,20 @@ class ScheduleAccessTests(TestCase):
         self.assertRedirects(response, reverse('schedule'))
         slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.THURSDAY)
         self.assertEqual(slot.slot_type, ScheduleSlot.FULL_DAY_AVAILABLE)
+        self.assertIsNone(slot.start_time_minutes)
+        self.assertIsNone(slot.end_time_minutes)
+
+    def test_player_can_create_tentative_day(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.client.post(reverse('slot_create'), {
+            'slot_type': ScheduleSlot.TENTATIVE,
+            'day_of_week': ScheduleSlot.WEDNESDAY,
+            'note': 'Пока не уверен',
+        })
+
+        self.assertRedirects(response, reverse('schedule'))
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.WEDNESDAY)
+        self.assertEqual(slot.slot_type, ScheduleSlot.TENTATIVE)
         self.assertIsNone(slot.start_time_minutes)
         self.assertIsNone(slot.end_time_minutes)
 
@@ -332,6 +360,21 @@ class ScheduleApiTests(TestCase):
         self.assertEqual(response.json()['slot']['label'], 'Свободен весь день')
         self.assertEqual(response.json()['slot']['eventTone'], 'green')
 
+    def test_api_creates_tentative_day(self):
+        self.client.login(username='player1', password='secret-pass')
+        response = self.post_json('api_slot_create', {
+            'slotType': ScheduleSlot.TENTATIVE,
+            'dayOfWeek': ScheduleSlot.TUESDAY,
+            'note': 'Под вопросом',
+        })
+
+        self.assertEqual(response.status_code, 201)
+        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.TUESDAY)
+        self.assertEqual(slot.slot_type, ScheduleSlot.TENTATIVE)
+        self.assertIsNone(slot.start_time_minutes)
+        self.assertEqual(response.json()['slot']['label'], 'Не уверен')
+        self.assertEqual(response.json()['slot']['eventTone'], 'orange')
+
     def test_api_prevents_editing_another_players_slot(self):
         slot = ScheduleSlot.objects.create(
             player=self.player_two,
@@ -417,5 +460,46 @@ class PlayerAvatarTests(TestCase):
         self.assertEqual(response.status_code, 200)
         avatar_url = next(item['avatarUrl'] for item in response.json()['players'] if item['id'] == player.id)
         self.assertTrue(avatar_url.startswith('data:image/png;base64,'))
+
+
+class RosterResetTests(TestCase):
+    def setUp(self):
+        self.player = Player.objects.get(name='Игрок 1')
+        self.user = User.objects.create_superuser(username='admin', email='admin@example.com', password='secret-pass')
+
+    def test_auto_reset_clears_only_slots_on_new_week(self):
+        original_player_count = Player.objects.count()
+        ScheduleSlot.objects.create(
+            player=self.player,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        RosterState.objects.create(pk=1, current_week_start=date(2026, 4, 20))
+
+        changed, deleted_count = ensure_current_roster_week(today=date(2026, 4, 27))
+
+        self.assertTrue(changed)
+        self.assertGreaterEqual(deleted_count, 1)
+        self.assertEqual(ScheduleSlot.objects.count(), 0)
+        self.assertEqual(Player.objects.count(), original_player_count)
+        self.assertEqual(StaffMember.objects.count(), 0)
+        self.assertEqual(str(RosterState.objects.get(pk=1).current_week_start), '2026-04-27')
+
+    def test_admin_reset_button_clears_schedule(self):
+        ScheduleSlot.objects.create(
+            player=self.player,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='admin', password='secret-pass')
+
+        response = self.client.post(reverse('admin:scheduler_scheduleslot_reset_table'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(ScheduleSlot.objects.count(), 0)
 
 # Create your tests here.

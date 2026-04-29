@@ -2,11 +2,15 @@ import mimetypes
 
 from django import forms
 from django.contrib import admin
+from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.urls import path, reverse
 from django.utils.html import format_html
 
-from .models import DayEventType, Player, ScheduleSlot, StaffMember
+from .models import DayEventType, Player, RosterState, ScheduleSlot, StaffMember
+from .roster import ensure_current_roster_week
 
 
 MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024
@@ -146,9 +150,37 @@ class StaffMemberAdmin(admin.ModelAdmin):
 
 @admin.register(ScheduleSlot)
 class ScheduleSlotAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/scheduler/scheduleslot/change_list.html'
     list_display = ('player', 'slot_type', 'day_of_week', 'start_label', 'end_label', 'note')
     list_filter = ('player', 'slot_type', 'day_of_week')
     search_fields = ('player__name', 'note')
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'reset-table/',
+                self.admin_site.admin_view(self.reset_table_view),
+                name='scheduler_scheduleslot_reset_table',
+            ),
+        ]
+        return custom_urls + urls
+
+    def changelist_view(self, request, extra_context=None):
+        state = RosterState.objects.filter(pk=1).first()
+        extra_context = extra_context or {}
+        extra_context['reset_table_url'] = reverse('admin:scheduler_scheduleslot_reset_table')
+        extra_context['last_reset_at'] = state.last_reset_at if state else None
+        extra_context['current_week_start'] = state.current_week_start if state else None
+        return super().changelist_view(request, extra_context=extra_context)
+
+    def reset_table_view(self, request):
+        if request.method != 'POST':
+            return HttpResponseRedirect(reverse('admin:scheduler_scheduleslot_changelist'))
+
+        _changed, deleted_count = ensure_current_roster_week(force=True)
+        messages.success(request, f'Таблица времени очищена. Удалено записей: {deleted_count}.')
+        return HttpResponseRedirect(reverse('admin:scheduler_scheduleslot_changelist'))
 
 
 @admin.register(DayEventType)

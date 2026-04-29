@@ -12,6 +12,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 from .forms import ScheduleSlotForm
 from .models import DayEventType, Player, ScheduleSlot, StaffMember
+from .roster import ensure_current_roster_week
 from .views import get_current_player
 
 
@@ -108,19 +109,24 @@ def serialize_slot(slot, current_player, day_event_map=None):
         'id': slot.id,
         'playerId': slot.player_id,
         'slotType': slot.slot_type,
-        'eventType': '' if (slot.is_unavailable or slot.is_full_day_available) else event_meta['eventType'],
-        'eventLabel': slot.label if (slot.is_unavailable or slot.is_full_day_available) else event_meta['eventLabel'],
-        'eventDescription': '' if (slot.is_unavailable or slot.is_full_day_available) else event_meta['eventDescription'],
-        'eventTone': 'red' if slot.is_unavailable else ('green' if slot.is_full_day_available else event_meta['eventTone']),
+        'eventType': '' if (slot.is_unavailable or slot.is_full_day_available or slot.is_tentative) else event_meta['eventType'],
+        'eventLabel': slot.label if (slot.is_unavailable or slot.is_full_day_available or slot.is_tentative) else event_meta['eventLabel'],
+        'eventDescription': '' if (slot.is_unavailable or slot.is_full_day_available or slot.is_tentative) else event_meta['eventDescription'],
+        'eventTone': (
+            'red' if slot.is_unavailable else
+            'green' if slot.is_full_day_available else
+            'orange' if slot.is_tentative else
+            event_meta['eventTone']
+        ),
         'dayOfWeek': slot.day_of_week,
         'startTimeMinutes': slot.start_time_minutes,
         'endTimeMinutes': slot.end_time_minutes,
         'startLabel': slot.start_label,
         'endLabel': slot.end_label,
         'timeRange': slot.time_range if slot.is_available else '',
-        'label': slot.label if (slot.is_unavailable or slot.is_full_day_available) else event_meta['eventLabel'],
+        'label': slot.label if (slot.is_unavailable or slot.is_full_day_available or slot.is_tentative) else event_meta['eventLabel'],
         'note': slot.note,
-        'displayNote': slot.note or (slot.label if (slot.is_unavailable or slot.is_full_day_available) else event_meta['eventLabel']),
+        'displayNote': slot.note or (slot.label if (slot.is_unavailable or slot.is_full_day_available or slot.is_tentative) else event_meta['eventLabel']),
         'canEdit': current_player == slot.player,
     }
 
@@ -164,6 +170,7 @@ def form_errors_payload(form):
 @require_GET
 @login_required
 def bootstrap(request):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     players = list(Player.objects.prefetch_related('slots'))
     staff_members = list(StaffMember.objects.all())
@@ -196,6 +203,7 @@ def build_timestamp_label():
 @require_POST
 @login_required
 def slot_create(request):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     if current_player is None:
         return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)
@@ -220,6 +228,7 @@ def slot_create(request):
 @require_http_methods(['PATCH', 'POST'])
 @login_required
 def slot_update(request, pk):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     if current_player is None:
         return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)
@@ -245,6 +254,7 @@ def slot_update(request, pk):
 @require_http_methods(['DELETE', 'POST'])
 @login_required
 def slot_delete(request, pk):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     if current_player is None:
         return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)

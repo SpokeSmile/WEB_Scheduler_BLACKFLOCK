@@ -124,6 +124,7 @@ class ScheduleSlot(models.Model):
     AVAILABLE = 'available'
     UNAVAILABLE = 'unavailable'
     FULL_DAY_AVAILABLE = 'full_day_available'
+    TENTATIVE = 'tentative'
 
     SCRIM = 'scrim'
     COMPETITIVE = 'competitive'
@@ -133,6 +134,7 @@ class ScheduleSlot(models.Model):
     SLOT_TYPE_CHOICES = [
         (AVAILABLE, 'Диапазон времени'),
         (FULL_DAY_AVAILABLE, 'Свободен весь день'),
+        (TENTATIVE, 'Не уверен'),
         (UNAVAILABLE, 'Не могу в этот день'),
     ]
 
@@ -226,6 +228,11 @@ class ScheduleSlot(models.Model):
                         end_time_minutes__isnull=True,
                     )
                     | Q(
+                        slot_type='tentative',
+                        start_time_minutes__isnull=True,
+                        end_time_minutes__isnull=True,
+                    )
+                    | Q(
                         slot_type='unavailable',
                         start_time_minutes__isnull=True,
                         end_time_minutes__isnull=True,
@@ -271,9 +278,15 @@ class ScheduleSlot(models.Model):
         return self.slot_type == self.FULL_DAY_AVAILABLE
 
     @property
+    def is_tentative(self):
+        return self.slot_type == self.TENTATIVE
+
+    @property
     def label(self):
         if self.is_full_day_available:
             return 'Свободен весь день'
+        if self.is_tentative:
+            return 'Не уверен'
         if self.is_unavailable:
             return 'Не могу в этот день'
         return 'Событие'
@@ -303,10 +316,23 @@ class ScheduleSlot(models.Model):
         return self.time_range
 
     def clean(self):
-        if self.slot_type in {self.UNAVAILABLE, self.FULL_DAY_AVAILABLE}:
+        if self.slot_type in {self.UNAVAILABLE, self.FULL_DAY_AVAILABLE, self.TENTATIVE}:
             self.start_time_minutes = None
             self.end_time_minutes = None
             return
+
+
+class RosterState(models.Model):
+    current_week_start = models.DateField('текущая неделя', blank=True, null=True)
+    last_reset_at = models.DateTimeField('последний сброс', blank=True, null=True)
+    updated_at = models.DateTimeField('обновлено', auto_now=True)
+
+    class Meta:
+        verbose_name = 'состояние расписания'
+        verbose_name_plural = 'состояние расписания'
+
+    def __str__(self):
+        return f'Roster state ({self.current_week_start or "not set"})'
 
         if self.start_time_minutes is None or self.end_time_minutes is None:
             raise ValidationError('Для диапазона времени нужно выбрать начало и конец.')

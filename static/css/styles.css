@@ -365,26 +365,29 @@ h2 {
     inset: -1px;
     z-index: -1;
     border-radius: inherit;
-    background: conic-gradient(
-        from 0deg,
-        rgba(243, 112, 30, 0) 0deg,
-        rgba(243, 112, 30, 0.02) 28deg,
-        rgba(243, 112, 30, 0.18) 56deg,
-        rgba(232, 216, 201, 0.12) 88deg,
-        rgba(243, 112, 30, 0.06) 114deg,
-        rgba(243, 112, 30, 0) 156deg,
-        rgba(243, 112, 30, 0) 360deg
-    );
-    transform-origin: 50% 50%;
-    animation: border-rotate 9s linear infinite;
+    border: 1px solid rgba(243, 112, 30, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(232, 216, 201, 0.04),
+        0 0 18px rgba(243, 112, 30, 0.08),
+        0 0 38px rgba(243, 112, 30, 0.05);
+    animation: border-breathe 5.8s ease-in-out infinite;
 }
 
-@keyframes border-rotate {
-    from {
-        transform: rotate(0turn);
+@keyframes border-breathe {
+    0%,
+    100% {
+        opacity: 0.72;
+        box-shadow:
+            0 0 0 1px rgba(232, 216, 201, 0.04),
+            0 0 16px rgba(243, 112, 30, 0.07),
+            0 0 32px rgba(243, 112, 30, 0.04);
     }
-    to {
-        transform: rotate(1turn);
+    50% {
+        opacity: 1;
+        box-shadow:
+            0 0 0 1px rgba(232, 216, 201, 0.06),
+            0 0 22px rgba(243, 112, 30, 0.12),
+            0 0 46px rgba(243, 112, 30, 0.08);
     }
 }
 

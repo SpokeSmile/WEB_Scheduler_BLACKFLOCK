@@ -70,6 +70,13 @@ const EVENT_STYLES = {
     text: 'text-emerald-200',
     glow: 'shadow-[0_0_12px_rgba(16,185,129,0.12)]',
   },
+  tentative: {
+    icon: AlertTriangle,
+    border: 'border-orange-300/45',
+    bg: 'bg-orange-500/18',
+    text: 'text-orange-200',
+    glow: 'shadow-[0_0_12px_rgba(243,112,30,0.12)]',
+  },
   fallback: {
     icon: Clock3,
     border: 'border-bf-cream/15',
@@ -231,7 +238,6 @@ function HeroBanner({ canAdd, onAdd }) {
           <h1 className="text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl">
             Weekly roster
           </h1>
-          <p className="text-lg text-bf-cream/62">Расписание команды на неделю</p>
         </div>
 
         <div className="relative z-10 justify-self-start lg:justify-self-end">
@@ -284,16 +290,21 @@ function EventCard({ event, onEdit }) {
   const eventStyle = EVENT_STYLES[event.eventType] || EVENT_STYLES.fallback;
   const isUnavailable = event.slotType === 'unavailable';
   const isFullDayAvailable = event.slotType === 'full_day_available';
-  const isAllDayStatus = isUnavailable || isFullDayAvailable;
+  const isTentative = event.slotType === 'tentative';
+  const isAllDayStatus = isUnavailable || isFullDayAvailable || isTentative;
   const style = isUnavailable
     ? EVENT_STYLES.unavailable
     : isFullDayAvailable
       ? EVENT_STYLES.full_day_available
+      : isTentative
+        ? EVENT_STYLES.tentative
       : AVAILABLE_CARD_STYLE;
   const Icon = isUnavailable
     ? EVENT_STYLES.unavailable.icon
     : isFullDayAvailable
       ? EVENT_STYLES.full_day_available.icon
+      : isTentative
+        ? EVENT_STYLES.tentative.icon
       : eventStyle.icon;
 
   return (
@@ -307,7 +318,7 @@ function EventCard({ event, onEdit }) {
           {isAllDayStatus ? (
             <>
               <div className={`whitespace-normal break-words text-[11px] font-black uppercase leading-tight ${style.text}`}>
-                {isFullDayAvailable ? 'Свободен весь день' : 'Не могу в этот день'}
+                {isFullDayAvailable ? 'Свободен весь день' : isTentative ? 'Не уверен' : 'Не могу в этот день'}
               </div>
               {event.note ? (
                 <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
@@ -316,7 +327,6 @@ function EventCard({ event, onEdit }) {
           ) : (
             <>
               <div className={`text-[11px] font-black leading-tight ${style.text}`}>{event.timeRange}</div>
-              <div className="mt-0.5 truncate text-xs font-black leading-tight text-slate-100">{event.label}</div>
               {event.note ? (
                 <p className="mt-1 line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
               ) : null}
@@ -440,11 +450,12 @@ function RosterTable({
                 const cellSlots = slotsByCell.get(`${player.id}:${day.value}`) || [];
                 const isUnavailable = cellSlots.some((slot) => slot.slotType === 'unavailable');
                 const isFullDayAvailable = cellSlots.some((slot) => slot.slotType === 'full_day_available');
+                const isTentative = cellSlots.some((slot) => slot.slotType === 'tentative');
                 return (
                   <div
                     key={`${player.id}-${day.value}`}
                     className={`relative flex min-h-[60px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${
-                      isUnavailable ? 'bg-red-950/42' : isFullDayAvailable ? 'bg-emerald-950/30' : 'bg-slate-950/36'
+                      isUnavailable ? 'bg-red-950/42' : isFullDayAvailable ? 'bg-emerald-950/30' : isTentative ? 'bg-orange-950/28' : 'bg-slate-950/36'
                     }`}
                   >
                     {cellSlots.length ? (
@@ -630,7 +641,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
       note,
     };
 
-    if (slotType === 'unavailable' || slotType === 'full_day_available') {
+    if (slotType === 'unavailable' || slotType === 'full_day_available' || slotType === 'tentative') {
       payload.startTimeMinutes = null;
       payload.endTimeMinutes = null;
     }
@@ -693,7 +704,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
         ) : null}
 
         <div className="mt-6 grid gap-5">
-          <div className="grid grid-cols-3 gap-3 max-md:grid-cols-1">
+          <div className="grid grid-cols-4 gap-3 max-lg:grid-cols-2 max-md:grid-cols-1">
             <button
               className={`rounded-2xl border px-4 py-3 font-black transition ${
                 slotType === 'available'
@@ -715,6 +726,17 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               onClick={() => setSlotType('full_day_available')}
             >
               Свободен весь день
+            </button>
+            <button
+              className={`rounded-2xl border px-4 py-3 font-black transition ${
+                slotType === 'tentative'
+                  ? 'border-orange-300/50 bg-orange-500/15 text-orange-100'
+                  : 'border-bf-cream/10 bg-black/20 text-bf-cream/62'
+              }`}
+              type="button"
+              onClick={() => setSlotType('tentative')}
+            >
+              Не уверен
             </button>
             <button
               className={`rounded-2xl border px-4 py-3 font-black transition ${

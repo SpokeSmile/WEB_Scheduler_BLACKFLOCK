@@ -6,6 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .forms import ScheduleSlotForm
 from .models import Player, ScheduleSlot
+from .roster import ensure_current_roster_week
 
 
 def get_current_player(user):
@@ -15,11 +16,13 @@ def get_current_player(user):
 @ensure_csrf_cookie
 @login_required
 def schedule_view(request):
+    ensure_current_roster_week()
     return render(request, 'scheduler/app.html')
 
 
 @login_required
 def slot_create(request):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
 
     if current_player is None:
@@ -49,6 +52,7 @@ def slot_create(request):
 
 @login_required
 def slot_edit(request, pk):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     slot = get_object_or_404(ScheduleSlot, pk=pk, player=current_player)
     form = ScheduleSlotForm(request.POST or None, instance=slot)
@@ -70,6 +74,7 @@ def slot_edit(request, pk):
 
 @login_required
 def slot_delete(request, pk):
+    ensure_current_roster_week()
     current_player = get_current_player(request.user)
     slot = get_object_or_404(ScheduleSlot, pk=pk, player=current_player)
 
