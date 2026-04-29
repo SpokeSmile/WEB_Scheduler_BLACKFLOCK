@@ -456,7 +456,7 @@ function EventCard({ event, onEdit }) {
                   <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60" title={event.note}>
                     {event.note}
                   </p>
-                  <div className="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden max-w-[240px] rounded-xl border border-bf-orange/28 bg-[#121a28] px-3 py-2 text-[11px] font-medium leading-relaxed text-slate-100 shadow-[0_18px_40px_rgba(0,0,0,0.48)] ring-1 ring-black/30 group-hover:block">
+                  <div className="pointer-events-none absolute left-0 top-full z-[90] mt-2 hidden min-w-[180px] max-w-[260px] rounded-xl border border-white/10 bg-black px-3 py-2 text-[12px] font-medium leading-relaxed text-white shadow-[0_18px_40px_rgba(0,0,0,0.72)] group-hover:block">
                     {event.note}
                   </div>
                 </div>
@@ -470,7 +470,7 @@ function EventCard({ event, onEdit }) {
                   <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60" title={event.note}>
                     {event.note}
                   </p>
-                  <div className="pointer-events-none absolute left-0 top-full z-20 mt-2 hidden max-w-[240px] rounded-xl border border-bf-orange/28 bg-[#121a28] px-3 py-2 text-[11px] font-medium leading-relaxed text-slate-100 shadow-[0_18px_40px_rgba(0,0,0,0.48)] ring-1 ring-black/30 group-hover:block">
+                  <div className="pointer-events-none absolute left-0 top-full z-[90] mt-2 hidden min-w-[180px] max-w-[260px] rounded-xl border border-white/10 bg-black px-3 py-2 text-[12px] font-medium leading-relaxed text-white shadow-[0_18px_40px_rgba(0,0,0,0.72)] group-hover:block">
                     {event.note}
                   </div>
                 </div>
@@ -549,7 +549,7 @@ function RosterTable({
       </div>
 
       <div className="roster-scroll overflow-x-auto">
-        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-2xl border border-bf-cream/10 bg-black/20">
+        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-2xl border border-bf-cream/10 bg-black/20">
           <div className="grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-black/20 px-4 py-4">
             <div className="flex items-center gap-2 font-black uppercase text-slate-100">
               <Users size={19} className="text-bf-orange" />
