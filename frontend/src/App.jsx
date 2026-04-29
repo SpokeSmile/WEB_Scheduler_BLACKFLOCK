@@ -9,6 +9,8 @@ import {
   LogOut,
   MonitorPlay,
   Pencil,
+  PanelLeftClose,
+  PanelLeftOpen,
   RefreshCw,
   Save,
   Settings,
@@ -29,6 +31,8 @@ import {
   updateProfile,
   updateSlot,
 } from './api.js';
+
+const SIDEBAR_STORAGE_KEY = 'bf-sidebar-collapsed';
 
 const EVENT_STYLES = {
   scrim: {
@@ -293,7 +297,7 @@ function Header({ user }) {
   );
 }
 
-function Sidebar({ pathname }) {
+function Sidebar({ pathname, collapsed, onToggle }) {
   const items = [
     {
       href: '/',
@@ -316,14 +320,25 @@ function Sidebar({ pathname }) {
   ];
 
   return (
-    <aside className="app-sidebar glass-panel xl:sticky xl:top-4 xl:self-start">
-      <a className="sidebar-brand" href="/" aria-label="Black Flock">
-        <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
-        <div className="min-w-0">
-          <div className="truncate text-sm font-black uppercase tracking-[0.18em] text-slate-100">Black Flock</div>
-          <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-bf-orange/85">Overwatch Team</div>
-        </div>
-      </a>
+    <aside className={`app-sidebar glass-panel xl:sticky xl:top-4 xl:self-start ${collapsed ? 'app-sidebar-collapsed' : ''}`}>
+      <div className="sidebar-head">
+        <a className="sidebar-brand" href="/" aria-label="Black Flock">
+          <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
+          <div className={`sidebar-brand-meta ${collapsed ? 'xl:w-0 xl:opacity-0' : 'xl:w-auto xl:opacity-100'}`}>
+            <div className="truncate text-sm font-black uppercase tracking-[0.18em] text-slate-100">Black Flock</div>
+            <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-bf-orange/85">Overwatch Team</div>
+          </div>
+        </a>
+        <button
+          className="sidebar-toggle hidden xl:inline-flex"
+          type="button"
+          onClick={onToggle}
+          aria-label={collapsed ? 'Развернуть меню' : 'Свернуть меню'}
+          aria-pressed={collapsed}
+        >
+          {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+        </button>
+      </div>
 
       <nav className="sidebar-nav" aria-label="Основная навигация">
         {items.map((item) => {
@@ -334,20 +349,24 @@ function Sidebar({ pathname }) {
               className={`sidebar-nav-link ${item.isActive ? 'sidebar-nav-link-active' : ''}`}
               href={item.href}
               aria-current={item.isActive ? 'page' : undefined}
+              title={collapsed ? item.label : undefined}
             >
               <Icon size={18} />
-              <span>{item.label}</span>
+              <span className={`sidebar-link-label ${collapsed ? 'xl:w-0 xl:opacity-0' : 'xl:w-auto xl:opacity-100'}`}>
+                {item.label}
+              </span>
+              {collapsed ? <span className="sidebar-link-tooltip">{item.label}</span> : null}
             </a>
           );
         })}
       </nav>
 
-      <div className="sidebar-footer">
+      <div className={`sidebar-footer ${collapsed ? 'xl:items-center' : ''}`}>
         <div className="sidebar-footer-mark">
           <img src="/static/design_assets/Logo.png" alt="" />
         </div>
-        <div className="text-sm font-black uppercase text-bf-orange">Black Flock</div>
-        <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-bf-cream/36">Together we strike</div>
+        <div className={`text-sm font-black uppercase text-bf-orange ${collapsed ? 'xl:hidden' : ''}`}>Black Flock</div>
+        <div className={`text-[11px] font-bold uppercase tracking-[0.18em] text-bf-cream/36 ${collapsed ? 'xl:hidden' : ''}`}>Together we strike</div>
       </div>
     </aside>
   );
@@ -1347,6 +1366,10 @@ export default function App() {
   const [error, setError] = useState('');
   const [slotModal, setSlotModal] = useState(null);
   const [profileModalPlayer, setProfileModalPlayer] = useState(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem(SIDEBAR_STORAGE_KEY) === 'true';
+  });
 
   async function loadData() {
     setIsLoading(true);
@@ -1364,6 +1387,11 @@ export default function App() {
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(sidebarCollapsed));
+  }, [sidebarCollapsed]);
 
   function upsertSlot(slot) {
     setData((current) => ({
@@ -1444,8 +1472,8 @@ export default function App() {
 
   return (
     <main className="mx-auto min-h-screen w-[min(1500px,calc(100%_-_48px))] py-4 max-sm:w-[min(100%_-_20px,760px)]">
-      <div className="grid gap-4 xl:grid-cols-[252px_minmax(0,1fr)]">
-        <Sidebar pathname={pathname} />
+      <div className={`app-shell ${sidebarCollapsed ? 'app-shell-collapsed' : ''}`}>
+        <Sidebar pathname={pathname} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((current) => !current)} />
         <div className="min-w-0">
           <Header user={data.user} />
           {isProfilePage ? (
