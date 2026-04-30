@@ -91,7 +91,7 @@ textarea {
   min-height: 56px;
   align-items: center;
   gap: 14px;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 0 20px;
   color: #f4f7fb;
   font-size: 14px;
@@ -113,7 +113,7 @@ textarea {
   min-height: 56px;
   grid-template-columns: repeat(3, 88px);
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .top-header-clock {
@@ -124,15 +124,15 @@ textarea {
   padding: 0 18px;
 }
 
-.top-header-clock:first-child {
+.top-header-clock:last-child {
   background: rgba(244, 247, 251, 0.96);
 }
 
-.top-header-clock:first-child .top-header-clock-label {
+.top-header-clock:last-child .top-header-clock-label {
   color: rgba(23, 30, 42, 0.58);
 }
 
-.top-header-clock:first-child .top-header-clock-value {
+.top-header-clock:last-child .top-header-clock-value {
   color: #151b26;
 }
 
@@ -219,7 +219,7 @@ textarea {
   justify-content: center;
   min-height: calc(100vh - 32px);
   border: 1px solid rgba(232, 237, 245, 0.07);
-  border-radius: 30px;
+  border-radius: 12px;
   background:
     linear-gradient(180deg, rgba(24, 33, 47, 0.96), rgba(16, 24, 36, 0.98)),
     #121a26;
@@ -275,7 +275,7 @@ textarea {
   justify-items: center;
   align-content: center;
   gap: 7px;
-  border-radius: 20px;
+  border-radius: 12px;
   background: transparent;
   color: rgba(232, 237, 245, 0.62);
   padding: 10px 7px;

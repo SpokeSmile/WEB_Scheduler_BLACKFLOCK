@@ -4,7 +4,7 @@
     <li>
         <form action="{{ reset_table_url }}" method="post" style="display:inline;">
             {% csrf_token %}
-            <button type="submit" class="button" style="padding:8px 14px;border-radius:8px;border:1px solid #f3701e;background:#f3701e;color:#160b05;font-weight:700;cursor:pointer;">
+            <button type="submit" class="button" style="padding:8px 14px;border-radius:12px;border:1px solid #f3701e;background:#f3701e;color:#160b05;font-weight:700;cursor:pointer;">
                 Сбросить таблицу
             </button>
         </form>
@@ -14,7 +14,7 @@
 
 {% block result_list %}
     {% if current_week_start or last_reset_at %}
-        <div style="margin:0 0 12px 0;padding:10px 12px;border:1px solid rgba(243,112,30,.3);border-radius:10px;background:rgba(243,112,30,.08);">
+        <div style="margin:0 0 12px 0;padding:10px 12px;border:1px solid rgba(243,112,30,.3);border-radius:12px;background:rgba(243,112,30,.08);">
             {% if current_week_start %}
                 <div><strong>Текущая неделя:</strong> {{ current_week_start }}</div>
             {% endif %}

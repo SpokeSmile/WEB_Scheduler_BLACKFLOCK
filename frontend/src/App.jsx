@@ -388,7 +388,7 @@ function Sidebar({ pathname }) {
   ];
 
   return (
-    <aside className="app-sidebar glass-panel rounded-[34px] xl:sticky xl:top-4 xl:self-start">
+    <aside className="app-sidebar glass-panel rounded-xl xl:sticky xl:top-4 xl:self-start">
       <div className="sidebar-shell">
         <div className="sidebar-head">
           <a className="sidebar-brand" href="/" aria-label="Black Flock">
@@ -419,7 +419,7 @@ function Sidebar({ pathname }) {
 
 function HeroBanner({ canAdd, onAdd }) {
   return (
-    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-[22px] border-bf-orange/45 px-6 py-6 lg:px-8">
+    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8">
       <div className="relative z-10 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
         <div className="grid gap-3 lg:max-w-[440px]">
           <div className="text-sm font-black uppercase text-bf-orange">Black Flock team</div>
@@ -451,7 +451,7 @@ function HeroBanner({ canAdd, onAdd }) {
 
 function TeamBanner() {
   return (
-    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-[22px] border-bf-orange/45 px-6 py-6 lg:px-8">
+    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8">
       <div className="relative z-10 grid gap-2 lg:max-w-[520px]">
         <div className="text-sm font-black uppercase text-bf-orange">Black Flock team</div>
         <h1 className="whitespace-nowrap text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl">
@@ -505,7 +505,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
   return (
     <motion.article
       whileHover={{ scale: 1.015 }}
-      className={`group relative z-0 max-w-full rounded-lg border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30`}
+      className={`group relative z-0 max-w-full rounded-xl border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30`}
       onMouseEnter={(mouseEvent) => {
         if (event.note) {
           onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect());
@@ -548,7 +548,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
         </div>
         {event.canEdit ? (
           <button
-            className="absolute right-1 top-1 rounded-md border border-bf-cream/10 bg-black/40 p-1 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100"
+            className="absolute right-1 top-1 rounded-xl border border-bf-cream/10 bg-black/40 p-1 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100"
             type="button"
             onClick={() => onEdit(event)}
             aria-label="Редактировать событие"
@@ -563,7 +563,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
 
 function Legend({ eventTypes }) {
   return (
-    <section className="glass-panel mt-4 rounded-[20px] p-4">
+    <section className="glass-panel mt-4 rounded-xl p-4">
       <div className="mb-4 text-sm font-black uppercase text-bf-orange">Event legend</div>
       <div className="grid grid-cols-4 gap-3 border-t border-bf-cream/10 pt-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
       {eventTypes.map((eventType) => {
@@ -571,7 +571,7 @@ function Legend({ eventTypes }) {
         const Icon = style.icon;
         return (
           <div key={eventType.value} className="flex items-center gap-3 border-r border-bf-cream/10 pr-3 last:border-r-0 last:pr-0 max-sm:border-r-0 max-sm:pr-0">
-            <div className={`grid h-9 w-9 place-items-center rounded-lg border ${style.border} ${style.bg}`}>
+            <div className={`grid h-9 w-9 place-items-center rounded-xl border ${style.border} ${style.bg}`}>
               <Icon className={style.text} size={17} />
             </div>
             <div>
@@ -610,16 +610,16 @@ function RosterTable({
   }, [slots]);
 
   return (
-    <section className="glass-panel mt-4 rounded-[20px] p-4">
+    <section className="glass-panel mt-4 rounded-xl p-4">
       <div className="mb-3 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch">
         <div className="flex items-center gap-3 text-lg font-black uppercase text-slate-100">
           <Users className="text-bf-orange" size={22} />
-          Игроки
+          Расписание на неделю
         </div>
       </div>
 
       <div className="roster-scroll overflow-x-auto">
-        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-2xl border border-bf-cream/10 bg-[#182231]/75">
+        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-xl border border-bf-cream/10 bg-[#182231]/75">
           <div className="grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-4 py-4">
             <div className="flex items-center gap-2 font-black uppercase text-slate-100">
               <Users size={19} className="text-bf-orange" />
@@ -714,7 +714,7 @@ function RosterTable({
         </div>
       </div>
 
-      <footer className="mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/18">
+      <footer className="mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/35">
         <span>Дата последнего обновления: {lastUpdated}</span>
       </footer>
     </section>
@@ -723,7 +723,7 @@ function RosterTable({
 
 function StaffDirectory({ staffMembers }) {
   return (
-    <section className="glass-panel mt-4 rounded-[20px] p-4">
+    <section className="glass-panel mt-4 rounded-xl p-4">
       <div className="mb-4">
         <div className="text-sm font-black uppercase text-bf-orange">Operations</div>
         <h2 className="mt-1 text-xl font-black uppercase text-slate-100">Организаторский состав</h2>
@@ -732,7 +732,7 @@ function StaffDirectory({ staffMembers }) {
       {staffMembers.length ? (
         <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {staffMembers.map((staffMember) => (
-            <article key={staffMember.id} className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
+            <article key={staffMember.id} className="rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
               <div className="flex items-start gap-3">
                 <Avatar src={staffMember.avatarUrl} alt={staffMember.name} fallbackLabel={staffMember.name} className="h-12 w-12 object-cover" />
                 <div className="min-w-0 flex-1">
@@ -748,7 +748,7 @@ function StaffDirectory({ staffMembers }) {
                 </div>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
+              <div className="mt-4 rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3">
                 <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Discord</div>
                 <DiscordClouds displayTag={staffMember.discordDisplayTag} />
               </div>
@@ -756,7 +756,7 @@ function StaffDirectory({ staffMembers }) {
           ))}
         </div>
       ) : (
-        <div className="rounded-[18px] border border-dashed border-bf-cream/12 bg-black/20 px-4 py-6 text-sm text-bf-cream/46">
+        <div className="rounded-xl border border-dashed border-bf-cream/12 bg-black/20 px-4 py-6 text-sm text-bf-cream/46">
           Организаторский состав пока не заполнен в админке.
         </div>
       )}
@@ -766,7 +766,7 @@ function StaffDirectory({ staffMembers }) {
 
 function PlayerProfiles({ players, showHeading = true }) {
   return (
-    <section className="glass-panel mt-4 rounded-[20px] p-4">
+    <section className="glass-panel mt-4 rounded-xl p-4">
       {showHeading ? (
         <div className="mb-4">
           <div className="text-sm font-black uppercase text-bf-orange">Player profiles</div>
@@ -776,7 +776,7 @@ function PlayerProfiles({ players, showHeading = true }) {
 
       <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {players.map((player) => (
-          <article key={player.id} className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
+          <article key={player.id} className="rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
             <div className="flex items-start justify-between gap-3">
               <div className="flex min-w-0 items-center gap-3">
                 <Avatar src={player.avatarUrl} alt={player.name} fallbackLabel={player.name} className="h-12 w-12 object-cover" />
@@ -795,7 +795,7 @@ function PlayerProfiles({ players, showHeading = true }) {
             </div>
 
             <div className="mt-4 grid gap-3 text-sm">
-              <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
+              <div className="rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3">
                 <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Battle.net</div>
                 {player.battleTags.length ? (
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -813,7 +813,7 @@ function PlayerProfiles({ players, showHeading = true }) {
                 )}
               </div>
 
-              <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-3">
+              <div className="rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3">
                 <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">Discord</div>
                 <DiscordClouds displayTag={player.discordDisplayTag} />
               </div>
@@ -917,7 +917,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
 
   if (!profile) {
     return (
-      <section className="glass-panel mt-4 rounded-[20px] p-6">
+      <section className="glass-panel mt-4 rounded-xl p-6">
         <div className="text-sm font-black uppercase text-bf-orange">Profile</div>
         <h1 className="mt-1 text-3xl font-black uppercase text-slate-100">Профиль</h1>
         <p className="mt-4 text-bf-cream/62">Аккаунт не привязан ни к игроку, ни к организаторскому составу. Обратитесь к администратору.</p>
@@ -926,7 +926,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
   }
 
   return (
-    <section className="glass-panel mt-4 rounded-[20px] p-5">
+    <section className="glass-panel mt-4 rounded-xl p-5">
       <div className="mb-5">
         <div>
           <div className="text-sm font-black uppercase text-bf-orange">Profile</div>
@@ -937,7 +937,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <form className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-5" onSubmit={handleProfileSubmit}>
+        <form className="rounded-xl border border-bf-cream/10 bg-black/24 p-5" onSubmit={handleProfileSubmit}>
           <div className="text-sm font-black uppercase text-bf-orange">
             {isStaffProfile ? 'Контактные данные' : 'Игровые данные'}
           </div>
@@ -966,7 +966,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
             <label className="grid gap-2 text-sm font-black text-bf-cream/70">
               Логин
               <input
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/20 px-4 text-bf-cream/52 outline-none"
+                className="h-12 rounded-xl border border-bf-cream/10 bg-black/20 px-4 text-bf-cream/52 outline-none"
                 value={user.username}
                 readOnly
               />
@@ -974,7 +974,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
             <label className="grid gap-2 text-sm font-black text-bf-cream/70">
               {isStaffProfile ? 'Имя' : 'Имя игрока'}
               <input
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
+                className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
                 value={name}
                 onChange={(inputEvent) => setName(inputEvent.target.value)}
               />
@@ -984,14 +984,14 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
               <label className="grid gap-2 text-sm font-black text-bf-cream/70">
                 BattleTag&apos;и
                 <textarea
-                  className="min-h-36 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/45"
+                  className="min-h-36 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/45"
                   value={battleTagsText}
                   onChange={(inputEvent) => setBattleTagsText(inputEvent.target.value)}
                   placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
                 />
               </label>
             ) : null}
-            <div className="rounded-2xl border border-bf-cream/10 bg-black/28 px-4 py-4">
+            <div className="rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-4">
               <div className="text-sm font-black uppercase text-bf-orange">Discord</div>
               {profile.discordConnected ? (
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
@@ -1034,7 +1034,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
           </div>
           <div className="mt-5 flex justify-end">
             <button
-              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
               type="submit"
               disabled={isSavingProfile}
             >
@@ -1044,7 +1044,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
           </div>
         </form>
 
-        <form className="rounded-[18px] border border-bf-cream/10 bg-black/24 p-5" onSubmit={handlePasswordSubmit}>
+        <form className="rounded-xl border border-bf-cream/10 bg-black/24 p-5" onSubmit={handlePasswordSubmit}>
           <div className="text-sm font-black uppercase text-bf-orange">Безопасность</div>
           {passwordErrors.__all__ ? (
             <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">
@@ -1061,7 +1061,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
               Старый пароль
               <input
                 type="password"
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
+                className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
                 value={oldPassword}
                 onChange={(inputEvent) => setOldPassword(inputEvent.target.value)}
               />
@@ -1071,7 +1071,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
               Новый пароль
               <input
                 type="password"
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
+                className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
                 value={newPassword}
                 onChange={(inputEvent) => setNewPassword(inputEvent.target.value)}
               />
@@ -1081,7 +1081,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
               Повторите новый пароль
               <input
                 type="password"
-                className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
+                className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/45"
                 value={newPasswordConfirm}
                 onChange={(inputEvent) => setNewPasswordConfirm(inputEvent.target.value)}
               />
@@ -1090,7 +1090,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
           </div>
           <div className="mt-5 flex justify-end">
             <button
-              className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-bf-orange/45 px-5 font-black text-bf-orange transition hover:bg-bf-orange/10 disabled:cursor-not-allowed disabled:opacity-45"
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-bf-orange/45 px-5 font-black text-bf-orange transition hover:bg-bf-orange/10 disabled:cursor-not-allowed disabled:opacity-45"
               type="submit"
               disabled={isSavingPassword}
             >
@@ -1163,7 +1163,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
       <motion.form
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        className="w-full max-w-2xl rounded-[24px] border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel"
+        className="w-full max-w-2xl rounded-xl border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel"
         onSubmit={handleSubmit}
       >
         <div className="flex items-start justify-between gap-4">
@@ -1192,7 +1192,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
         <div className="mt-6 grid gap-5">
           <div className="grid grid-cols-4 gap-3 max-lg:grid-cols-2 max-md:grid-cols-1">
             <button
-              className={`rounded-2xl border px-4 py-3 font-black transition ${
+              className={`rounded-xl border px-4 py-3 font-black transition ${
                 slotType === 'available'
                   ? 'border-bf-orange bg-bf-orange/15 text-bf-orange'
                   : 'border-bf-cream/10 bg-black/20 text-bf-cream/62'
@@ -1203,7 +1203,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               Диапазон времени
             </button>
             <button
-              className={`rounded-2xl border px-4 py-3 font-black transition ${
+              className={`rounded-xl border px-4 py-3 font-black transition ${
                 slotType === 'full_day_available'
                   ? 'border-emerald-300/50 bg-emerald-500/15 text-emerald-100'
                   : 'border-bf-cream/10 bg-black/20 text-bf-cream/62'
@@ -1214,7 +1214,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               Свободен весь день
             </button>
             <button
-              className={`rounded-2xl border px-4 py-3 font-black transition ${
+              className={`rounded-xl border px-4 py-3 font-black transition ${
                 slotType === 'tentative'
                   ? 'border-orange-300/50 bg-orange-500/15 text-orange-100'
                   : 'border-bf-cream/10 bg-black/20 text-bf-cream/62'
@@ -1225,7 +1225,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               Не уверен
             </button>
             <button
-              className={`rounded-2xl border px-4 py-3 font-black transition ${
+              className={`rounded-xl border px-4 py-3 font-black transition ${
                 slotType === 'unavailable'
                   ? 'border-red-300/50 bg-red-500/15 text-red-100'
                   : 'border-bf-cream/10 bg-black/20 text-bf-cream/62'
@@ -1240,7 +1240,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           <label className="grid gap-2 text-sm font-black text-bf-cream/70">
             День
             <select
-              className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
+              className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
               value={dayOfWeek}
               onChange={(inputEvent) => setDayOfWeek(Number(inputEvent.target.value))}
             >
@@ -1258,7 +1258,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               <label className="grid gap-2 text-sm font-black text-bf-cream/70">
                 С
                 <select
-                  className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
+                  className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
                   value={startTimeMinutes}
                   onChange={(inputEvent) => setStartTimeMinutes(Number(inputEvent.target.value))}
                 >
@@ -1273,7 +1273,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
               <label className="grid gap-2 text-sm font-black text-bf-cream/70">
                 До
                 <select
-                  className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
+                  className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none focus:border-bf-orange/50"
                   value={endTimeMinutes}
                   onChange={(inputEvent) => setEndTimeMinutes(Number(inputEvent.target.value))}
                 >
@@ -1291,7 +1291,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           <label className="grid gap-2 text-sm font-black text-bf-cream/70">
             Комментарий
             <input
-              className="h-12 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
+              className="h-12 rounded-xl border border-bf-cream/10 bg-black/30 px-4 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
               value={note}
               onChange={(inputEvent) => setNote(inputEvent.target.value)}
               placeholder="Дополнительная информация"
@@ -1303,7 +1303,7 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           <div>
             {isEditing ? (
               <button
-                className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-red-300/30 px-4 font-black text-red-100 transition hover:bg-red-500/10"
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-red-300/30 px-4 font-black text-red-100 transition hover:bg-red-500/10"
                 type="button"
                 disabled={isSaving}
                 onClick={handleDelete}
@@ -1315,14 +1315,14 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
           </div>
           <div className="flex gap-3">
             <button
-              className="min-h-11 rounded-2xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40"
+              className="min-h-11 rounded-xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40"
               type="button"
               onClick={onClose}
             >
               Отмена
             </button>
             <button
-              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
               type="submit"
               disabled={isSaving}
             >
@@ -1360,7 +1360,7 @@ function ProfileModal({ player, onClose, onSaved }) {
       <motion.form
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        className="w-full max-w-xl rounded-[24px] border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel"
+        className="w-full max-w-xl rounded-xl border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel"
         onSubmit={handleSubmit}
       >
         <div className="flex items-start justify-between gap-4">
@@ -1386,7 +1386,7 @@ function ProfileModal({ player, onClose, onSaved }) {
           <label className="grid gap-2 text-sm font-black text-bf-cream/70">
             BattleTag&apos;и
             <textarea
-              className="min-h-32 rounded-2xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
+              className="min-h-32 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50"
               value={battleTagsText}
               onChange={(inputEvent) => setBattleTagsText(inputEvent.target.value)}
               placeholder={'По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876'}
@@ -1397,14 +1397,14 @@ function ProfileModal({ player, onClose, onSaved }) {
 
         <div className="mt-6 flex justify-end gap-3">
           <button
-            className="min-h-11 rounded-2xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40"
+            className="min-h-11 rounded-xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40"
             type="button"
             onClick={onClose}
           >
             Отмена
           </button>
           <button
-            className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             type="submit"
             disabled={isSaving}
           >
@@ -1513,7 +1513,7 @@ export default function App() {
   if (isLoading) {
     return (
       <main className="grid min-h-screen place-items-center px-6">
-        <div className="glass-panel rounded-[22px] px-8 py-6 text-center">
+        <div className="glass-panel rounded-xl px-8 py-6 text-center">
           <RefreshCw className="mx-auto animate-spin text-bf-orange" />
           <div className="mt-3 font-black uppercase">Загрузка расписания</div>
         </div>
@@ -1524,11 +1524,11 @@ export default function App() {
   if (error) {
     return (
       <main className="grid min-h-screen place-items-center px-6">
-        <div className="glass-panel max-w-md rounded-[22px] px-8 py-6 text-center">
+        <div className="glass-panel max-w-md rounded-xl px-8 py-6 text-center">
           <AlertTriangle className="mx-auto text-red-300" />
           <div className="mt-3 font-black uppercase">Не удалось загрузить расписание</div>
           <p className="mt-2 text-bf-cream/60">{error}</p>
-          <button className="mt-5 rounded-2xl bg-bf-orange px-5 py-3 font-black text-black" type="button" onClick={loadData}>
+          <button className="mt-5 rounded-xl bg-bf-orange px-5 py-3 font-black text-black" type="button" onClick={loadData}>
             Повторить
           </button>
         </div>
