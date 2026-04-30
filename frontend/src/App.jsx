@@ -34,67 +34,67 @@ import {
 const EVENT_STYLES = {
   scrim: {
     icon: Swords,
-    border: 'border-blue-400/45',
-    bg: 'bg-blue-500/10',
-    text: 'text-blue-300',
-    glow: 'shadow-[0_0_12px_rgba(59,130,246,0.08)]',
+    border: 'border-[#56688f]/55',
+    bg: 'bg-[#22314d]/80',
+    text: 'text-[#b8c7ec]',
+    glow: 'shadow-[0_0_12px_rgba(72,88,126,0.14)]',
   },
   competitive: {
     icon: Crosshair,
-    border: 'border-orange-500/45',
-    bg: 'bg-orange-500/10',
-    text: 'text-orange-300',
-    glow: 'shadow-[0_0_12px_rgba(243,112,30,0.08)]',
+    border: 'border-[#8a6b4d]/50',
+    bg: 'bg-[#3a3028]/80',
+    text: 'text-[#e2c19d]',
+    glow: 'shadow-[0_0_12px_rgba(138,107,77,0.12)]',
   },
   review: {
     icon: MonitorPlay,
-    border: 'border-purple-400/45',
-    bg: 'bg-purple-500/10',
-    text: 'text-purple-300',
-    glow: 'shadow-[0_0_12px_rgba(168,85,247,0.08)]',
+    border: 'border-[#6b5a91]/50',
+    bg: 'bg-[#342b4c]/80',
+    text: 'text-[#c8b6f2]',
+    glow: 'shadow-[0_0_12px_rgba(107,90,145,0.12)]',
   },
   tournament: {
     icon: Trophy,
-    border: 'border-red-400/45',
-    bg: 'bg-red-500/10',
-    text: 'text-red-300',
-    glow: 'shadow-[0_0_12px_rgba(239,68,68,0.08)]',
+    border: 'border-[#8d4c45]/50',
+    bg: 'bg-[#492a2c]/80',
+    text: 'text-[#f0b3a8]',
+    glow: 'shadow-[0_0_12px_rgba(141,76,69,0.12)]',
   },
   unavailable: {
     icon: AlertTriangle,
-    border: 'border-red-300/45',
-    bg: 'bg-red-500/28',
-    text: 'text-red-200',
-    glow: 'shadow-[0_0_14px_rgba(239,68,68,0.14)]',
+    border: 'border-[#9a4651]/55',
+    bg: 'bg-[#612633]/80',
+    text: 'text-[#ffc7ce]',
+    glow: 'shadow-[0_0_14px_rgba(154,70,81,0.16)]',
   },
   full_day_available: {
     icon: Check,
-    border: 'border-emerald-300/45',
-    bg: 'bg-emerald-500/18',
-    text: 'text-emerald-200',
-    glow: 'shadow-[0_0_12px_rgba(16,185,129,0.12)]',
+    border: 'border-[#3f8067]/55',
+    bg: 'bg-[#1f513f]/80',
+    text: 'text-[#bdebd5]',
+    glow: 'shadow-[0_0_12px_rgba(63,128,103,0.14)]',
   },
   tentative: {
     icon: AlertTriangle,
-    border: 'border-orange-300/45',
-    bg: 'bg-orange-500/22',
-    text: 'text-orange-200',
-    glow: 'shadow-[0_0_14px_rgba(243,112,30,0.14)]',
+    border: 'border-[#9a6a39]/55',
+    bg: 'bg-[#4c3425]/80',
+    text: 'text-[#f5c993]',
+    glow: 'shadow-[0_0_14px_rgba(154,106,57,0.16)]',
   },
   fallback: {
     icon: Clock3,
-    border: 'border-bf-cream/15',
-    bg: 'bg-bf-steel/10',
-    text: 'text-bf-cream/72',
-    glow: 'shadow-[0_0_10px_rgba(75,96,127,0.08)]',
+    border: 'border-[#556076]/35',
+    bg: 'bg-[#202b40]/80',
+    text: 'text-[#d7deea]',
+    glow: 'shadow-[0_0_10px_rgba(62,73,98,0.12)]',
   },
 };
 
 const AVAILABLE_CARD_STYLE = {
-  border: 'border-bf-cream/12',
-  bg: 'bg-bf-steel/10',
-  text: 'text-bf-cream/82',
-  glow: 'shadow-[0_0_10px_rgba(75,96,127,0.07)]',
+  border: 'border-[#556076]/35',
+  bg: 'bg-[#202b40]/80',
+  text: 'text-[#e3e9f3]',
+  glow: 'shadow-[0_0_10px_rgba(62,73,98,0.12)]',
 };
 
 function formatClock(timeZone) {
@@ -202,7 +202,7 @@ function buildDayEventMap(dayEventTypes = []) {
 
 function hexToRgba(hexColor, alpha) {
   if (!hexColor || !/^#[0-9A-Fa-f]{6}$/.test(hexColor)) {
-    return `rgba(232, 216, 201, ${alpha})`;
+    return `rgba(232, 237, 245, ${alpha})`;
   }
 
   const red = Number.parseInt(hexColor.slice(1, 3), 16);
@@ -431,7 +431,7 @@ function HeroBanner({ canAdd, onAdd }) {
         <div className="relative z-10 justify-self-start lg:justify-self-end">
           {canAdd ? (
             <button
-              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-white shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
+              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
               type="button"
               onClick={() => onAdd(null)}
             >
@@ -619,8 +619,8 @@ function RosterTable({
       </div>
 
       <div className="roster-scroll overflow-x-auto">
-        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-2xl border border-bf-cream/10 bg-black/20">
-          <div className="grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-black/20 px-4 py-4">
+        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-2xl border border-bf-cream/10 bg-[#182231]/75">
+          <div className="grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-4 py-4">
             <div className="flex items-center gap-2 font-black uppercase text-slate-100">
               <Users size={19} className="text-bf-orange" />
               Игроки
@@ -635,7 +635,7 @@ function RosterTable({
             return (
               <div
                 key={day.value}
-                className="grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-black/20 px-2.5 pt-4 pb-3 text-center last:border-r-0"
+                className="grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-2.5 pt-4 pb-3 text-center last:border-r-0"
               >
                 <div className="grid justify-items-center gap-1.5">
                   <div className="text-sm font-black text-slate-100">{day.label}</div>
@@ -644,7 +644,7 @@ function RosterTable({
                     className={`mt-1 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${
                       hasDayType
                         ? `${style.border} ${style.bg} ${style.text}`
-                        : 'border-bf-cream/10 bg-black/30 text-bf-cream/35'
+                        : 'border-bf-cream/10 bg-[#202b40]/70 text-bf-cream/35'
                     }`}
                     title={hasDayType ? 'Тип события задан админом для всего дня' : 'Админ не выбрал тип события для этого дня'}
                   >
@@ -658,7 +658,7 @@ function RosterTable({
 
           {players.map((player) => (
             <div key={player.id} className="contents">
-              <div className="min-h-[60px] border-b border-r border-bf-cream/10 bg-black/20">
+              <div className="min-h-[60px] border-b border-r border-bf-cream/10 bg-[#151f2e]/78">
                 <PlayerRow player={player} />
               </div>
               {days.map((day) => {
@@ -670,7 +670,7 @@ function RosterTable({
                   <div
                     key={`${player.id}-${day.value}`}
                     className={`relative flex min-h-[60px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${
-                      isUnavailable ? 'bg-red-900/50' : isFullDayAvailable ? 'bg-emerald-950/30' : isTentative ? 'bg-orange-950/40' : 'bg-slate-950/36'
+                      isUnavailable ? 'bg-[#4d202d]/78' : isFullDayAvailable ? 'bg-[#17382f]/78' : isTentative ? 'bg-[#3f2c22]/78' : 'bg-[#151f2e]/82'
                     }`}
                   >
                     {cellSlots.length ? (
@@ -1020,7 +1020,7 @@ function ProfilePage({ user, profile, profileType, onSaved }) {
                     <div className="mt-1 text-xs text-bf-cream/50">Аватар и Discord handle подтянутся автоматически после подключения.</div>
                   </div>
                   <button
-                    className="inline-flex min-h-10 items-center rounded-xl bg-bf-orange px-4 font-black text-black transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.18)]"
+                    className="inline-flex min-h-10 items-center rounded-xl bg-bf-orange px-4 font-black text-black transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(216,109,56,0.18)]"
                     type="button"
                     onClick={() => {
                       window.location.href = '/api/discord/connect/';

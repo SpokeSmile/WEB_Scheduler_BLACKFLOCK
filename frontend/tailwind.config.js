@@ -5,16 +5,16 @@ export default {
     extend: {
       colors: {
         bf: {
-          bg: '#0B0F1A',
-          bg2: '#0F172A',
-          orange: '#F3701E',
-          cream: '#E8D8C9',
-          steel: '#4B607F',
+          bg: '#151B26',
+          bg2: '#1A2230',
+          orange: '#D86D38',
+          cream: '#E8EDF5',
+          steel: '#303A50',
         },
       },
       boxShadow: {
-        glow: '0 0 16px rgba(243, 112, 30, 0.12)',
-        panel: '0 12px 34px rgba(0, 0, 0, 0.24)',
+        glow: '0 0 16px rgba(104, 114, 152, 0.16)',
+        panel: '0 12px 34px rgba(0, 0, 0, 0.22)',
       },
     },
   },
