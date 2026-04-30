@@ -185,6 +185,13 @@ function discordFeedbackFromUrl(search) {
   return null;
 }
 
+function previewNote(text, maxChars = 25) {
+  if (!text) return '';
+  const chars = Array.from(text);
+  if (chars.length <= maxChars) return text;
+  return `${chars.slice(0, maxChars).join('')}...`;
+}
+
 function buildDayEventMap(dayEventTypes = []) {
   const map = new Map();
   dayEventTypes.forEach((dayEvent) => {
@@ -385,7 +392,7 @@ function Sidebar({ pathname }) {
   ];
 
   return (
-    <aside className="app-sidebar glass-panel xl:sticky xl:top-4 xl:self-start">
+    <aside className="app-sidebar glass-panel rounded-[34px] xl:sticky xl:top-4 xl:self-start">
       <div className="sidebar-shell">
         <div className="sidebar-head">
           <a className="sidebar-brand" href="/" aria-label="Black Flock">
@@ -524,7 +531,9 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
               </div>
               {event.note ? (
                 <div className="relative mt-1">
-                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
+                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">
+                    {previewNote(event.note)}
+                  </p>
                 </div>
               ) : null}
             </>
@@ -533,7 +542,9 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
               <div className={`text-[11px] font-black leading-tight ${style.text}`}>{event.timeRange}</div>
               {event.note ? (
                 <div className="relative mt-1">
-                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
+                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">
+                    {previewNote(event.note)}
+                  </p>
                 </div>
               ) : null}
             </>
