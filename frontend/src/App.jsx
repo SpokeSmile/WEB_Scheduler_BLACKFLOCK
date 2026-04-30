@@ -324,40 +324,36 @@ function Header({ user }) {
   }
 
   return (
-    <header className="glass-panel grid min-h-16 grid-cols-[minmax(220px,1fr)_auto_minmax(220px,1fr)] items-center gap-5 rounded-[20px] px-5 py-2 max-lg:grid-cols-1">
-      <a className="flex w-max items-center gap-3 font-black uppercase tracking-normal text-slate-100" href="/">
-        <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
+    <header className="top-header">
+      <a className="top-header-brand" href="/">
+        <img className="top-header-logo" src="/static/design_assets/Logo.png" alt="" />
         <span>Black Flock</span>
       </a>
 
-      <div className="grid grid-cols-3 gap-3 max-sm:grid-cols-1">
+      <div className="top-header-clocks">
         {[
           ['UTC', clocks.utc],
           ['Moscow', clocks.moscow],
           ['CEST', clocks.cest],
         ].map(([label, value]) => (
-          <div key={label} className="min-w-28 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-2">
-            <div className="text-xs font-bold uppercase text-bf-cream/55">{label}</div>
-            <div className="text-base font-black text-slate-100">{value}</div>
+          <div key={label} className="top-header-clock">
+            <div className="top-header-clock-label">{label}</div>
+            <div className="top-header-clock-value">{value}</div>
           </div>
         ))}
       </div>
 
-      <div className="flex items-center justify-end gap-3 max-lg:justify-between">
+      <div className="top-header-actions">
         <a
-          className={`flex items-center gap-2 rounded-full border px-3 py-2 transition ${
-            isProfilePage
-              ? 'border-bf-orange/40 bg-bf-orange/10'
-              : 'border-bf-cream/10 bg-black/30 hover:border-bf-orange/35 hover:bg-bf-orange/5'
-          }`}
+          className={`top-header-user ${isProfilePage ? 'top-header-user-active' : ''}`}
           href="/profile/"
           aria-label="Открыть профиль"
         >
           <Avatar src={user.avatarUrl} alt={user.username} fallbackLabel={user.username} className="h-7 w-7 object-cover" />
-          <span className="max-w-28 truncate font-semibold text-bf-cream/80">{user.username}</span>
+          <span>{user.username}</span>
         </a>
         <button
-          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-bf-orange px-4 font-black text-slate-100 transition hover:-translate-y-0.5 hover:shadow-[0_0_14px_rgba(243,112,30,0.16)]"
+          className="top-header-logout"
           type="button"
           onClick={handleLogout}
         >
@@ -435,7 +431,7 @@ function HeroBanner({ canAdd, onAdd }) {
         <div className="relative z-10 justify-self-start lg:justify-self-end">
           {canAdd ? (
             <button
-              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-black shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
+              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-6 font-black text-white shadow-[0_8px_18px_rgba(243,112,30,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(243,112,30,0.2)]"
               type="button"
               onClick={() => onAdd(null)}
             >
@@ -718,7 +714,7 @@ function RosterTable({
         </div>
       </div>
 
-      <footer className="mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/48">
+      <footer className="mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/18">
         <span>Дата последнего обновления: {lastUpdated}</span>
       </footer>
     </section>
