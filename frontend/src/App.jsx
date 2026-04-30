@@ -386,37 +386,29 @@ function Sidebar({ pathname }) {
 
   return (
     <aside className="app-sidebar glass-panel xl:sticky xl:top-4 xl:self-start">
-      <div className="sidebar-head">
-        <a className="sidebar-brand" href="/" aria-label="Black Flock">
-          <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
-        </a>
-      </div>
-
-      <nav className="sidebar-nav" aria-label="Основная навигация">
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <a
-              key={item.href}
-              className={`sidebar-nav-link ${item.isActive ? 'sidebar-nav-link-active' : ''}`}
-              href={item.href}
-              aria-current={item.isActive ? 'page' : undefined}
-            >
-              <Icon size={18} />
-              <span className="sidebar-link-label">{item.label}</span>
-            </a>
-          );
-        })}
-      </nav>
-
-      <div className="sidebar-footer">
-        <div className="sidebar-footer-mark">
-          <img src="/static/design_assets/Logo.png" alt="" />
+      <div className="sidebar-shell">
+        <div className="sidebar-head">
+          <a className="sidebar-brand" href="/" aria-label="Black Flock">
+            <img className="brand-logo" src="/static/design_assets/Logo.png" alt="" />
+          </a>
         </div>
-        <div className="sidebar-footer-copy">
-          <div className="text-sm font-black uppercase text-bf-orange">Black Flock</div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-bf-cream/36">Together we strike</div>
-        </div>
+
+        <nav className="sidebar-nav" aria-label="Основная навигация">
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <a
+                key={item.href}
+                className={`sidebar-nav-link ${item.isActive ? 'sidebar-nav-link-active' : ''}`}
+                href={item.href}
+                aria-current={item.isActive ? 'page' : undefined}
+              >
+                <Icon size={20} />
+                <span className="sidebar-link-label">{item.label}</span>
+              </a>
+            );
+          })}
+        </nav>
       </div>
     </aside>
   );
@@ -511,6 +503,16 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
     <motion.article
       whileHover={{ scale: 1.015 }}
       className={`group relative z-0 max-w-full rounded-lg border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30`}
+      onMouseEnter={(mouseEvent) => {
+        if (event.note) {
+          onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect());
+        }
+      }}
+      onMouseLeave={() => {
+        if (event.note) {
+          onNoteHoverEnd();
+        }
+      }}
     >
       <div className="flex min-w-0 items-center gap-2">
         <Icon className={`${style.text} shrink-0`} size={isAllDayStatus ? 16 : 17} />
@@ -522,13 +524,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
               </div>
               {event.note ? (
                 <div className="relative mt-1">
-                  <p
-                    className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60"
-                    onMouseEnter={(mouseEvent) => onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect())}
-                    onMouseLeave={onNoteHoverEnd}
-                  >
-                    {event.note}
-                  </p>
+                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
                 </div>
               ) : null}
             </>
@@ -537,13 +533,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
               <div className={`text-[11px] font-black leading-tight ${style.text}`}>{event.timeRange}</div>
               {event.note ? (
                 <div className="relative mt-1">
-                  <p
-                    className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60"
-                    onMouseEnter={(mouseEvent) => onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect())}
-                    onMouseLeave={onNoteHoverEnd}
-                  >
-                    {event.note}
-                  </p>
+                  <p className="line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60">{event.note}</p>
                 </div>
               ) : null}
             </>
