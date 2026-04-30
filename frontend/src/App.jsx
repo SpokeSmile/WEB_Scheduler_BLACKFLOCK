@@ -910,12 +910,15 @@ function UpdateContentBlock({ block }) {
 
   if (block.type === 'image') {
     return (
-      <div className="mt-3 flex items-center gap-3 rounded-xl border border-bf-cream/10 bg-black/18 p-3">
-        <img
-          className="h-14 w-14 rounded-xl border border-bf-cream/10 object-cover"
-          src={block.src}
-          alt={block.alt || ''}
-        />
+      <div className="mt-3 flex items-center gap-3 rounded-xl border border-bf-cream/10 bg-[#101620] p-3">
+        <div className="relative h-14 w-14 overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]">
+          <img
+            className="h-full w-full object-cover opacity-90"
+            src={block.src}
+            alt={block.alt || ''}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.12),rgba(16,22,32,0.42))]" />
+        </div>
         <div className="text-sm font-bold text-bf-cream/72">{block.alt || 'Hero update'}</div>
       </div>
     );
@@ -1014,11 +1017,14 @@ function UpdatesPage({
                 </div>
 
                 {selectedUpdate.heroImageUrl ? (
-                  <img
-                    className="h-48 w-full rounded-xl border border-bf-cream/10 object-cover"
-                    src={selectedUpdate.heroImageUrl}
-                    alt={selectedUpdate.title}
-                  />
+                  <div className="relative h-48 w-full overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]">
+                    <img
+                      className="h-full w-full object-cover opacity-88"
+                      src={selectedUpdate.heroImageUrl}
+                      alt={selectedUpdate.title}
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.18),rgba(16,22,32,0.5))]" />
+                  </div>
                 ) : null}
               </div>
 
