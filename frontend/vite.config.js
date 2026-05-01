@@ -7,6 +7,8 @@ export default defineConfig({
   build: {
     outDir: '../static/frontend',
     emptyOutDir: true,
+    minify: false,
+    cssMinify: false,
     rollupOptions: {
       output: {
         entryFileNames: 'app.js',
