@@ -462,3 +462,49 @@ class GameUpdate(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class OverwatchStatsCache(models.Model):
+    COMPETITIVE = 'competitive'
+    QUICKPLAY = 'quickplay'
+
+    STATUS_READY = 'ready'
+    STATUS_ERROR = 'error'
+    STATUS_MISSING_BATTLETAG = 'missing_battletag'
+
+    MODE_CHOICES = [
+        (COMPETITIVE, 'Competitive'),
+        (QUICKPLAY, 'Quickplay'),
+    ]
+
+    STATUS_CHOICES = [
+        (STATUS_READY, 'Готово'),
+        (STATUS_ERROR, 'Ошибка'),
+        (STATUS_MISSING_BATTLETAG, 'BattleTag не указан'),
+    ]
+
+    player = models.ForeignKey(
+        Player,
+        verbose_name='игрок',
+        on_delete=models.CASCADE,
+        related_name='overwatch_stats_cache',
+    )
+    battle_tag = models.CharField('battle tag', max_length=120, blank=True)
+    overfast_player_id = models.CharField('overfast player id', max_length=120, blank=True)
+    mode = models.CharField('режим', max_length=20, choices=MODE_CHOICES)
+    status = models.CharField('статус', max_length=32, choices=STATUS_CHOICES, default=STATUS_ERROR)
+    error = models.CharField('ошибка', max_length=255, blank=True)
+    summary_json = models.JSONField('summary json', default=dict, blank=True)
+    stats_json = models.JSONField('stats json', default=dict, blank=True)
+    fetched_at = models.DateTimeField('обновлено', null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['player', 'mode'], name='unique_overwatch_stats_cache_player_mode'),
+        ]
+        ordering = ['player__sort_order', 'overfast_player_id', 'mode']
+        verbose_name = 'кэш статистики Overwatch'
+        verbose_name_plural = 'кэш статистики Overwatch'
+
+    def __str__(self):
+        return f'{self.player} · {self.mode}'

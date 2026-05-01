@@ -2,7 +2,20 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip as ChartTooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
   AlertTriangle,
+  BarChart3,
   BookText,
   CalendarPlus,
   Check,
@@ -30,7 +43,9 @@ import {
   disconnectDiscord,
   fetchGameUpdateDetail,
   fetchGameUpdates,
+  fetchOverwatchStats,
   logout,
+  refreshOverwatchStats,
   updateProfile,
   updateSlot,
 } from './api.js';
@@ -224,6 +239,68 @@ function formatPublishedDate(value) {
   }).format(new Date(value));
 }
 
+function formatShortDateTime(value) {
+  if (!value) return '—';
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value));
+}
+
+function formatInteger(value) {
+  return new Intl.NumberFormat('ru-RU', {
+    maximumFractionDigits: 0,
+  }).format(Number.isFinite(value) ? value : 0);
+}
+
+function formatDecimal(value, digits = 1) {
+  if (!Number.isFinite(value)) return '—';
+  return new Intl.NumberFormat('ru-RU', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value);
+}
+
+function formatPercent(value) {
+  if (!Number.isFinite(value)) return '—';
+  return `${formatDecimal(value, 1)}%`;
+}
+
+function formatHours(seconds) {
+  const hours = Math.round((Number(seconds) || 0) / 3600);
+  return `${formatInteger(hours)} ч.`;
+}
+
+function formatCompactStat(value) {
+  if (!Number.isFinite(value)) return '—';
+  return new Intl.NumberFormat('ru-RU', {
+    notation: value >= 10000 ? 'compact' : 'standard',
+    maximumFractionDigits: value >= 10000 ? 1 : 0,
+  }).format(value);
+}
+
+const OVERWATCH_STATS_MODES = [
+  { value: 'overview', label: 'Общая статистика' },
+  { value: 'competitive', label: 'Competitive' },
+  { value: 'quickplay', label: 'Quickplay' },
+];
+
+const RANK_CHART_COLORS = {
+  Champion: '#f6d266',
+  Grandmaster: '#e6c462',
+  Master: '#b58df4',
+  Diamond: '#7fc7ff',
+  Platinum: '#67dcc8',
+  Gold: '#f2bf61',
+  Silver: '#c9d2dc',
+  Bronze: '#b4764f',
+};
+
+const MODE_CHART_COLORS = ['#f3701e', '#4f8df5', '#65d385'];
+
 const UPDATE_TYPE_STYLES = {
   Hotfix: 'border-amber-300/30 bg-amber-500/10 text-amber-100',
   'Bug Fix': 'border-rose-300/30 bg-rose-500/10 text-rose-100',
@@ -392,7 +469,7 @@ function Sidebar({ pathname }) {
       href: '/',
       label: 'Расписание',
       icon: Clock3,
-      isActive: !pathname.startsWith('/team') && !pathname.startsWith('/profile') && !pathname.startsWith('/updates'),
+      isActive: !pathname.startsWith('/team') && !pathname.startsWith('/profile') && !pathname.startsWith('/updates') && !pathname.startsWith('/stats'),
     },
     {
       href: '/team/',
@@ -405,6 +482,12 @@ function Sidebar({ pathname }) {
       label: 'Обновления',
       icon: BookText,
       isActive: pathname.startsWith('/updates'),
+    },
+    {
+      href: '/stats/',
+      label: 'Статистика',
+      icon: BarChart3,
+      isActive: pathname.startsWith('/stats'),
     },
     {
       href: '/profile/',
@@ -1063,6 +1146,338 @@ function UpdatesPage({
   );
 }
 
+function StatSummaryCard({ icon: Icon, label, value, caption, tone = 'orange' }) {
+  const toneClass = {
+    orange: 'text-bf-orange bg-bf-orange/10 border-bf-orange/20',
+    green: 'text-emerald-200 bg-emerald-500/10 border-emerald-300/20',
+    blue: 'text-sky-200 bg-sky-500/10 border-sky-300/20',
+    purple: 'text-violet-200 bg-violet-500/10 border-violet-300/20',
+    red: 'text-red-200 bg-red-500/10 border-red-300/20',
+    muted: 'text-bf-cream/72 bg-black/24 border-bf-cream/10',
+  }[tone];
+
+  return (
+    <div className="rounded-xl border border-bf-cream/10 bg-black/22 p-4">
+      <div className="flex items-center gap-3">
+        <div className={`grid h-10 w-10 place-items-center rounded-xl border ${toneClass}`}>
+          <Icon size={19} />
+        </div>
+        <div className="min-w-0">
+          <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">{label}</div>
+          <div className="mt-1 truncate text-2xl font-black text-slate-100">{value}</div>
+        </div>
+      </div>
+      {caption ? <div className="mt-2 text-xs font-semibold text-bf-cream/46">{caption}</div> : null}
+    </div>
+  );
+}
+
+function StatsBanner({ updatedAt, isRefreshing, onRefresh }) {
+  return (
+    <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/25 px-6 py-6 lg:px-8">
+      <div className="relative z-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+        <div className="grid gap-3 lg:max-w-[620px]">
+          <div className="text-sm font-black uppercase text-bf-orange">Black Flock team</div>
+          <h1 className="text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl">
+            Статистика Overwatch
+          </h1>
+          <p className="text-sm font-semibold text-bf-cream/58">
+            Данные OverFast API по первому BattleTag каждого игрока.
+          </p>
+        </div>
+
+        <div className="grid justify-items-start gap-3 lg:justify-items-end">
+          <div className="text-sm font-semibold text-bf-cream/35">
+            Последнее обновление: {formatShortDateTime(updatedAt)}
+          </div>
+          <button
+            className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-bf-orange px-5 font-black text-white shadow-[0_10px_24px_rgba(243,112,30,0.18)] transition hover:-translate-y-0.5 hover:bg-[#ff812e] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+            type="button"
+            onClick={onRefresh}
+            disabled={isRefreshing}
+          >
+            <RefreshCw className={isRefreshing ? 'animate-spin' : ''} size={18} />
+            {isRefreshing ? 'Обновляю данные...' : 'Обновить данные'}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatsFilterBar({ mode, onModeChange }) {
+  return (
+    <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-bf-cream/10 bg-black/20 p-3">
+      <div className="flex flex-wrap gap-2">
+        {OVERWATCH_STATS_MODES.map((item) => {
+          const isModeButton = item.value === 'competitive' || item.value === 'quickplay';
+          const isActive = item.value === 'overview' || mode === item.value;
+          return (
+            <button
+              key={item.value}
+              className={`rounded-xl px-4 py-2 text-xs font-black uppercase transition ${
+                isActive
+                  ? 'bg-bf-orange/18 text-bf-orange shadow-[0_0_14px_rgba(243,112,30,0.10)]'
+                  : 'text-bf-cream/48 hover:bg-bf-steel/10 hover:text-slate-100'
+              } ${item.value === 'overview' ? 'cursor-default' : ''}`}
+              type="button"
+              onClick={() => {
+                if (isModeButton) onModeChange(item.value);
+              }}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-2 text-xs font-black uppercase text-bf-cream/35">
+        All-time
+      </div>
+    </div>
+  );
+}
+
+function PlayerStatsTable({ players }) {
+  return (
+    <div className="mt-4 overflow-x-auto rounded-xl border border-bf-cream/10">
+      <table className="min-w-[1120px] w-full border-collapse bg-[#111925]/86 text-left">
+        <thead>
+          <tr className="border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42">
+            <th className="px-4 py-3">Игрок</th>
+            <th className="px-4 py-3">Ранг</th>
+            <th className="px-4 py-3">SR</th>
+            <th className="px-4 py-3">Winrate</th>
+            <th className="px-4 py-3">Матчей</th>
+            <th className="px-4 py-3">W / L</th>
+            <th className="px-4 py-3">Последние игры</th>
+            <th className="px-4 py-3">K/D</th>
+            <th className="px-4 py-3">Средний урон</th>
+            <th className="px-4 py-3">Средняя смерть</th>
+          </tr>
+        </thead>
+        <tbody>
+          {players.map((player) => {
+            const isReady = player.status === 'ready';
+            const winrateWidth = `${Math.min(Math.max(player.winrate || 0, 0), 100)}%`;
+            return (
+              <tr key={player.id} className="border-b border-bf-cream/10 bg-black/10 last:border-b-0 hover:bg-bf-steel/10">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <Avatar src={player.avatarUrl} alt={player.name} fallbackLabel={player.name} className="h-10 w-10 object-cover" />
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-black text-slate-100">{player.name}</div>
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                        <RoleBadge role={player.role} color={player.roleColor} />
+                        {player.battleTag ? (
+                          <span className="text-[11px] font-semibold text-bf-cream/42">{player.battleTag}</span>
+                        ) : null}
+                      </div>
+                      {!isReady ? (
+                        <div className="mt-1 text-xs font-semibold text-amber-100/75">{player.error || 'Данные недоступны'}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">
+                  {isReady && player.rank ? (
+                    <div className="flex items-center gap-2">
+                      {player.rank.rankIcon ? (
+                        <img className="h-5 w-5" src={player.rank.rankIcon} alt="" />
+                      ) : null}
+                      <span>{player.rank.label}</span>
+                    </div>
+                  ) : '—'}
+                </td>
+                <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">—</td>
+                <td className="px-4 py-3">
+                  {isReady ? (
+                    <div className="min-w-[110px]">
+                      <div className="text-sm font-black text-slate-100">{formatPercent(player.winrate)}</div>
+                      <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-bf-cream/10">
+                        <div className="h-full rounded-full bg-emerald-400" style={{ width: winrateWidth }} />
+                      </div>
+                    </div>
+                  ) : '—'}
+                </td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatInteger(player.matches) : '—'}</td>
+                <td className="px-4 py-3 text-sm font-black">
+                  {isReady ? (
+                    <span>
+                      <span className="text-emerald-300">{formatInteger(player.wins)}W</span>
+                      <span className="mx-1 text-bf-cream/28">/</span>
+                      <span className="text-red-300">{formatInteger(player.losses)}L</span>
+                    </span>
+                  ) : '—'}
+                </td>
+                <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">Недоступно</td>
+                <td className="px-4 py-3 text-sm font-black text-emerald-300">{isReady ? formatDecimal(player.kd, 2) : '—'}</td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatInteger(player.avgDamage) : '—'}</td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatDecimal(player.avgDeaths, 1) : '—'}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function StatsCharts({ stats }) {
+  const rankRows = (stats.rankDistribution || []).filter((item) => item.count > 0);
+  const winrateRows = (stats.winrateByMode || []).filter((item) => item.matches > 0);
+  const topHeroes = stats.topHeroes || [];
+
+  return (
+    <section className="mt-4 grid gap-4 xl:grid-cols-[1fr_1fr_1.15fr]">
+      <div className="glass-panel rounded-xl p-4">
+        <div className="mb-4 text-sm font-black uppercase text-slate-100">Распределение рангов</div>
+        {rankRows.length ? (
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={rankRows} layout="vertical" margin={{ top: 4, right: 12, left: 18, bottom: 4 }}>
+                <CartesianGrid stroke="rgba(255,255,255,0.06)" horizontal={false} />
+                <XAxis type="number" allowDecimals={false} stroke="rgba(236,241,248,0.36)" tickLine={false} axisLine={false} />
+                <YAxis dataKey="divisionLabel" type="category" width={90} stroke="rgba(236,241,248,0.56)" tickLine={false} axisLine={false} />
+                <ChartTooltip
+                  cursor={{ fill: 'rgba(243,112,30,0.08)' }}
+                  contentStyle={{ background: '#070c14', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, color: '#fff' }}
+                />
+                <Bar dataKey="count" radius={[0, 10, 10, 0]}>
+                  {rankRows.map((item) => (
+                    <Cell key={item.division} fill={RANK_CHART_COLORS[item.divisionLabel] || '#f3701e'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52">
+            Ранги появятся после успешной синхронизации competitive профилей.
+          </div>
+        )}
+      </div>
+
+      <div className="glass-panel rounded-xl p-4">
+        <div className="mb-4 text-sm font-black uppercase text-slate-100">Winrate по режимам</div>
+        {winrateRows.length ? (
+          <div className="grid min-h-64 items-center gap-4 sm:grid-cols-[180px_minmax(0,1fr)] xl:grid-cols-1 2xl:grid-cols-[180px_minmax(0,1fr)]">
+            <div className="h-48">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={winrateRows} dataKey="winrate" nameKey="label" innerRadius={52} outerRadius={82} paddingAngle={3}>
+                    {winrateRows.map((item, index) => (
+                      <Cell key={item.mode} fill={MODE_CHART_COLORS[index % MODE_CHART_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <ChartTooltip
+                    formatter={(value) => `${formatDecimal(Number(value), 1)}%`}
+                    contentStyle={{ background: '#070c14', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, color: '#fff' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid gap-3">
+              {winrateRows.map((item, index) => (
+                <div key={item.mode} className="flex items-center justify-between gap-3 text-sm">
+                  <div className="flex items-center gap-2 text-bf-cream/70">
+                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MODE_CHART_COLORS[index % MODE_CHART_COLORS.length] }} />
+                    {item.label}
+                  </div>
+                  <div className="font-black text-slate-100">{formatPercent(item.winrate)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52">
+            Winrate появится после первой успешной синхронизации.
+          </div>
+        )}
+      </div>
+
+      <div className="glass-panel rounded-xl p-4">
+        <div className="mb-4 text-sm font-black uppercase text-slate-100">Топ героев</div>
+        {topHeroes.length ? (
+          <div className="grid gap-2">
+            <div className="grid grid-cols-[minmax(0,1fr)_80px_80px_90px] gap-3 border-b border-bf-cream/10 pb-2 text-[11px] font-black uppercase tracking-wide text-bf-cream/38">
+              <span>Герой</span>
+              <span>Winrate</span>
+              <span>Матчей</span>
+              <span>Урон</span>
+            </div>
+            {topHeroes.map((hero) => (
+              <div key={hero.hero} className="grid grid-cols-[minmax(0,1fr)_80px_80px_90px] items-center gap-3 rounded-xl bg-black/18 px-3 py-2 text-sm">
+                <div className="truncate font-black text-slate-100">{hero.heroLabel}</div>
+                <div className="font-black text-emerald-300">{formatPercent(hero.winrate)}</div>
+                <div className="font-semibold text-bf-cream/72">{formatInteger(hero.matches)}</div>
+                <div className="font-semibold text-bf-cream/72">{formatCompactStat(hero.avgDamage)}</div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52">
+            Герои появятся после загрузки статистики OverFast.
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function OverwatchStatsPage({
+  stats,
+  mode,
+  onModeChange,
+  isLoading,
+  isRefreshing,
+  error,
+  onRefresh,
+}) {
+  const team = stats?.team || {};
+  const players = stats?.players || [];
+
+  return (
+    <>
+      <StatsBanner updatedAt={stats?.updatedAt} isRefreshing={isRefreshing} onRefresh={onRefresh} />
+      <section className="glass-panel mt-4 rounded-xl p-4">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+          <StatSummaryCard icon={Trophy} label="Средний ранг" value={team.averageRank || '—'} caption="SR недоступен в OverFast" tone="purple" />
+          <StatSummaryCard icon={Check} label="Процент побед" value={formatPercent(team.winrate)} caption="По загруженным игрокам" tone="green" />
+          <StatSummaryCard icon={Clock3} label="Все сыграно" value={formatHours(team.timePlayed)} caption="All-time" tone="orange" />
+          <StatSummaryCard icon={BarChart3} label="Матчей сыграно" value={formatInteger(team.matches || 0)} caption="Выбранный режим" tone="blue" />
+          <StatSummaryCard icon={Swords} label="Лучшая серия" value={team.bestStreak || 'Недоступно'} caption="Нет истории матчей" tone="muted" />
+          <StatSummaryCard icon={AlertTriangle} label="Худшая серия" value={team.worstStreak || 'Недоступно'} caption="Нет истории матчей" tone="red" />
+        </div>
+
+        <StatsFilterBar mode={mode} onModeChange={onModeChange} />
+
+        {isLoading && !stats ? (
+          <div className="mt-4 rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-center text-sm text-bf-cream/62">
+            Загружаю кэш статистики...
+          </div>
+        ) : error ? (
+          <div className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-6 text-sm font-semibold text-red-100">
+            {error}
+          </div>
+        ) : stats?.cacheEmpty ? (
+          <div className="mt-4 rounded-xl border border-bf-orange/25 bg-bf-orange/10 px-4 py-6 text-sm text-bf-cream/74">
+            Данные OverFast еще не загружены. Нажмите «Обновить данные», чтобы собрать статистику по BattleTag игроков.
+          </div>
+        ) : null}
+
+        <PlayerStatsTable players={players} />
+      </section>
+
+      <StatsCharts stats={stats || {}} />
+
+      <div className="mt-4 rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-3 text-sm text-bf-cream/42">
+        {stats?.unavailableMessage || 'SR, история последних матчей и серии не доступны в OverFast API.'}
+      </div>
+    </>
+  );
+}
+
 function ProfilePage({ user, profile, profileType, onSaved }) {
   const isPlayerProfile = profileType === 'player';
   const isStaffProfile = profileType === 'staff';
@@ -1658,6 +2073,11 @@ export default function App() {
   const [isLoadingUpdateDetail, setIsLoadingUpdateDetail] = useState(false);
   const [updatesError, setUpdatesError] = useState('');
   const [selectedUpdateSlug, setSelectedUpdateSlug] = useState(() => new URLSearchParams(window.location.search).get('patch') || '');
+  const [statsMode, setStatsMode] = useState('competitive');
+  const [statsByMode, setStatsByMode] = useState({});
+  const [isLoadingStats, setIsLoadingStats] = useState(false);
+  const [isRefreshingStats, setIsRefreshingStats] = useState(false);
+  const [statsError, setStatsError] = useState('');
 
   async function loadData() {
     setIsLoading(true);
@@ -1725,6 +2145,40 @@ export default function App() {
     window.history.replaceState({}, document.title, `${window.location.pathname}${query ? `?${query}` : ''}`);
   }
 
+  async function loadOverwatchStats(mode) {
+    setIsLoadingStats(true);
+    setStatsError('');
+    try {
+      const response = await fetchOverwatchStats(mode);
+      setStatsByMode((current) => ({
+        ...current,
+        [response.stats.mode]: response.stats,
+      }));
+      return response.stats;
+    } catch (loadError) {
+      setStatsError(loadError.message);
+      return null;
+    } finally {
+      setIsLoadingStats(false);
+    }
+  }
+
+  async function handleOverwatchStatsRefresh() {
+    setIsRefreshingStats(true);
+    setStatsError('');
+    try {
+      const response = await refreshOverwatchStats(statsMode);
+      setStatsByMode((current) => ({
+        ...current,
+        [response.stats.mode]: response.stats,
+      }));
+    } catch (refreshError) {
+      setStatsError(refreshError.message);
+    } finally {
+      setIsRefreshingStats(false);
+    }
+  }
+
   useEffect(() => {
     if (!commentTooltip) return;
 
@@ -1740,6 +2194,7 @@ export default function App() {
 
   const pathname = window.location.pathname;
   const isUpdatesPage = pathname.startsWith('/updates');
+  const isStatsPage = pathname.startsWith('/stats');
 
   useEffect(() => {
     if (!isUpdatesPage) return;
@@ -1774,6 +2229,11 @@ export default function App() {
     if (!isUpdatesPage || !selectedUpdateSlug) return;
     loadUpdateDetail(selectedUpdateSlug);
   }, [isUpdatesPage, selectedUpdateSlug]);
+
+  useEffect(() => {
+    if (!isStatsPage) return;
+    loadOverwatchStats(statsMode);
+  }, [isStatsPage, statsMode]);
 
   function handleNoteHoverStart(text, anchorRect) {
     setCommentTooltip({
@@ -1864,6 +2324,7 @@ export default function App() {
   const currentProfile = data.user.profileType === 'staff' ? currentStaffMember : currentPlayer;
   const handleProfileSaved = data.user.profileType === 'staff' ? updateStaffProfile : updatePlayerProfile;
   const selectedUpdate = selectedUpdateSlug ? updatesBySlug[selectedUpdateSlug] || null : null;
+  const selectedStats = statsByMode[statsMode] || null;
 
   return (
     <main className="mx-auto min-h-screen w-[min(1500px,calc(100%_-_48px))] py-4 xl:w-[min(1700px,calc(100%_-_32px))] 2xl:w-[min(1820px,calc(100%_-_28px))] max-sm:w-[min(100%_-_20px,760px)]">
@@ -1889,6 +2350,16 @@ export default function App() {
               isLoadingList={isLoadingUpdatesList}
               isLoadingDetail={isLoadingUpdateDetail}
               error={updatesError}
+            />
+          ) : isStatsPage ? (
+            <OverwatchStatsPage
+              stats={selectedStats}
+              mode={statsMode}
+              onModeChange={setStatsMode}
+              isLoading={isLoadingStats}
+              isRefreshing={isRefreshingStats}
+              error={statsError}
+              onRefresh={handleOverwatchStatsRefresh}
             />
           ) : (
             <>

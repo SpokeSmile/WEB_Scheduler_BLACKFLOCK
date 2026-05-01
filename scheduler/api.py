@@ -20,7 +20,8 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 from .game_updates import GameUpdateSyncError, sync_game_updates
 from .forms import ScheduleSlotForm
-from .models import DayEventType, DiscordConnection, GameUpdate, Player, ScheduleSlot, StaffMember
+from .models import DayEventType, DiscordConnection, GameUpdate, OverwatchStatsCache, Player, ScheduleSlot, StaffMember
+from .overfast import build_overwatch_stats_dashboard, refresh_overwatch_stats
 from .roster import ensure_current_roster_week
 from .views import get_current_player, get_current_staff_member
 
@@ -343,6 +344,32 @@ def game_updates_list(request):
 def game_update_detail(request, slug):
     game_update = get_object_or_404(GameUpdate, slug=slug)
     return JsonResponse({'update': serialize_game_update_detail(game_update)})
+
+
+def clean_overwatch_stats_mode(request):
+    mode = request.GET.get('mode') or request.POST.get('mode') or OverwatchStatsCache.COMPETITIVE
+    if mode not in {OverwatchStatsCache.COMPETITIVE, OverwatchStatsCache.QUICKPLAY}:
+        return OverwatchStatsCache.COMPETITIVE
+    return mode
+
+
+@require_GET
+@login_required
+def overwatch_stats(request):
+    mode = clean_overwatch_stats_mode(request)
+    return JsonResponse({'stats': build_overwatch_stats_dashboard(mode)})
+
+
+@require_POST
+@login_required
+def overwatch_stats_refresh(request):
+    mode = clean_overwatch_stats_mode(request)
+    result = refresh_overwatch_stats()
+    return JsonResponse({
+        'ok': True,
+        'refresh': result,
+        'stats': build_overwatch_stats_dashboard(mode),
+    })
 
 
 @require_GET

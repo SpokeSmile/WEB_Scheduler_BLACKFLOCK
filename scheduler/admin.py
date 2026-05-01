@@ -8,7 +8,7 @@ from django.urls import path, reverse
 from django.utils.html import format_html
 
 from .game_updates import GameUpdateSyncError, sync_game_updates
-from .models import DayEventType, DiscordConnection, GameUpdate, Player, RosterState, ScheduleSlot, StaffMember
+from .models import DayEventType, DiscordConnection, GameUpdate, OverwatchStatsCache, Player, RosterState, ScheduleSlot, StaffMember
 from .roster import ensure_current_roster_week
 
 
@@ -258,3 +258,24 @@ class GameUpdateAdmin(admin.ModelAdmin):
     @admin.display(description='контент')
     def content_preview(self, obj):
         return format_html('<pre style="white-space:pre-wrap;max-width:900px;">{}</pre>', obj.content_json)
+
+
+@admin.register(OverwatchStatsCache)
+class OverwatchStatsCacheAdmin(admin.ModelAdmin):
+    list_display = ('player', 'mode', 'status', 'battle_tag', 'overfast_player_id', 'fetched_at')
+    list_filter = ('mode', 'status')
+    search_fields = ('player__name', 'battle_tag', 'overfast_player_id', 'error')
+    readonly_fields = (
+        'player',
+        'battle_tag',
+        'overfast_player_id',
+        'mode',
+        'status',
+        'error',
+        'summary_json',
+        'stats_json',
+        'fetched_at',
+    )
+
+    def has_add_permission(self, request):
+        return False
