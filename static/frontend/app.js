@@ -20635,6 +20635,12 @@ function RoleBadge({ role, color: color2, className = "" }) {
     }
   );
 }
+function DiscordClouds({ displayTag }) {
+  if (!displayTag) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-bf-cream/42", children: "Не подключен" });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100", children: displayTag }) });
+}
 function r(e) {
   var t, f, n = "";
   if ("string" == typeof e || "number" == typeof e) n += e;
@@ -45234,6 +45240,218 @@ function OverwatchStatsPage({
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-3 text-sm text-bf-cream/42", children: stats?.unavailableMessage || "SR, история последних матчей и серии не доступны в OverFast API." })
   ] });
 }
+function TeamBanner() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid gap-2 lg:max-w-[520px]", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Black Flock team" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "whitespace-nowrap text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl", children: "Состав команды" })
+  ] }) });
+}
+function StaffDirectory({ staffMembers }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Operations" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-xl font-black uppercase text-slate-100", children: "Организаторский состав" })
+    ] }),
+    staffMembers.length ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4 lg:grid-cols-2 xl:grid-cols-3", children: staffMembers.map((staffMember) => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Avatar, { src: staffMember.avatarUrl, alt: staffMember.name, fallbackLabel: staffMember.name, className: "h-12 w-12 object-cover" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate text-base font-black text-slate-100", children: staffMember.name }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 flex flex-wrap gap-1.5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(RoleBadge, { role: staffMember.role, color: staffMember.roleColor }),
+            staffMember.canEdit ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange", children: "Ваш профиль" }) : null
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Discord" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(DiscordClouds, { displayTag: staffMember.discordDisplayTag })
+      ] })
+    ] }, staffMember.id)) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-dashed border-bf-cream/12 bg-black/20 px-4 py-6 text-sm text-bf-cream/46", children: "Организаторский состав пока не заполнен в админке." })
+  ] });
+}
+function PlayerProfiles({ players, showHeading = true }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
+    showHeading ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Player profiles" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-xl font-black uppercase text-slate-100", children: "Актуальные игровые профили" })
+    ] }) : null,
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4 lg:grid-cols-2 xl:grid-cols-3", children: players.map((player) => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-start justify-between gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex min-w-0 items-center gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Avatar, { src: player.avatarUrl, alt: player.name, fallbackLabel: player.name, className: "h-12 w-12 object-cover" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate text-base font-black text-slate-100", children: player.name }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 flex flex-wrap gap-1.5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(RoleBadge, { role: player.role, color: player.roleColor }),
+            player.canEdit ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange", children: "Ваш профиль" }) : null
+          ] })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 grid gap-3 text-sm", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Battle.net" }),
+          player.battleTags.length ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: player.battleTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "span",
+            {
+              className: "rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100",
+              children: tag
+            },
+            tag
+          )) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-bf-cream/42", children: "Не указано" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Discord" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DiscordClouds, { displayTag: player.discordDisplayTag })
+        ] })
+      ] })
+    ] }, player.id)) })
+  ] });
+}
+function TeamPage({ players, staffMembers }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TeamBanner, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerProfiles, { players, showHeading: false }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(StaffDirectory, { staffMembers })
+  ] });
+}
+function formatPublishedDate(value) {
+  if (!value) return "";
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(new Date(value));
+}
+const UPDATE_TYPE_STYLES = {
+  Hotfix: "border-amber-300/30 bg-amber-500/10 text-amber-100",
+  "Bug Fix": "border-rose-300/30 bg-rose-500/10 text-rose-100",
+  "Season / Event": "border-purple-300/30 bg-purple-500/10 text-purple-100",
+  "Patch Notes": "border-sky-300/30 bg-sky-500/10 text-sky-100",
+  Update: "border-bf-cream/10 bg-black/20 text-bf-cream/72"
+};
+function UpdateTypeBadge({ typeLabel, className = "" }) {
+  const style = UPDATE_TYPE_STYLES[typeLabel] || UPDATE_TYPE_STYLES.Update;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${style} ${className}`, children: typeLabel });
+}
+function UpdatesBanner() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/25 px-6 py-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid gap-3 lg:max-w-[520px]", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Blizzard" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl", children: "Обновления Overwatch" })
+  ] }) });
+}
+function UpdateContentBlock({ block }) {
+  if (block.type === "heading") {
+    if (block.level <= 4) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "mt-5 text-lg font-black uppercase text-slate-100 first:mt-0", children: block.text });
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "mt-4 text-sm font-black uppercase text-bf-orange", children: block.text });
+  }
+  if (block.type === "paragraph") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm leading-6 text-bf-cream/74", children: block.text });
+  }
+  if (block.type === "bullet_list") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "grid gap-2 pl-5 text-sm leading-6 text-bf-cream/78", children: block.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "list-disc", children: item }, item)) });
+  }
+  if (block.type === "image") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 flex items-center gap-3 rounded-xl border border-bf-cream/10 bg-[#101620] p-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-14 w-14 overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            className: "h-full w-full object-cover opacity-90",
+            src: block.src,
+            alt: block.alt || ""
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.12),rgba(16,22,32,0.42))]" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-bold text-bf-cream/72", children: block.alt || "Hero update" })
+    ] });
+  }
+  return null;
+}
+function UpdatesPage({
+  updates,
+  selectedSlug,
+  selectedUpdate,
+  onSelect,
+  isLoadingList,
+  isLoadingDetail,
+  error
+}) {
+  const visibleUpdates = updates.slice(0, 10);
+  const hasUpdates = visibleUpdates.length > 0;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(UpdatesBanner, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mt-4 grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex items-center gap-2 text-sm font-black uppercase text-slate-100", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BookText, { size: 18, className: "text-bf-orange" }),
+          "Последние обновления"
+        ] }),
+        isLoadingList ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Загружаю список обновлений..." }) : error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-6 text-sm text-red-100", children: error }) : hasUpdates ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-3", children: visibleUpdates.map((update) => {
+          const isActive = update.slug === selectedSlug;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => onSelect(update.slug),
+              className: `grid gap-3 overflow-hidden rounded-xl border p-4 text-left transition ${isActive ? "border-bf-orange/45 bg-bf-orange/10 shadow-[0_0_18px_rgba(216,109,56,0.10)]" : "border-bf-cream/10 bg-black/18 hover:border-bf-orange/25 hover:bg-bf-steel/10"}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid items-start gap-2 sm:grid-cols-[minmax(0,1fr)_auto]", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "line-clamp-2 break-words text-base font-black uppercase leading-tight text-slate-100", children: update.title }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-xs font-semibold text-bf-cream/48", children: formatPublishedDate(update.publishedAt) })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateTypeBadge, { typeLabel: update.typeLabel, className: "justify-self-start sm:justify-self-end" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "line-clamp-3 text-sm leading-5 text-bf-cream/64", children: update.summary || "Без краткого описания." })
+              ]
+            },
+            update.slug
+          );
+        }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Обновления еще не синхронизированы." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glass-panel rounded-xl p-4", children: isLoadingDetail ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Загружаю детали патча..." }) : selectedUpdate ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateTypeBadge, { typeLabel: selectedUpdate.typeLabel }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold uppercase tracking-wide text-bf-cream/44", children: formatPublishedDate(selectedUpdate.publishedAt) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-3 break-words text-3xl font-black uppercase leading-tight text-slate-100", children: selectedUpdate.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-3 max-w-[780px] text-sm leading-6 text-bf-cream/70", children: selectedUpdate.summary || "Без краткого описания." })
+          ] }),
+          selectedUpdate.heroImageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-48 w-full overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                className: "h-full w-full object-cover opacity-88",
+                src: selectedUpdate.heroImageUrl,
+                alt: selectedUpdate.title
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.18),rgba(16,22,32,0.5))]" })
+          ] }) : null
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4", children: selectedUpdate.contentJson.length ? selectedUpdate.contentJson.map((block, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateContentBlock, { block }, `${block.type}-${index}-${block.text || block.src || "block"}`)) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-bf-cream/60", children: "Контент патча не найден." }) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "a",
+          {
+            className: "inline-flex min-h-11 items-center gap-2 rounded-xl border border-bf-cream/10 bg-black/18 px-4 font-black text-slate-100 transition hover:border-bf-orange/35 hover:text-bf-orange",
+            href: selectedUpdate.sourceUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { size: 17 }),
+              "Открыть на Blizzard"
+            ]
+          }
+        ) })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Выберите обновление из списка." }) })
+    ] })
+  ] });
+}
 const EVENT_STYLES = {
   scrim: {
     icon: Swords,
@@ -45371,27 +45589,6 @@ function buildDayEventMap(dayEventTypes = []) {
     map2.set(Number(dayEvent.dayOfWeek), dayEvent);
   });
   return map2;
-}
-function formatPublishedDate(value) {
-  if (!value) return "";
-  return new Intl.DateTimeFormat("ru-RU", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  }).format(new Date(value));
-}
-const UPDATE_TYPE_STYLES = {
-  Hotfix: "border-amber-300/30 bg-amber-500/10 text-amber-100",
-  "Bug Fix": "border-rose-300/30 bg-rose-500/10 text-rose-100",
-  "Season / Event": "border-purple-300/30 bg-purple-500/10 text-purple-100",
-  "Patch Notes": "border-sky-300/30 bg-sky-500/10 text-sky-100",
-  Update: "border-bf-cream/10 bg-black/20 text-bf-cream/72"
-};
-function DiscordClouds({ displayTag }) {
-  if (!displayTag) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-bf-cream/42", children: "Не подключен" });
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100", children: displayTag }) });
 }
 function CommentTooltip({ tooltip }) {
   const needsEmergencyWrap = /\S{30,}/.test(tooltip.text || "");
@@ -45572,12 +45769,6 @@ function HeroBanner({ canAdd, onAdd }) {
         ]
       }
     ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70", children: "Аккаунт не привязан к игроку" }) })
-  ] }) });
-}
-function TeamBanner() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid gap-2 lg:max-w-[520px]", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Black Flock team" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "whitespace-nowrap text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl", children: "Состав команды" })
   ] }) });
 }
 function PlayerRow({ player }) {
@@ -45764,197 +45955,6 @@ function RosterTable({
       "Дата последнего обновления: ",
       lastUpdated
     ] }) })
-  ] });
-}
-function StaffDirectory({ staffMembers }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Operations" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-xl font-black uppercase text-slate-100", children: "Организаторский состав" })
-    ] }),
-    staffMembers.length ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4 lg:grid-cols-2 xl:grid-cols-3", children: staffMembers.map((staffMember) => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Avatar, { src: staffMember.avatarUrl, alt: staffMember.name, fallbackLabel: staffMember.name, className: "h-12 w-12 object-cover" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate text-base font-black text-slate-100", children: staffMember.name }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 flex flex-wrap gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(RoleBadge, { role: staffMember.role, color: staffMember.roleColor }),
-            staffMember.canEdit ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange", children: "Ваш профиль" }) : null
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Discord" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DiscordClouds, { displayTag: staffMember.discordDisplayTag })
-      ] })
-    ] }, staffMember.id)) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-dashed border-bf-cream/12 bg-black/20 px-4 py-6 text-sm text-bf-cream/46", children: "Организаторский состав пока не заполнен в админке." })
-  ] });
-}
-function PlayerProfiles({ players, showHeading = true }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
-    showHeading ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Player profiles" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-xl font-black uppercase text-slate-100", children: "Актуальные игровые профили" })
-    ] }) : null,
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4 lg:grid-cols-2 xl:grid-cols-3", children: players.map((player) => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "rounded-xl border border-bf-cream/10 bg-black/24 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.16)]", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-start justify-between gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex min-w-0 items-center gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Avatar, { src: player.avatarUrl, alt: player.name, fallbackLabel: player.name, className: "h-12 w-12 object-cover" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate text-base font-black text-slate-100", children: player.name }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 flex flex-wrap gap-1.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(RoleBadge, { role: player.role, color: player.roleColor }),
-            player.canEdit ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-orange/30 bg-bf-orange/10 px-2 py-0.5 text-[11px] font-bold text-bf-orange", children: "Ваш профиль" }) : null
-          ] })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 grid gap-3 text-sm", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Battle.net" }),
-          player.battleTags.length ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: player.battleTags.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "span",
-            {
-              className: "rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100",
-              children: tag
-            },
-            tag
-          )) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-bf-cream/42", children: "Не указано" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/28 px-4 py-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: "Discord" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DiscordClouds, { displayTag: player.discordDisplayTag })
-        ] })
-      ] })
-    ] }, player.id)) })
-  ] });
-}
-function TeamPage({ players, staffMembers }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TeamBanner, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerProfiles, { players, showHeading: false }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(StaffDirectory, { staffMembers })
-  ] });
-}
-function UpdateTypeBadge({ typeLabel, className = "" }) {
-  const style = UPDATE_TYPE_STYLES[typeLabel] || UPDATE_TYPE_STYLES.Update;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${style} ${className}`, children: typeLabel });
-}
-function UpdatesBanner() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/25 px-6 py-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid gap-3 lg:max-w-[520px]", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Blizzard" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-4xl font-black uppercase leading-none text-slate-100 max-md:text-3xl", children: "Обновления Overwatch" })
-  ] }) });
-}
-function UpdateContentBlock({ block }) {
-  if (block.type === "heading") {
-    if (block.level <= 4) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "mt-5 text-lg font-black uppercase text-slate-100 first:mt-0", children: block.text });
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "mt-4 text-sm font-black uppercase text-bf-orange", children: block.text });
-  }
-  if (block.type === "paragraph") {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm leading-6 text-bf-cream/74", children: block.text });
-  }
-  if (block.type === "bullet_list") {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "grid gap-2 pl-5 text-sm leading-6 text-bf-cream/78", children: block.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "list-disc", children: item }, item)) });
-  }
-  if (block.type === "image") {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 flex items-center gap-3 rounded-xl border border-bf-cream/10 bg-[#101620] p-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-14 w-14 overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
-          {
-            className: "h-full w-full object-cover opacity-90",
-            src: block.src,
-            alt: block.alt || ""
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.12),rgba(16,22,32,0.42))]" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-bold text-bf-cream/72", children: block.alt || "Hero update" })
-    ] });
-  }
-  return null;
-}
-function UpdatesPage({
-  updates,
-  selectedSlug,
-  selectedUpdate,
-  onSelect,
-  isLoadingList,
-  isLoadingDetail,
-  error
-}) {
-  const visibleUpdates = updates.slice(0, 10);
-  const hasUpdates = visibleUpdates.length > 0;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(UpdatesBanner, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mt-4 grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex items-center gap-2 text-sm font-black uppercase text-slate-100", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(BookText, { size: 18, className: "text-bf-orange" }),
-          "Последние обновления"
-        ] }),
-        isLoadingList ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Загружаю список обновлений..." }) : error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-6 text-sm text-red-100", children: error }) : hasUpdates ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-3", children: visibleUpdates.map((update) => {
-          const isActive = update.slug === selectedSlug;
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              type: "button",
-              onClick: () => onSelect(update.slug),
-              className: `grid gap-3 overflow-hidden rounded-xl border p-4 text-left transition ${isActive ? "border-bf-orange/45 bg-bf-orange/10 shadow-[0_0_18px_rgba(216,109,56,0.10)]" : "border-bf-cream/10 bg-black/18 hover:border-bf-orange/25 hover:bg-bf-steel/10"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid items-start gap-2 sm:grid-cols-[minmax(0,1fr)_auto]", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "line-clamp-2 break-words text-base font-black uppercase leading-tight text-slate-100", children: update.title }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-xs font-semibold text-bf-cream/48", children: formatPublishedDate(update.publishedAt) })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateTypeBadge, { typeLabel: update.typeLabel, className: "justify-self-start sm:justify-self-end" })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "line-clamp-3 text-sm leading-5 text-bf-cream/64", children: update.summary || "Без краткого описания." })
-              ]
-            },
-            update.slug
-          );
-        }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Обновления еще не синхронизированы." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glass-panel rounded-xl p-4", children: isLoadingDetail ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Загружаю детали патча..." }) : selectedUpdate ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-3", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateTypeBadge, { typeLabel: selectedUpdate.typeLabel }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold uppercase tracking-wide text-bf-cream/44", children: formatPublishedDate(selectedUpdate.publishedAt) })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-3 break-words text-3xl font-black uppercase leading-tight text-slate-100", children: selectedUpdate.title }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-3 max-w-[780px] text-sm leading-6 text-bf-cream/70", children: selectedUpdate.summary || "Без краткого описания." })
-          ] }),
-          selectedUpdate.heroImageUrl ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-48 w-full overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101620]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                className: "h-full w-full object-cover opacity-88",
-                src: selectedUpdate.heroImageUrl,
-                alt: selectedUpdate.title
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,22,32,0.18),rgba(16,22,32,0.5))]" })
-          ] }) : null
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-4", children: selectedUpdate.contentJson.length ? selectedUpdate.contentJson.map((block, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(UpdateContentBlock, { block }, `${block.type}-${index}-${block.text || block.src || "block"}`)) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-bf-cream/60", children: "Контент патча не найден." }) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "a",
-          {
-            className: "inline-flex min-h-11 items-center gap-2 rounded-xl border border-bf-cream/10 bg-black/18 px-4 font-black text-slate-100 transition hover:border-bf-orange/35 hover:text-bf-orange",
-            href: selectedUpdate.sourceUrl,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { size: 17 }),
-              "Открыть на Blizzard"
-            ]
-          }
-        ) })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-6 text-sm text-bf-cream/62", children: "Выберите обновление из списка." }) })
-    ] })
   ] });
 }
 function ProfilePage({ user, profile, profileType, onSaved }) {

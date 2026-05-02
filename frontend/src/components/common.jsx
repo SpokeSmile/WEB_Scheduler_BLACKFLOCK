@@ -45,3 +45,17 @@ export function RoleBadge({ role, color, className = '' }) {
     </span>
   );
 }
+
+export function DiscordClouds({ displayTag }) {
+  if (!displayTag) {
+    return <div className="mt-2 text-bf-cream/42">Не подключен</div>;
+  }
+
+  return (
+    <div className="mt-2 flex flex-wrap gap-2">
+      <span className="rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100">
+        {displayTag}
+      </span>
+    </div>
+  );
+}
