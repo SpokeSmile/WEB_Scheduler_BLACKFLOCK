@@ -7,7 +7,7 @@ from .models import OverwatchStatsCache, Player
 
 OVERFAST_BASE_URL = 'https://overfast-api.tekrop.fr'
 OVERFAST_TIMEOUT = 18
-OVERFAST_MODES = [OverwatchStatsCache.COMPETITIVE, OverwatchStatsCache.QUICKPLAY]
+OVERFAST_MODES = [OverwatchStatsCache.COMPETITIVE]
 RANK_DIVISIONS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandmaster', 'champion']
 RANK_LABELS = {
     'bronze': 'Bronze',
@@ -193,6 +193,16 @@ def rank_label_from_score(score):
     return f'{RANK_LABELS[division]} {tier}'
 
 
+def rank_rating_from_score(score):
+    if score is None:
+        return None
+    max_score = len(RANK_DIVISIONS) * 5 - 1
+    normalized_score = max(0, min(float(score), max_score))
+    if normalized_score >= max_score:
+        return 5000
+    return round(1000 + normalized_score * 100)
+
+
 def serialize_rank(rank, role=''):
     score = rank_score(rank)
     if score is None:
@@ -208,6 +218,7 @@ def serialize_rank(rank, role=''):
         'rankIcon': rank.get('rank_icon') or '',
         'roleIcon': rank.get('role_icon') or '',
         'score': score,
+        'rating': rank_rating_from_score(score),
     }
 
 
@@ -242,6 +253,38 @@ def hero_label(hero_key):
     return (hero_key or '').replace('-', ' ').replace('_', ' ').title()
 
 
+def hero_time_played(payload):
+    return safe_number(payload.get('time_played'))
+
+
+def average_eliminations(general):
+    average = general.get('average') or {}
+    total = general.get('total') or {}
+    explicit_average = safe_number(average.get('eliminations'), None)
+    if explicit_average is not None:
+        return explicit_average
+    games_played = safe_number(general.get('games_played'))
+    if not games_played:
+        return 0
+    return round(safe_number(total.get('eliminations')) / games_played, 1)
+
+
+def main_hero_from_stats(stats):
+    heroes = stats.get('heroes') or {}
+    if not heroes:
+        return None
+    hero_key, payload = max(
+        heroes.items(),
+        key=lambda item: (hero_time_played(item[1]), safe_number(item[1].get('games_played'))),
+    )
+    return {
+        'hero': hero_key,
+        'heroLabel': hero_label(hero_key),
+        'timePlayed': hero_time_played(payload),
+        'matches': safe_number(payload.get('games_played')),
+    }
+
+
 def serialize_player_row(player, cache):
     status = cache.status if cache else OverwatchStatsCache.STATUS_ERROR
     stats = cache.stats_json if cache and cache.stats_json else {}
@@ -254,6 +297,7 @@ def serialize_player_row(player, cache):
     deaths = safe_number(total.get('deaths'))
     eliminations = safe_number(total.get('eliminations'))
     rank = select_rank(summary, player)
+    main_hero = main_hero_from_stats(stats)
     connection = player.discord_connection
 
     return {
@@ -275,8 +319,9 @@ def serialize_player_row(player, cache):
         'losses': losses,
         'timePlayed': safe_number(general.get('time_played')),
         'kd': ratio(eliminations, deaths),
-        'avgDamage': safe_number(average.get('damage')),
+        'avgEliminations': average_eliminations(general),
         'avgDeaths': safe_number(average.get('deaths')),
+        'mainHero': main_hero,
         'recentGamesAvailable': False,
         'recentGamesLabel': 'Недоступно',
     }
@@ -294,19 +339,15 @@ def aggregate_top_heroes(caches):
                 'matches': 0,
                 'wins': 0,
                 'losses': 0,
-                'damageTotal': 0,
-                'damageSamples': 0,
+                'timePlayed': 0,
             })
             matches = safe_number(payload.get('games_played'))
             wins = safe_number(payload.get('games_won'))
             losses = safe_number(payload.get('games_lost'))
-            avg_damage = safe_number((payload.get('average') or {}).get('damage'))
             entry['matches'] += matches
             entry['wins'] += wins
             entry['losses'] += losses
-            if matches:
-                entry['damageTotal'] += avg_damage * matches
-                entry['damageSamples'] += matches
+            entry['timePlayed'] += hero_time_played(payload)
 
     rows = []
     for entry in heroes.values():
@@ -318,9 +359,9 @@ def aggregate_top_heroes(caches):
             'wins': entry['wins'],
             'losses': entry['losses'],
             'winrate': round((entry['wins'] / matches) * 100, 1) if matches else 0,
-            'avgDamage': round(entry['damageTotal'] / entry['damageSamples'], 1) if entry['damageSamples'] else 0,
+            'timePlayed': entry['timePlayed'],
         })
-    return sorted(rows, key=lambda item: (item['matches'], item['winrate']), reverse=True)[:5]
+    return sorted(rows, key=lambda item: (item['timePlayed'], item['matches'], item['winrate']), reverse=True)[:5]
 
 
 def rank_distribution(player_rows):
@@ -362,7 +403,12 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         mode = OverwatchStatsCache.COMPETITIVE
 
     players = list(Player.objects.select_related('user__discord_connection').order_by('sort_order', 'id'))
-    caches = list(OverwatchStatsCache.objects.select_related('player').filter(player__in=players))
+    caches = list(
+        OverwatchStatsCache.objects.select_related('player').filter(
+            player__in=players,
+            mode__in=OVERFAST_MODES,
+        )
+    )
     cache_map = {(cache.player_id, cache.mode): cache for cache in caches}
     selected_caches = [cache for cache in caches if cache.mode == mode]
     rows = [
@@ -374,15 +420,11 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
     team_summary.update({
         'averageRank': rank_label_from_score(sum(rank_scores) / len(rank_scores)) if rank_scores else '—',
         'averageRankScore': round(sum(rank_scores) / len(rank_scores), 1) if rank_scores else None,
+        'averageRating': rank_rating_from_score(sum(rank_scores) / len(rank_scores)) if rank_scores else None,
         'bestStreak': 'Недоступно',
         'worstStreak': 'Недоступно',
         'unavailablePlayers': len([row for row in rows if row['status'] != OverwatchStatsCache.STATUS_READY]),
     })
-
-    winrate_by_mode = []
-    for item_mode, label in [(OverwatchStatsCache.COMPETITIVE, 'Competitive'), (OverwatchStatsCache.QUICKPLAY, 'Quickplay')]:
-        summary = weighted_mode_summary([cache for cache in caches if cache.mode == item_mode])
-        winrate_by_mode.append({'mode': item_mode, 'label': label, 'winrate': summary['winrate'], 'matches': summary['matches']})
 
     latest_cache = max([cache for cache in caches if cache.fetched_at], key=lambda item: item.fetched_at, default=None)
 
@@ -395,7 +437,6 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         'players': rows,
         'team': team_summary,
         'rankDistribution': rank_distribution(rows),
-        'winrateByMode': winrate_by_mode,
         'topHeroes': aggregate_top_heroes(selected_caches),
         'unavailableMessage': 'История матчей, серии и настоящий SR недоступны в OverFast API.',
     }

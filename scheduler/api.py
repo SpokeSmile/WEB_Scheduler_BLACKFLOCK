@@ -348,7 +348,7 @@ def game_update_detail(request, slug):
 
 def clean_overwatch_stats_mode(request):
     mode = request.GET.get('mode') or request.POST.get('mode') or OverwatchStatsCache.COMPETITIVE
-    if mode not in {OverwatchStatsCache.COMPETITIVE, OverwatchStatsCache.QUICKPLAY}:
+    if mode != OverwatchStatsCache.COMPETITIVE:
         return OverwatchStatsCache.COMPETITIVE
     return mode
 

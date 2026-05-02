@@ -20661,26 +20661,26 @@ function svgPropertiesAndEvents(obj) {
   }
   return result;
 }
-var _excluded$l = ["children", "width", "height", "viewBox", "className", "style", "title", "desc"];
-function _extends$p() {
-  return _extends$p = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$j = ["children", "width", "height", "viewBox", "className", "style", "title", "desc"];
+function _extends$n() {
+  return _extends$n = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$p.apply(null, arguments);
+  }, _extends$n.apply(null, arguments);
 }
-function _objectWithoutProperties$l(e, t) {
+function _objectWithoutProperties$j(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$l(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$j(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$l(r2, e) {
+function _objectWithoutPropertiesLoose$j(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -20699,7 +20699,7 @@ var Surface = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     style,
     title,
     desc
-  } = props, others = _objectWithoutProperties$l(props, _excluded$l);
+  } = props, others = _objectWithoutProperties$j(props, _excluded$j);
   var svgView = viewBox || {
     width,
     height,
@@ -20707,7 +20707,7 @@ var Surface = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     y: 0
   };
   var layerClass = clsx("recharts-surface", className);
-  return /* @__PURE__ */ reactExports.createElement("svg", _extends$p({}, svgPropertiesAndEvents(others), {
+  return /* @__PURE__ */ reactExports.createElement("svg", _extends$n({}, svgPropertiesAndEvents(others), {
     className: layerClass,
     width,
     height,
@@ -20716,26 +20716,26 @@ var Surface = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref
   }), /* @__PURE__ */ reactExports.createElement("title", null, title), /* @__PURE__ */ reactExports.createElement("desc", null, desc), children);
 });
-var _excluded$k = ["children", "className"];
-function _extends$o() {
-  return _extends$o = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$i = ["children", "className"];
+function _extends$m() {
+  return _extends$m = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$o.apply(null, arguments);
+  }, _extends$m.apply(null, arguments);
 }
-function _objectWithoutProperties$k(e, t) {
+function _objectWithoutProperties$i(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$k(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$i(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$k(r2, e) {
+function _objectWithoutPropertiesLoose$i(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -20748,9 +20748,9 @@ var Layer = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   var {
     children,
     className
-  } = props, others = _objectWithoutProperties$k(props, _excluded$k);
+  } = props, others = _objectWithoutProperties$i(props, _excluded$i);
   var layerClass = clsx("recharts-layer", className);
-  return /* @__PURE__ */ reactExports.createElement("g", _extends$o({
+  return /* @__PURE__ */ reactExports.createElement("g", _extends$m({
     className: layerClass
   }, svgPropertiesAndEvents(others), {
     ref
@@ -22018,17 +22018,17 @@ function isNotNil(value) {
 }
 function noop$2() {
 }
-var _excluded$j = ["type", "size", "sizeType"];
-function _extends$n() {
-  return _extends$n = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$h = ["type", "size", "sizeType"];
+function _extends$l() {
+  return _extends$l = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$n.apply(null, arguments);
+  }, _extends$l.apply(null, arguments);
 }
-function ownKeys$F(e, r2) {
+function ownKeys$B(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -22038,25 +22038,25 @@ function ownKeys$F(e, r2) {
   }
   return t;
 }
-function _objectSpread$F(e) {
+function _objectSpread$B(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$F(Object(t), true).forEach(function(r3) {
-      _defineProperty$H(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$F(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$B(Object(t), true).forEach(function(r3) {
+      _defineProperty$D(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$B(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$H(e, r2, t) {
-  return (r2 = _toPropertyKey$H(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$D(e, r2, t) {
+  return (r2 = _toPropertyKey$D(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$H(t) {
-  var i = _toPrimitive$H(t, "string");
+function _toPropertyKey$D(t) {
+  var i = _toPrimitive$D(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$H(t, r2) {
+function _toPrimitive$D(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -22066,16 +22066,16 @@ function _toPrimitive$H(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$j(e, t) {
+function _objectWithoutProperties$h(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$j(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$h(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$j(r2, e) {
+function _objectWithoutPropertiesLoose$h(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -22129,8 +22129,8 @@ var Symbols = (_ref2) => {
     type = "circle",
     size = 64,
     sizeType = "area"
-  } = _ref2, rest = _objectWithoutProperties$j(_ref2, _excluded$j);
-  var props = _objectSpread$F(_objectSpread$F({}, rest), {}, {
+  } = _ref2, rest = _objectWithoutProperties$h(_ref2, _excluded$h);
+  var props = _objectSpread$B(_objectSpread$B({}, rest), {}, {
     type,
     size,
     sizeType
@@ -22155,7 +22155,7 @@ var Symbols = (_ref2) => {
   } = props;
   var filteredProps = svgPropertiesAndEvents(props);
   if (isNumber(cx) && isNumber(cy) && isNumber(size)) {
-    return /* @__PURE__ */ reactExports.createElement("path", _extends$n({}, filteredProps, {
+    return /* @__PURE__ */ reactExports.createElement("path", _extends$l({}, filteredProps, {
       className: clsx("recharts-symbols", className),
       transform: "translate(".concat(cx, ", ").concat(cy, ")"),
       d: getPath2()
@@ -22204,7 +22204,7 @@ var adaptEventsOfChild = (props, data, index) => {
   });
   return out;
 };
-function ownKeys$E(e, r2) {
+function ownKeys$A(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -22214,25 +22214,25 @@ function ownKeys$E(e, r2) {
   }
   return t;
 }
-function _objectSpread$E(e) {
+function _objectSpread$A(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$E(Object(t), true).forEach(function(r3) {
-      _defineProperty$G(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$E(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$A(Object(t), true).forEach(function(r3) {
+      _defineProperty$C(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$A(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$G(e, r2, t) {
-  return (r2 = _toPropertyKey$G(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$C(e, r2, t) {
+  return (r2 = _toPropertyKey$C(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$G(t) {
-  var i = _toPrimitive$G(t, "string");
+function _toPropertyKey$C(t) {
+  var i = _toPrimitive$C(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$G(t, r2) {
+function _toPrimitive$C(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -22243,7 +22243,7 @@ function _toPrimitive$G(t, r2) {
   return ("string" === r2 ? String : Number)(t);
 }
 function resolveDefaultProps(realProps, defaultProps) {
-  var resolvedProps = _objectSpread$E({}, realProps);
+  var resolvedProps = _objectSpread$A({}, realProps);
   var dp = defaultProps;
   var keys = Object.keys(defaultProps);
   var withDefaults = keys.reduce((acc, key) => {
@@ -25919,7 +25919,7 @@ function isWellBehavedNumber(n) {
 function isPositiveNumber(n) {
   return typeof n === "number" && n > 0 && Number.isFinite(n);
 }
-function ownKeys$D(e, r2) {
+function ownKeys$z(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -25929,25 +25929,25 @@ function ownKeys$D(e, r2) {
   }
   return t;
 }
-function _objectSpread$D(e) {
+function _objectSpread$z(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$D(Object(t), true).forEach(function(r3) {
-      _defineProperty$F(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$D(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$z(Object(t), true).forEach(function(r3) {
+      _defineProperty$B(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$z(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$F(e, r2, t) {
-  return (r2 = _toPropertyKey$F(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$B(e, r2, t) {
+  return (r2 = _toPropertyKey$B(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$F(t) {
-  var i = _toPrimitive$F(t, "string");
+function _toPropertyKey$B(t) {
+  var i = _toPrimitive$B(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$F(t, r2) {
+function _toPrimitive$B(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -25981,12 +25981,12 @@ var appendOffsetOfLegend = (offset, legendSettings, legendSize) => {
       layout: layout2
     } = legendSettings;
     if ((layout2 === "vertical" || layout2 === "horizontal" && verticalAlign === "middle") && align !== "center" && isNumber(offset[align])) {
-      return _objectSpread$D(_objectSpread$D({}, offset), {}, {
+      return _objectSpread$z(_objectSpread$z({}, offset), {}, {
         [align]: offset[align] + (boxWidth || 0)
       });
     }
     if ((layout2 === "horizontal" || layout2 === "vertical" && align === "center") && verticalAlign !== "middle" && isNumber(offset[verticalAlign])) {
-      return _objectSpread$D(_objectSpread$D({}, offset), {}, {
+      return _objectSpread$z(_objectSpread$z({}, offset), {}, {
         [verticalAlign]: offset[verticalAlign] + (boxHeight || 0)
       });
     }
@@ -26314,7 +26314,7 @@ function getTooltipEntry(_ref4) {
     value,
     name
   } = _ref4;
-  return _objectSpread$D(_objectSpread$D({}, tooltipEntrySettings), {}, {
+  return _objectSpread$z(_objectSpread$z({}, tooltipEntrySettings), {}, {
     dataKey,
     payload,
     value,
@@ -26358,7 +26358,7 @@ var selectAllYAxes = createSelector((state) => state.cartesianAxis.yAxis, (yAxis
 var DATA_ITEM_INDEX_ATTRIBUTE_NAME = "data-recharts-item-index";
 var DATA_ITEM_GRAPHICAL_ITEM_ID_ATTRIBUTE_NAME = "data-recharts-item-id";
 var DEFAULT_Y_AXIS_WIDTH = 60;
-function ownKeys$C(e, r2) {
+function ownKeys$y(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -26368,25 +26368,25 @@ function ownKeys$C(e, r2) {
   }
   return t;
 }
-function _objectSpread$C(e) {
+function _objectSpread$y(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$C(Object(t), true).forEach(function(r3) {
-      _defineProperty$E(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$C(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$y(Object(t), true).forEach(function(r3) {
+      _defineProperty$A(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$y(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$E(e, r2, t) {
-  return (r2 = _toPropertyKey$E(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$A(e, r2, t) {
+  return (r2 = _toPropertyKey$A(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$E(t) {
-  var i = _toPrimitive$E(t, "string");
+function _toPropertyKey$A(t) {
+  var i = _toPrimitive$A(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$E(t, r2) {
+function _toPrimitive$A(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -26444,13 +26444,13 @@ var selectChartOffsetInternal = createSelector([selectChartWidth, selectChartHei
     top: (margin.top || 0) + topAxesOffset,
     bottom: (margin.bottom || 0) + bottomAxesOffset
   };
-  var offset = _objectSpread$C(_objectSpread$C({}, offsetV), offsetH);
+  var offset = _objectSpread$y(_objectSpread$y({}, offsetV), offsetH);
   var brushBottom = offset.bottom;
   offset.bottom += brushHeight;
   offset = appendOffsetOfLegend(offset, legendSettings, legendSize);
   var offsetWidth = chartWidth - offset.left - offset.right;
   var offsetHeight = chartHeight - offset.top - offset.bottom;
-  return _objectSpread$C(_objectSpread$C({
+  return _objectSpread$y(_objectSpread$y({
     brushBottom
   }, offset), {}, {
     // never return negative values for height and width
@@ -26739,16 +26739,16 @@ function getDefaultWidthAndHeight(_ref2) {
     height: calculatedHeight
   };
 }
-function _extends$m() {
-  return _extends$m = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$k() {
+  return _extends$k = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$m.apply(null, arguments);
+  }, _extends$k.apply(null, arguments);
 }
-function ownKeys$B(e, r2) {
+function ownKeys$x(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -26758,25 +26758,25 @@ function ownKeys$B(e, r2) {
   }
   return t;
 }
-function _objectSpread$B(e) {
+function _objectSpread$x(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$B(Object(t), true).forEach(function(r3) {
-      _defineProperty$D(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$B(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$x(Object(t), true).forEach(function(r3) {
+      _defineProperty$z(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$x(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$D(e, r2, t) {
-  return (r2 = _toPropertyKey$D(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$z(e, r2, t) {
+  return (r2 = _toPropertyKey$z(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$D(t) {
-  var i = _toPrimitive$D(t, "string");
+function _toPropertyKey$z(t) {
+  var i = _toPrimitive$z(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$D(t, r2) {
+function _toPrimitive$z(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -26901,7 +26901,7 @@ var SizeDetectorContainer = /* @__PURE__ */ reactExports.forwardRef((_ref2, ref)
   return /* @__PURE__ */ reactExports.createElement("div", {
     id: id2 ? "".concat(id2) : void 0,
     className: clsx("recharts-responsive-container", className),
-    style: _objectSpread$B(_objectSpread$B({}, style), {}, {
+    style: _objectSpread$x(_objectSpread$x({}, style), {}, {
       width,
       height,
       minWidth,
@@ -26947,7 +26947,7 @@ var ResponsiveContainer = /* @__PURE__ */ reactExports.forwardRef((props, ref) =
       height: calculatedHeight
     }, props.children);
   }
-  return /* @__PURE__ */ reactExports.createElement(SizeDetectorContainer, _extends$m({}, props, {
+  return /* @__PURE__ */ reactExports.createElement(SizeDetectorContainer, _extends$k({}, props, {
     width,
     height,
     ref
@@ -28122,16 +28122,16 @@ function propsAreEqual(prevProps, nextProps) {
   }
   return true;
 }
-function _extends$l() {
-  return _extends$l = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$j() {
+  return _extends$j = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$l.apply(null, arguments);
+  }, _extends$j.apply(null, arguments);
 }
-function ownKeys$A(e, r2) {
+function ownKeys$w(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28141,25 +28141,25 @@ function ownKeys$A(e, r2) {
   }
   return t;
 }
-function _objectSpread$A(e) {
+function _objectSpread$w(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$A(Object(t), true).forEach(function(r3) {
-      _defineProperty$C(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$A(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$w(Object(t), true).forEach(function(r3) {
+      _defineProperty$y(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$w(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$C(e, r2, t) {
-  return (r2 = _toPropertyKey$C(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$y(e, r2, t) {
+  return (r2 = _toPropertyKey$y(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$C(t) {
-  var i = _toPrimitive$C(t, "string");
+function _toPropertyKey$y(t) {
+  var i = _toPrimitive$y(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$C(t, r2) {
+function _toPrimitive$y(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28239,7 +28239,7 @@ var DefaultTooltipContent = (props) => {
             return null;
           }
         }
-        var finalItemStyle = _objectSpread$A(_objectSpread$A({}, defaultDefaultTooltipContentProps.itemStyle), {}, {
+        var finalItemStyle = _objectSpread$w(_objectSpread$w({}, defaultDefaultTooltipContentProps.itemStyle), {}, {
           color: entry.color || defaultDefaultTooltipContentProps.itemStyle.color
         }, itemStyle);
         return /* @__PURE__ */ reactExports.createElement("li", {
@@ -28263,8 +28263,8 @@ var DefaultTooltipContent = (props) => {
     }
     return null;
   };
-  var finalStyle = _objectSpread$A(_objectSpread$A({}, defaultDefaultTooltipContentProps.contentStyle), contentStyle);
-  var finalLabelStyle = _objectSpread$A({
+  var finalStyle = _objectSpread$w(_objectSpread$w({}, defaultDefaultTooltipContentProps.contentStyle), contentStyle);
+  var finalLabelStyle = _objectSpread$w({
     margin: 0
   }, labelStyle);
   var hasLabel = !isNullish(label);
@@ -28278,7 +28278,7 @@ var DefaultTooltipContent = (props) => {
     role: "status",
     "aria-live": "assertive"
   } : {};
-  return /* @__PURE__ */ reactExports.createElement("div", _extends$l({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$j({
     className: wrapperCN,
     style: finalStyle
   }, accessibilityAttributes), /* @__PURE__ */ reactExports.createElement("p", {
@@ -28437,7 +28437,7 @@ function usePrefersReducedMotion() {
   }, []);
   return prefersReducedMotion2;
 }
-function ownKeys$z(e, r2) {
+function ownKeys$v(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28447,25 +28447,25 @@ function ownKeys$z(e, r2) {
   }
   return t;
 }
-function _objectSpread$z(e) {
+function _objectSpread$v(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$z(Object(t), true).forEach(function(r3) {
-      _defineProperty$B(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$z(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$v(Object(t), true).forEach(function(r3) {
+      _defineProperty$x(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$v(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$B(e, r2, t) {
-  return (r2 = _toPropertyKey$B(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$x(e, r2, t) {
+  return (r2 = _toPropertyKey$x(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$B(t) {
-  var i = _toPrimitive$B(t, "string");
+function _toPropertyKey$x(t) {
+  var i = _toPrimitive$x(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$B(t, r2) {
+function _toPrimitive$x(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28513,7 +28513,7 @@ function TooltipBoundingBoxImpl(props) {
     };
   }, [(_props$coordinate3 = props.coordinate) === null || _props$coordinate3 === void 0 ? void 0 : _props$coordinate3.x, (_props$coordinate4 = props.coordinate) === null || _props$coordinate4 === void 0 ? void 0 : _props$coordinate4.y]);
   if (state.dismissed && (((_props$coordinate$x2 = (_props$coordinate5 = props.coordinate) === null || _props$coordinate5 === void 0 ? void 0 : _props$coordinate5.x) !== null && _props$coordinate$x2 !== void 0 ? _props$coordinate$x2 : 0) !== state.dismissedAtCoordinate.x || ((_props$coordinate$y2 = (_props$coordinate6 = props.coordinate) === null || _props$coordinate6 === void 0 ? void 0 : _props$coordinate6.y) !== null && _props$coordinate$y2 !== void 0 ? _props$coordinate$y2 : 0) !== state.dismissedAtCoordinate.y)) {
-    setState(_objectSpread$z(_objectSpread$z({}, state), {}, {
+    setState(_objectSpread$v(_objectSpread$v({}, state), {}, {
       dismissed: false
     }));
   }
@@ -28534,7 +28534,7 @@ function TooltipBoundingBoxImpl(props) {
     useTranslate3d: props.useTranslate3d,
     viewBox: props.viewBox
   });
-  var positionStyle = props.hasPortalFromProps ? {} : _objectSpread$z(_objectSpread$z({
+  var positionStyle = props.hasPortalFromProps ? {} : _objectSpread$v(_objectSpread$v({
     transition: resolveTransitionProperty({
       prefersReducedMotion: prefersReducedMotion2,
       isAnimationActive: props.isAnimationActive,
@@ -28548,7 +28548,7 @@ function TooltipBoundingBoxImpl(props) {
     top: 0,
     left: 0
   });
-  var outerStyle = _objectSpread$z(_objectSpread$z({}, positionStyle), {}, {
+  var outerStyle = _objectSpread$v(_objectSpread$v({}, positionStyle), {}, {
     visibility: !state.dismissed && props.active && props.hasPayload ? "visible" : "hidden"
   }, props.wrapperStyle);
   return /* @__PURE__ */ reactExports.createElement("div", {
@@ -28565,16 +28565,16 @@ var useAccessibilityLayer = () => {
   var _useAppSelector;
   return (_useAppSelector = useAppSelector((state) => state.rootProps.accessibilityLayer)) !== null && _useAppSelector !== void 0 ? _useAppSelector : true;
 };
-function _extends$k() {
-  return _extends$k = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$i() {
+  return _extends$i = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$k.apply(null, arguments);
+  }, _extends$i.apply(null, arguments);
 }
-function ownKeys$y(e, r2) {
+function ownKeys$u(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28584,25 +28584,25 @@ function ownKeys$y(e, r2) {
   }
   return t;
 }
-function _objectSpread$y(e) {
+function _objectSpread$u(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$y(Object(t), true).forEach(function(r3) {
-      _defineProperty$A(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$y(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$u(Object(t), true).forEach(function(r3) {
+      _defineProperty$w(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$u(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$A(e, r2, t) {
-  return (r2 = _toPropertyKey$A(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$w(e, r2, t) {
+  return (r2 = _toPropertyKey$w(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$A(t) {
-  var i = _toPrimitive$A(t, "string");
+function _toPropertyKey$w(t) {
+  var i = _toPrimitive$w(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$A(t, r2) {
+function _toPrimitive$w(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28660,7 +28660,7 @@ var getPath$1 = (_ref2) => {
   var formatPoints = connectNulls ? points.filter(defined) : points;
   if (Array.isArray(baseLine)) {
     var _lineFunction;
-    var areaPoints = points.map((entry, index) => _objectSpread$y(_objectSpread$y({}, entry), {}, {
+    var areaPoints = points.map((entry, index) => _objectSpread$u(_objectSpread$u({}, entry), {}, {
       base: baseLine[index]
     }));
     if (layout2 === "vertical") {
@@ -28702,23 +28702,23 @@ var Curve = (props) => {
     connectNulls: props.connectNulls
   };
   var realPath = points && points.length ? getPath$1(getPathInput) : path;
-  return /* @__PURE__ */ reactExports.createElement("path", _extends$k({}, svgPropertiesNoEvents(props), adaptEventHandlers(props), {
+  return /* @__PURE__ */ reactExports.createElement("path", _extends$i({}, svgPropertiesNoEvents(props), adaptEventHandlers(props), {
     className: clsx("recharts-curve", className),
     d: realPath === null ? void 0 : realPath,
     ref: pathRef
   }));
 };
-var _excluded$i = ["x", "y", "top", "left", "width", "height", "className"];
-function _extends$j() {
-  return _extends$j = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$g = ["x", "y", "top", "left", "width", "height", "className"];
+function _extends$h() {
+  return _extends$h = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$j.apply(null, arguments);
+  }, _extends$h.apply(null, arguments);
 }
-function ownKeys$x(e, r2) {
+function ownKeys$t(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28728,25 +28728,25 @@ function ownKeys$x(e, r2) {
   }
   return t;
 }
-function _objectSpread$x(e) {
+function _objectSpread$t(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$x(Object(t), true).forEach(function(r3) {
-      _defineProperty$z(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$x(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$t(Object(t), true).forEach(function(r3) {
+      _defineProperty$v(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$t(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$z(e, r2, t) {
-  return (r2 = _toPropertyKey$z(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$v(e, r2, t) {
+  return (r2 = _toPropertyKey$v(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$z(t) {
-  var i = _toPrimitive$z(t, "string");
+function _toPropertyKey$v(t) {
+  var i = _toPrimitive$v(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$z(t, r2) {
+function _toPrimitive$v(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28756,16 +28756,16 @@ function _toPrimitive$z(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$i(e, t) {
+function _objectWithoutProperties$g(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$i(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$g(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$i(r2, e) {
+function _objectWithoutPropertiesLoose$g(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -28786,8 +28786,8 @@ var Cross = (_ref2) => {
     width = 0,
     height = 0,
     className
-  } = _ref2, rest = _objectWithoutProperties$i(_ref2, _excluded$i);
-  var props = _objectSpread$x({
+  } = _ref2, rest = _objectWithoutProperties$g(_ref2, _excluded$g);
+  var props = _objectSpread$t({
     x: x2,
     y: y2,
     top,
@@ -28798,7 +28798,7 @@ var Cross = (_ref2) => {
   if (!isNumber(x2) || !isNumber(y2) || !isNumber(width) || !isNumber(height) || !isNumber(top) || !isNumber(left)) {
     return null;
   }
-  return /* @__PURE__ */ reactExports.createElement("path", _extends$j({}, svgPropertiesAndEvents(props), {
+  return /* @__PURE__ */ reactExports.createElement("path", _extends$h({}, svgPropertiesAndEvents(props), {
     className: clsx("recharts-cross", className),
     d: getPath(x2, y2, width, height, top, left)
   }));
@@ -28814,7 +28814,7 @@ function getCursorRectangle(layout2, activeCoordinate, offset, tooltipAxisBandSi
     height: layout2 === "horizontal" ? offset.height - 1 : tooltipAxisBandSize
   };
 }
-function ownKeys$w(e, r2) {
+function ownKeys$s(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28824,25 +28824,25 @@ function ownKeys$w(e, r2) {
   }
   return t;
 }
-function _objectSpread$w(e) {
+function _objectSpread$s(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$w(Object(t), true).forEach(function(r3) {
-      _defineProperty$y(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$w(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$s(Object(t), true).forEach(function(r3) {
+      _defineProperty$u(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$s(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$y(e, r2, t) {
-  return (r2 = _toPropertyKey$y(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$u(e, r2, t) {
+  return (r2 = _toPropertyKey$u(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$y(t) {
-  var i = _toPrimitive$y(t, "string");
+function _toPropertyKey$u(t) {
+  var i = _toPrimitive$u(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$y(t, r2) {
+function _toPrimitive$u(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28855,10 +28855,10 @@ function _toPrimitive$y(t, r2) {
 var getDashCase = (name) => name.replace(/([A-Z])/g, (v) => "-".concat(v.toLowerCase()));
 var getTransitionVal = (props, duration, easing) => props.map((prop) => "".concat(getDashCase(prop), " ").concat(duration, "ms ").concat(easing)).join(",");
 var getIntersectionKeys = (preObj, nextObj) => [Object.keys(preObj), Object.keys(nextObj)].reduce((a2, b) => a2.filter((c2) => b.includes(c2)));
-var mapObject = (fn, obj) => Object.keys(obj).reduce((res, key) => _objectSpread$w(_objectSpread$w({}, res), {}, {
+var mapObject = (fn, obj) => Object.keys(obj).reduce((res, key) => _objectSpread$s(_objectSpread$s({}, res), {}, {
   [key]: fn(key, obj[key])
 }), {});
-function ownKeys$v(e, r2) {
+function ownKeys$r(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -28868,25 +28868,25 @@ function ownKeys$v(e, r2) {
   }
   return t;
 }
-function _objectSpread$v(e) {
+function _objectSpread$r(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$v(Object(t), true).forEach(function(r3) {
-      _defineProperty$x(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$v(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$r(Object(t), true).forEach(function(r3) {
+      _defineProperty$t(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$r(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$x(e, r2, t) {
-  return (r2 = _toPropertyKey$x(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$t(e, r2, t) {
+  return (r2 = _toPropertyKey$t(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$x(t) {
-  var i = _toPrimitive$x(t, "string");
+function _toPropertyKey$t(t) {
+  var i = _toPrimitive$t(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$x(t, r2) {
+function _toPrimitive$t(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -28908,7 +28908,7 @@ var calStepperVals = (easing, preVals, steps) => {
   var nextStepVals = mapObject((key, val) => {
     if (needContinue(val)) {
       var [newX, newV] = easing(val.from, val.to, val.velocity);
-      return _objectSpread$v(_objectSpread$v({}, val), {}, {
+      return _objectSpread$r(_objectSpread$r({}, val), {}, {
         from: newX,
         velocity: newV
       });
@@ -28918,7 +28918,7 @@ var calStepperVals = (easing, preVals, steps) => {
   if (steps < 1) {
     return mapObject((key, val) => {
       if (needContinue(val) && nextStepVals[key] != null) {
-        return _objectSpread$v(_objectSpread$v({}, val), {}, {
+        return _objectSpread$r(_objectSpread$r({}, val), {}, {
           velocity: alpha(val.velocity, nextStepVals[key].velocity, steps),
           from: alpha(val.from, nextStepVals[key].from, steps)
         });
@@ -28930,7 +28930,7 @@ var calStepperVals = (easing, preVals, steps) => {
 };
 function createStepperUpdate(from2, to2, easing, interKeys, render, timeoutController) {
   var preTime;
-  var stepperStyle = interKeys.reduce((res, key) => _objectSpread$v(_objectSpread$v({}, res), {}, {
+  var stepperStyle = interKeys.reduce((res, key) => _objectSpread$r(_objectSpread$r({}, res), {}, {
     [key]: {
       from: from2[key],
       velocity: 0,
@@ -28947,7 +28947,7 @@ function createStepperUpdate(from2, to2, easing, interKeys, render, timeoutContr
     var deltaTime = now2 - preTime;
     var steps = deltaTime / easing.dt;
     stepperStyle = calStepperVals(easing, stepperStyle, steps);
-    render(_objectSpread$v(_objectSpread$v(_objectSpread$v({}, from2), to2), getCurrStyle()));
+    render(_objectSpread$r(_objectSpread$r(_objectSpread$r({}, from2), to2), getCurrStyle()));
     preTime = now2;
     if (!shouldStopAnimation()) {
       stopAnimation = timeoutController.setTimeout(stepperUpdate);
@@ -28969,7 +28969,7 @@ function createTimingUpdate(from2, to2, easing, duration, interKeys, render, tim
     if (fromElement == null || toElement == null) {
       return res;
     }
-    return _objectSpread$v(_objectSpread$v({}, res), {}, {
+    return _objectSpread$r(_objectSpread$r({}, res), {}, {
       [key]: [fromElement, toElement]
     });
   }, {});
@@ -28980,12 +28980,12 @@ function createTimingUpdate(from2, to2, easing, duration, interKeys, render, tim
     }
     var t = (now2 - beginTime) / duration;
     var currStyle = mapObject((key, val) => alpha(...val, easing(t)), timingStyle);
-    render(_objectSpread$v(_objectSpread$v(_objectSpread$v({}, from2), to2), currStyle));
+    render(_objectSpread$r(_objectSpread$r(_objectSpread$r({}, from2), to2), currStyle));
     if (t < 1) {
       stopAnimation = timeoutController.setTimeout(timingUpdate);
     } else {
       var finalStyle = mapObject((key, val) => alpha(...val, easing(1)), timingStyle);
-      render(_objectSpread$v(_objectSpread$v(_objectSpread$v({}, from2), to2), finalStyle));
+      render(_objectSpread$r(_objectSpread$r(_objectSpread$r({}, from2), to2), finalStyle));
     }
   };
   return () => {
@@ -29000,7 +29000,7 @@ const configUpdate = (from2, to2, easing, duration, render, timeoutController) =
   var interKeys = getIntersectionKeys(from2, to2);
   if (easing == null) {
     return () => {
-      render(_objectSpread$v(_objectSpread$v({}, from2), to2));
+      render(_objectSpread$r(_objectSpread$r({}, from2), to2));
       return () => {
       };
     };
@@ -29288,9 +29288,9 @@ function useAnimationId(input) {
   }
   return animationId.current;
 }
-var _excluded$h = ["radius"], _excluded2$9 = ["radius"];
+var _excluded$f = ["radius"], _excluded2$8 = ["radius"];
 var _templateObject$2, _templateObject2$2, _templateObject3$2, _templateObject4$2, _templateObject5$2, _templateObject6$1, _templateObject7$1, _templateObject8, _templateObject9, _templateObject0;
-function ownKeys$u(e, r2) {
+function ownKeys$q(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -29300,25 +29300,25 @@ function ownKeys$u(e, r2) {
   }
   return t;
 }
-function _objectSpread$u(e) {
+function _objectSpread$q(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$u(Object(t), true).forEach(function(r3) {
-      _defineProperty$w(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$u(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$q(Object(t), true).forEach(function(r3) {
+      _defineProperty$s(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$q(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$w(e, r2, t) {
-  return (r2 = _toPropertyKey$w(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$s(e, r2, t) {
+  return (r2 = _toPropertyKey$s(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$w(t) {
-  var i = _toPrimitive$w(t, "string");
+function _toPropertyKey$s(t) {
+  var i = _toPrimitive$s(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$w(t, r2) {
+function _toPrimitive$s(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -29328,25 +29328,25 @@ function _toPrimitive$w(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends$i() {
-  return _extends$i = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$g() {
+  return _extends$g = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$i.apply(null, arguments);
+  }, _extends$g.apply(null, arguments);
 }
-function _objectWithoutProperties$h(e, t) {
+function _objectWithoutProperties$f(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$h(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$f(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$h(r2, e) {
+function _objectWithoutPropertiesLoose$f(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -29459,8 +29459,8 @@ var Rectangle = (rectangleProps) => {
   if (!isUpdateAnimationActive) {
     var _svgPropertiesAndEven = svgPropertiesAndEvents(props), {
       radius: _
-    } = _svgPropertiesAndEven, otherPathProps = _objectWithoutProperties$h(_svgPropertiesAndEven, _excluded$h);
-    return /* @__PURE__ */ reactExports.createElement("path", _extends$i({}, otherPathProps, {
+    } = _svgPropertiesAndEven, otherPathProps = _objectWithoutProperties$f(_svgPropertiesAndEven, _excluded$f);
+    return /* @__PURE__ */ reactExports.createElement("path", _extends$g({}, otherPathProps, {
       x: round$1(x2),
       y: round$1(y2),
       width: round$1(width),
@@ -29513,17 +29513,17 @@ var Rectangle = (rectangleProps) => {
     }
     var _svgPropertiesAndEven2 = svgPropertiesAndEvents(props), {
       radius: _2
-    } = _svgPropertiesAndEven2, otherPathProps2 = _objectWithoutProperties$h(_svgPropertiesAndEven2, _excluded2$9);
-    return /* @__PURE__ */ reactExports.createElement("path", _extends$i({}, otherPathProps2, {
+    } = _svgPropertiesAndEven2, otherPathProps2 = _objectWithoutProperties$f(_svgPropertiesAndEven2, _excluded2$8);
+    return /* @__PURE__ */ reactExports.createElement("path", _extends$g({}, otherPathProps2, {
       radius: typeof radius === "number" ? radius : void 0,
       className: layerClass,
       d: getRectanglePath(currX, currY, currWidth, currHeight, radius),
       ref: pathRef,
-      style: _objectSpread$u(_objectSpread$u({}, animationStyle), props.style)
+      style: _objectSpread$q(_objectSpread$q({}, animationStyle), props.style)
     }));
   });
 };
-function ownKeys$t(e, r2) {
+function ownKeys$p(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -29533,25 +29533,25 @@ function ownKeys$t(e, r2) {
   }
   return t;
 }
-function _objectSpread$t(e) {
+function _objectSpread$p(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$t(Object(t), true).forEach(function(r3) {
-      _defineProperty$v(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$t(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$p(Object(t), true).forEach(function(r3) {
+      _defineProperty$r(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$p(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$v(e, r2, t) {
-  return (r2 = _toPropertyKey$v(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$r(e, r2, t) {
+  return (r2 = _toPropertyKey$r(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$v(t) {
-  var i = _toPrimitive$v(t, "string");
+function _toPropertyKey$r(t) {
+  var i = _toPrimitive$r(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$v(t, r2) {
+function _toPrimitive$r(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -29689,7 +29689,7 @@ var inRangeOfSector = (_ref5, viewBox) => {
     inRange = formatAngle >= endAngle && formatAngle <= startAngle;
   }
   if (inRange) {
-    return _objectSpread$t(_objectSpread$t({}, viewBox), {}, {
+    return _objectSpread$p(_objectSpread$p({}, viewBox), {}, {
       radius,
       angle: reverseFormatAngleOfSector(formatAngle, viewBox)
     });
@@ -29716,14 +29716,14 @@ function getRadialCursorPoints(activeCoordinate) {
   };
 }
 var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1, _templateObject5$1, _templateObject6, _templateObject7;
-function _extends$h() {
-  return _extends$h = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$f() {
+  return _extends$f = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$h.apply(null, arguments);
+  }, _extends$f.apply(null, arguments);
 }
 function _taggedTemplateLiteral$1(e, t) {
   return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
@@ -29928,7 +29928,7 @@ var Sector = (sectorProps) => {
       endAngle
     });
   }
-  return /* @__PURE__ */ reactExports.createElement("path", _extends$h({}, svgPropertiesAndEvents(props), {
+  return /* @__PURE__ */ reactExports.createElement("path", _extends$f({}, svgPropertiesAndEvents(props), {
     className: layerClass,
     d: path
   }));
@@ -30089,7 +30089,7 @@ var selectChartDataSliceIfNotInPanorama = createSelector([selectChartDataWithInd
   } = _ref2;
   return chartData != null ? chartData.slice(dataStartIndex, dataEndIndex + 1) : [];
 });
-var selectChartDataSliceIgnoringIndexes = createSelector([selectChartDataAndAlwaysIgnoreIndexes], (_ref2) => {
+createSelector([selectChartDataAndAlwaysIgnoreIndexes], (_ref2) => {
   var {
     chartData,
     dataStartIndex,
@@ -31466,7 +31466,7 @@ function getAxisTypeBasedOnLayout(layout2, axisType, axisDomainType) {
   }
   return isCategoricalAxis(layout2, axisType) ? "category" : "number";
 }
-function ownKeys$s(e, r2) {
+function ownKeys$o(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -31476,25 +31476,25 @@ function ownKeys$s(e, r2) {
   }
   return t;
 }
-function _objectSpread$s(e) {
+function _objectSpread$o(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$s(Object(t), true).forEach(function(r3) {
-      _defineProperty$u(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$s(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$o(Object(t), true).forEach(function(r3) {
+      _defineProperty$q(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$o(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$u(e, r2, t) {
-  return (r2 = _toPropertyKey$u(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$q(e, r2, t) {
+  return (r2 = _toPropertyKey$q(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$u(t) {
-  var i = _toPrimitive$u(t, "string");
+function _toPropertyKey$q(t) {
+  var i = _toPrimitive$q(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$u(t, r2) {
+function _toPrimitive$q(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -31553,7 +31553,7 @@ var selectAngleAxis = createSelector([selectAngleAxisNoDefaults, selectPolarChar
     return angleAxisSettings;
   }
   var evaluatedType = (_getAxisTypeBasedOnLa = getAxisTypeBasedOnLayout(layout2, "angleAxis", implicitAngleAxis.type)) !== null && _getAxisTypeBasedOnLa !== void 0 ? _getAxisTypeBasedOnLa : "category";
-  return _objectSpread$s(_objectSpread$s({}, implicitAngleAxis), {}, {
+  return _objectSpread$o(_objectSpread$o({}, implicitAngleAxis), {}, {
     type: evaluatedType
   });
 });
@@ -31566,7 +31566,7 @@ var selectRadiusAxis = createSelector([selectRadiusAxisNoDefaults, selectPolarCh
     return radiusAxisSettings;
   }
   var evaluatedType = (_getAxisTypeBasedOnLa2 = getAxisTypeBasedOnLayout(layout2, "radiusAxis", implicitRadiusAxis.type)) !== null && _getAxisTypeBasedOnLa2 !== void 0 ? _getAxisTypeBasedOnLa2 : "category";
-  return _objectSpread$s(_objectSpread$s({}, implicitRadiusAxis), {}, {
+  return _objectSpread$o(_objectSpread$o({}, implicitRadiusAxis), {}, {
     type: evaluatedType
   });
 });
@@ -34543,7 +34543,7 @@ function combineInverseScaleFunction(configuredScale) {
   }
   return createCategoricalInverse(configuredScale, void 0);
 }
-function ownKeys$r(e, r2) {
+function ownKeys$n(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -34553,25 +34553,25 @@ function ownKeys$r(e, r2) {
   }
   return t;
 }
-function _objectSpread$r(e) {
+function _objectSpread$n(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$r(Object(t), true).forEach(function(r3) {
-      _defineProperty$t(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$r(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$n(Object(t), true).forEach(function(r3) {
+      _defineProperty$p(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$n(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$t(e, r2, t) {
-  return (r2 = _toPropertyKey$t(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$p(e, r2, t) {
+  return (r2 = _toPropertyKey$p(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$t(t) {
-  var i = _toPrimitive$t(t, "string");
+function _toPropertyKey$p(t) {
+  var i = _toPrimitive$p(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$t(t, r2) {
+function _toPrimitive$p(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -34754,14 +34754,14 @@ function itemAxisPredicate(axisType, axisId) {
   };
 }
 var selectUnfilteredCartesianItems = (state) => state.graphicalItems.cartesianItems;
-var selectAxisPredicate$1 = createSelector([pickAxisType, pickAxisId], itemAxisPredicate);
+var selectAxisPredicate = createSelector([pickAxisType, pickAxisId], itemAxisPredicate);
 var combineGraphicalItemsSettings = (graphicalItems, axisSettings, axisPredicate) => graphicalItems.filter(axisPredicate).filter((item) => {
   if ((axisSettings === null || axisSettings === void 0 ? void 0 : axisSettings.includeHidden) === true) {
     return true;
   }
   return !item.hide;
 });
-var selectCartesianItemsSettings = createSelector([selectUnfilteredCartesianItems, selectBaseAxis, selectAxisPredicate$1], combineGraphicalItemsSettings, {
+var selectCartesianItemsSettings = createSelector([selectUnfilteredCartesianItems, selectBaseAxis, selectAxisPredicate], combineGraphicalItemsSettings, {
   memoizeOptions: {
     resultEqualityCheck: emptyArraysAreEqualCheck
   }
@@ -34789,7 +34789,7 @@ var combineDisplayedData = (graphicalItemsData, _ref2) => {
   }
   return chartData.slice(dataStartIndex, dataEndIndex + 1);
 };
-var selectDisplayedData$1 = createSelector([selectCartesianGraphicalItemsData, selectChartDataWithIndexesIfNotInPanoramaPosition4], combineDisplayedData);
+var selectDisplayedData = createSelector([selectCartesianGraphicalItemsData, selectChartDataWithIndexesIfNotInPanoramaPosition4], combineDisplayedData);
 var combineAppliedValues = (data, axisSettings, items) => {
   if ((axisSettings === null || axisSettings === void 0 ? void 0 : axisSettings.dataKey) != null) {
     return data.map((item) => ({
@@ -34821,7 +34821,7 @@ var combineAllAppliedValues = (displayedData, axisSettings, items, _ref2, anyIte
   }
   return appliedValues;
 };
-var selectAllAppliedValues = createSelector([selectDisplayedData$1, selectBaseAxis, selectCartesianItemsSettings, selectChartDataWithIndexesIfNotInPanoramaPosition4, selectAnyCartesianItemsUsesChartData, selectCartesianGraphicalItemsData], combineAllAppliedValues);
+var selectAllAppliedValues = createSelector([selectDisplayedData, selectBaseAxis, selectCartesianItemsSettings, selectChartDataWithIndexesIfNotInPanoramaPosition4, selectAnyCartesianItemsUsesChartData, selectCartesianGraphicalItemsData], combineAllAppliedValues);
 function makeNumber(val) {
   if (isNumOrStr(val) || val instanceof Date) {
     var n = Number(val);
@@ -35050,7 +35050,7 @@ var combineDomainOfAllAppliedNumericalValuesIncludingErrorValues = function comb
   }
   return void 0;
 };
-var selectDomainOfAllAppliedNumericalValuesIncludingErrorValues$1 = createSelector([selectDisplayedData$1, selectBaseAxis, selectCartesianItemsSettingsExceptStacked, selectAllErrorBarSettings, pickAxisType, selectChartDataSliceIfNotInPanorama], combineDomainOfAllAppliedNumericalValuesIncludingErrorValues, {
+var selectDomainOfAllAppliedNumericalValuesIncludingErrorValues$1 = createSelector([selectDisplayedData, selectBaseAxis, selectCartesianItemsSettingsExceptStacked, selectAllErrorBarSettings, pickAxisType, selectChartDataSliceIfNotInPanorama], combineDomainOfAllAppliedNumericalValuesIncludingErrorValues, {
   memoizeOptions: {
     resultEqualityCheck: numberDomainEqualityCheck
   }
@@ -35181,7 +35181,7 @@ var combineAxisDomain = (axisSettings, layout2, displayedData, allAppliedValues,
   }
   return numericalDomain;
 };
-var selectAxisDomain = createSelector([selectBaseAxis, selectChartLayout, selectDisplayedData$1, selectAllAppliedValues, selectStackOffsetType, pickAxisType, selectNumericalDomain], combineAxisDomain);
+var selectAxisDomain = createSelector([selectBaseAxis, selectChartLayout, selectDisplayedData, selectAllAppliedValues, selectStackOffsetType, pickAxisType, selectNumericalDomain], combineAxisDomain);
 var selectRealScaleType = createSelector([selectBaseAxis, selectHasBar, selectChartName], combineRealScaleType);
 var combineNiceTicks = (axisDomain, axisSettings, realScaleType) => {
   var {
@@ -35707,7 +35707,7 @@ var selectAxisWithScale = createSelector(selectBaseAxis, selectAxisScale, (axis,
   if (axis == null || scale2 == null) {
     return void 0;
   }
-  return _objectSpread$r(_objectSpread$r({}, axis), {}, {
+  return _objectSpread$n(_objectSpread$n({}, axis), {}, {
     scale: scale2
   });
 });
@@ -35717,7 +35717,7 @@ createSelector((state, _axisType, axisId) => selectZAxisSettings(state, axisId),
   if (axis == null || scale2 == null) {
     return void 0;
   }
-  return _objectSpread$r(_objectSpread$r({}, axis), {}, {
+  return _objectSpread$n(_objectSpread$n({}, axis), {}, {
     scale: scale2
   });
 });
@@ -35931,7 +35931,7 @@ var {
   setKeyboardInteraction
 } = tooltipSlice.actions;
 var tooltipReducer = tooltipSlice.reducer;
-function ownKeys$q(e, r2) {
+function ownKeys$m(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -35941,25 +35941,25 @@ function ownKeys$q(e, r2) {
   }
   return t;
 }
-function _objectSpread$q(e) {
+function _objectSpread$m(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$q(Object(t), true).forEach(function(r3) {
-      _defineProperty$s(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$q(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$m(Object(t), true).forEach(function(r3) {
+      _defineProperty$o(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$m(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$s(e, r2, t) {
-  return (r2 = _toPropertyKey$s(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$o(e, r2, t) {
+  return (r2 = _toPropertyKey$o(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$s(t) {
-  var i = _toPrimitive$s(t, "string");
+function _toPropertyKey$o(t) {
+  var i = _toPrimitive$o(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$s(t, r2) {
+function _toPrimitive$o(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -36004,7 +36004,7 @@ var combineTooltipInteractionState = (tooltipState, tooltipEventType, trigger, d
   var activeFromProps = tooltipState.settings.active === true;
   if (hasBeenActivePreviously(appropriateMouseInteraction)) {
     if (activeFromProps) {
-      return _objectSpread$q(_objectSpread$q({}, appropriateMouseInteraction), {}, {
+      return _objectSpread$m(_objectSpread$m({}, appropriateMouseInteraction), {}, {
         active: true
       });
     }
@@ -36017,7 +36017,7 @@ var combineTooltipInteractionState = (tooltipState, tooltipEventType, trigger, d
       graphicalItemId: void 0
     };
   }
-  return _objectSpread$q(_objectSpread$q({}, noInteraction), {}, {
+  return _objectSpread$m(_objectSpread$m({}, noInteraction), {}, {
     coordinate: appropriateMouseInteraction.coordinate
   });
 };
@@ -36138,7 +36138,7 @@ var combineTooltipPayloadConfigurations = (tooltipState, tooltipEventType, trigg
 };
 var selectTooltipPayloadSearcher = (state) => state.options.tooltipPayloadSearcher;
 var selectTooltipState = (state) => state.tooltip;
-function ownKeys$p(e, r2) {
+function ownKeys$l(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -36148,25 +36148,25 @@ function ownKeys$p(e, r2) {
   }
   return t;
 }
-function _objectSpread$p(e) {
+function _objectSpread$l(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$p(Object(t), true).forEach(function(r3) {
-      _defineProperty$r(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$p(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$l(Object(t), true).forEach(function(r3) {
+      _defineProperty$n(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$l(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$r(e, r2, t) {
-  return (r2 = _toPropertyKey$r(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$n(e, r2, t) {
+  return (r2 = _toPropertyKey$n(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$r(t) {
-  var i = _toPrimitive$r(t, "string");
+function _toPropertyKey$n(t) {
+  var i = _toPrimitive$n(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$r(t, r2) {
+function _toPrimitive$n(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -36283,7 +36283,7 @@ var combineTooltipPayload = (tooltipPayloadConfigurations, activeIndex, chartDat
         var itemName = parsedItem === null || parsedItem === void 0 ? void 0 : parsedItem.name;
         var itemDataKey = parsedItem === null || parsedItem === void 0 ? void 0 : parsedItem.dataKey;
         var itemPayload = parsedItem === null || parsedItem === void 0 ? void 0 : parsedItem.payload;
-        var newSettings = _objectSpread$p(_objectSpread$p({}, settings), {}, {
+        var newSettings = _objectSpread$l(_objectSpread$l({}, settings), {}, {
           name: itemName,
           unit: parsedItem === null || parsedItem === void 0 ? void 0 : parsedItem.unit,
           // Preserve item-level color/fill from graphical items.
@@ -36446,7 +36446,7 @@ createSelector([selectActiveTooltipPayload], (payload) => {
   var dataPoints = payload.map((p) => p.payload).filter((p) => p != null);
   return Array.from(new Set(dataPoints));
 });
-function ownKeys$o(e, r2) {
+function ownKeys$k(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -36456,25 +36456,25 @@ function ownKeys$o(e, r2) {
   }
   return t;
 }
-function _objectSpread$o(e) {
+function _objectSpread$k(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$o(Object(t), true).forEach(function(r3) {
-      _defineProperty$q(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$o(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$k(Object(t), true).forEach(function(r3) {
+      _defineProperty$m(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$k(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$q(e, r2, t) {
-  return (r2 = _toPropertyKey$q(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$m(e, r2, t) {
+  return (r2 = _toPropertyKey$m(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$q(t) {
-  var i = _toPrimitive$q(t, "string");
+function _toPropertyKey$m(t) {
+  var i = _toPrimitive$m(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$q(t, r2) {
+function _toPrimitive$m(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -36492,11 +36492,11 @@ var useTooltipAxisBandSize = () => {
   if (!tooltipAxis || !tooltipAxisScale) {
     return getBandSizeOfAxis(void 0, tooltipTicks);
   }
-  return getBandSizeOfAxis(_objectSpread$o(_objectSpread$o({}, tooltipAxis), {}, {
+  return getBandSizeOfAxis(_objectSpread$k(_objectSpread$k({}, tooltipAxis), {}, {
     scale: tooltipAxisScale
   }), tooltipTicks);
 };
-function ownKeys$n(e, r2) {
+function ownKeys$j(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -36506,25 +36506,25 @@ function ownKeys$n(e, r2) {
   }
   return t;
 }
-function _objectSpread$n(e) {
+function _objectSpread$j(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$n(Object(t), true).forEach(function(r3) {
-      _defineProperty$p(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$n(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$j(Object(t), true).forEach(function(r3) {
+      _defineProperty$l(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$j(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$p(e, r2, t) {
-  return (r2 = _toPropertyKey$p(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$l(e, r2, t) {
+  return (r2 = _toPropertyKey$l(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$p(t) {
-  var i = _toPrimitive$p(t, "string");
+function _toPropertyKey$l(t) {
+  var i = _toPrimitive$l(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$p(t, r2) {
+function _toPrimitive$l(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -36563,7 +36563,7 @@ var getActivePolarCoordinate = (layout2, tooltipTicks, activeIndex, rangeObj) =>
       var {
         radius: _radius
       } = rangeObj;
-      return _objectSpread$n(_objectSpread$n(_objectSpread$n({}, rangeObj), polarToCartesian(rangeObj.cx, rangeObj.cy, _radius, _angle)), {}, {
+      return _objectSpread$j(_objectSpread$j(_objectSpread$j({}, rangeObj), polarToCartesian(rangeObj.cx, rangeObj.cy, _radius, _angle)), {}, {
         angle: _angle,
         radius: _radius
       });
@@ -36572,7 +36572,7 @@ var getActivePolarCoordinate = (layout2, tooltipTicks, activeIndex, rangeObj) =>
     var {
       angle
     } = rangeObj;
-    return _objectSpread$n(_objectSpread$n(_objectSpread$n({}, rangeObj), polarToCartesian(rangeObj.cx, rangeObj.cy, radius, angle)), {}, {
+    return _objectSpread$j(_objectSpread$j(_objectSpread$j({}, rangeObj), polarToCartesian(rangeObj.cx, rangeObj.cy, radius, angle)), {}, {
       angle,
       radius
     });
@@ -36763,7 +36763,7 @@ var selectAllRegisteredZIndexes = createSelector((state) => state.zIndex.zIndexM
     resultEqualityCheck: arrayContentsAreEqualCheck
   }
 });
-function ownKeys$m(e, r2) {
+function ownKeys$i(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -36773,25 +36773,25 @@ function ownKeys$m(e, r2) {
   }
   return t;
 }
-function _objectSpread$m(e) {
+function _objectSpread$i(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$m(Object(t), true).forEach(function(r3) {
-      _defineProperty$o(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$m(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$i(Object(t), true).forEach(function(r3) {
+      _defineProperty$k(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$i(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$o(e, r2, t) {
-  return (r2 = _toPropertyKey$o(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$k(e, r2, t) {
+  return (r2 = _toPropertyKey$k(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$o(t) {
-  var i = _toPrimitive$o(t, "string");
+function _toPropertyKey$k(t) {
+  var i = _toPrimitive$k(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$o(t, r2) {
+function _toPrimitive$k(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -36803,7 +36803,7 @@ function _toPrimitive$o(t, r2) {
 }
 var seed = {};
 var initialState$a = {
-  zIndexMap: Object.values(DefaultZIndexes).reduce((acc, current2) => _objectSpread$m(_objectSpread$m({}, acc), {}, {
+  zIndexMap: Object.values(DefaultZIndexes).reduce((acc, current2) => _objectSpread$i(_objectSpread$i({}, acc), {}, {
     [current2]: {
       element: void 0,
       panoramaElement: void 0,
@@ -36960,16 +36960,16 @@ function ZIndexLayer(_ref2) {
   }
   return /* @__PURE__ */ reactDomExports.createPortal(children, targetElement);
 }
-function _extends$g() {
-  return _extends$g = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$e() {
+  return _extends$e = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$g.apply(null, arguments);
+  }, _extends$e.apply(null, arguments);
 }
-function ownKeys$l(e, r2) {
+function ownKeys$h(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -36979,25 +36979,25 @@ function ownKeys$l(e, r2) {
   }
   return t;
 }
-function _objectSpread$l(e) {
+function _objectSpread$h(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$l(Object(t), true).forEach(function(r3) {
-      _defineProperty$n(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$l(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$h(Object(t), true).forEach(function(r3) {
+      _defineProperty$j(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$n(e, r2, t) {
-  return (r2 = _toPropertyKey$n(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$j(e, r2, t) {
+  return (r2 = _toPropertyKey$j(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$n(t) {
-  var i = _toPrimitive$n(t, "string");
+function _toPropertyKey$j(t) {
+  var i = _toPrimitive$j(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$n(t, r2) {
+function _toPrimitive$j(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -37072,7 +37072,7 @@ function CursorInternal(props) {
     preferredZIndex = DefaultZIndexes.cursorLine;
   }
   var extraClassName = typeof cursor === "object" && "className" in cursor ? cursor.className : void 0;
-  var cursorProps = _objectSpread$l(_objectSpread$l(_objectSpread$l(_objectSpread$l({
+  var cursorProps = _objectSpread$h(_objectSpread$h(_objectSpread$h(_objectSpread$h({
     stroke: "#ccc",
     pointerEvents: "none"
   }, offset), restProps), svgPropertiesNoEventsFromUnknown(cursor)), {}, {
@@ -37096,7 +37096,7 @@ function Cursor(props) {
   if (tooltipAxisBandSize == null || offset == null || layout2 == null || chartName == null) {
     return null;
   }
-  return /* @__PURE__ */ reactExports.createElement(CursorInternal, _extends$g({}, props, {
+  return /* @__PURE__ */ reactExports.createElement(CursorInternal, _extends$e({}, props, {
     offset,
     layout: layout2,
     tooltipAxisBandSize,
@@ -37350,8 +37350,8 @@ var {
   setComputedData
 } = chartDataSlice.actions;
 var chartDataReducer = chartDataSlice.reducer;
-var _excluded$g = ["x", "y"];
-function ownKeys$k(e, r2) {
+var _excluded$e = ["x", "y"];
+function ownKeys$g(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -37361,25 +37361,25 @@ function ownKeys$k(e, r2) {
   }
   return t;
 }
-function _objectSpread$k(e) {
+function _objectSpread$g(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$k(Object(t), true).forEach(function(r3) {
-      _defineProperty$m(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$k(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$g(Object(t), true).forEach(function(r3) {
+      _defineProperty$i(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$m(e, r2, t) {
-  return (r2 = _toPropertyKey$m(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$i(e, r2, t) {
+  return (r2 = _toPropertyKey$i(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$m(t) {
-  var i = _toPrimitive$m(t, "string");
+function _toPropertyKey$i(t) {
+  var i = _toPrimitive$i(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$m(t, r2) {
+function _toPrimitive$i(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -37389,16 +37389,16 @@ function _toPrimitive$m(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$g(e, t) {
+function _objectWithoutProperties$e(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$g(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$e(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$g(r2, e) {
+function _objectWithoutPropertiesLoose$e(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -37445,19 +37445,19 @@ function useTooltipSyncEventsListener() {
           var _action$payload$coord = action.payload.coordinate, {
             x: _x,
             y: _y
-          } = _action$payload$coord, otherCoordinateProps = _objectWithoutProperties$g(_action$payload$coord, _excluded$g);
+          } = _action$payload$coord, otherCoordinateProps = _objectWithoutProperties$e(_action$payload$coord, _excluded$e);
           var {
             x: sourceX,
             y: sourceY,
             width: sourceWidth,
             height: sourceHeight
           } = action.payload.sourceViewBox;
-          var scaledCoordinate = _objectSpread$k(_objectSpread$k({}, otherCoordinateProps), {}, {
+          var scaledCoordinate = _objectSpread$g(_objectSpread$g({}, otherCoordinateProps), {}, {
             x: viewBox.x + (sourceWidth ? (_x - sourceX) / sourceWidth : 0) * viewBox.width,
             y: viewBox.y + (sourceHeight ? (_y - sourceY) / sourceHeight : 0) * viewBox.height
           });
-          dispatch(_objectSpread$k(_objectSpread$k({}, action), {}, {
-            payload: _objectSpread$k(_objectSpread$k({}, action.payload), {}, {
+          dispatch(_objectSpread$g(_objectSpread$g({}, action), {}, {
+            payload: _objectSpread$g(_objectSpread$g({}, action.payload), {}, {
               coordinate: scaledCoordinate
             })
           }));
@@ -37599,7 +37599,7 @@ function useTooltipChartSynchronisation(tooltipEventType, trigger, activeCoordin
     eventCenter.emit(TOOLTIP_SYNC_EVENT, syncId, syncAction, eventEmitterSymbol);
   }, [isReceivingSynchronisation, activeCoordinate, activeDataKey, activeGraphicalItemId, activeIndex, activeLabel, eventEmitterSymbol, syncId, syncMethod, isTooltipActive, viewBox]);
 }
-function ownKeys$j(e, r2) {
+function ownKeys$f(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -37609,25 +37609,25 @@ function ownKeys$j(e, r2) {
   }
   return t;
 }
-function _objectSpread$j(e) {
+function _objectSpread$f(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$j(Object(t), true).forEach(function(r3) {
-      _defineProperty$l(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$j(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$f(Object(t), true).forEach(function(r3) {
+      _defineProperty$h(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$l(e, r2, t) {
-  return (r2 = _toPropertyKey$l(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$h(e, r2, t) {
+  return (r2 = _toPropertyKey$h(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$l(t) {
-  var i = _toPrimitive$l(t, "string");
+function _toPropertyKey$h(t) {
+  var i = _toPrimitive$h(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$l(t, r2) {
+function _toPrimitive$h(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -37739,7 +37739,7 @@ function Tooltip(outsideProps) {
     finalPayload = getUniqPayload(finalPayload.filter((entry) => entry.value != null && (entry.hide !== true || props.includeHidden)), payloadUniqBy, defaultUniqBy);
   }
   var hasPayload = finalPayload.length > 0;
-  var tooltipContentProps = _objectSpread$j(_objectSpread$j({}, props), {}, {
+  var tooltipContentProps = _objectSpread$f(_objectSpread$f({}, props), {}, {
     payload: finalPayload,
     label: finalLabel,
     active: finalIsActive,
@@ -37775,14 +37775,14 @@ function Tooltip(outsideProps) {
 }
 var Cell = (_props) => null;
 Cell.displayName = "Cell";
-function _defineProperty$k(e, r2, t) {
-  return (r2 = _toPropertyKey$k(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$g(e, r2, t) {
+  return (r2 = _toPropertyKey$g(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$k(t) {
-  var i = _toPrimitive$k(t, "string");
+function _toPropertyKey$g(t) {
+  var i = _toPrimitive$g(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$k(t, r2) {
+function _toPrimitive$g(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -37794,7 +37794,7 @@ function _toPrimitive$k(t, r2) {
 }
 class LRUCache {
   constructor(maxSize) {
-    _defineProperty$k(this, "cache", /* @__PURE__ */ new Map());
+    _defineProperty$g(this, "cache", /* @__PURE__ */ new Map());
     this.maxSize = maxSize;
   }
   get(key) {
@@ -37823,7 +37823,7 @@ class LRUCache {
     return this.cache.size;
   }
 }
-function ownKeys$i(e, r2) {
+function ownKeys$e(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -37833,25 +37833,25 @@ function ownKeys$i(e, r2) {
   }
   return t;
 }
-function _objectSpread$i(e) {
+function _objectSpread$e(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$i(Object(t), true).forEach(function(r3) {
-      _defineProperty$j(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$i(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$e(Object(t), true).forEach(function(r3) {
+      _defineProperty$f(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$e(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$j(e, r2, t) {
-  return (r2 = _toPropertyKey$j(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$f(e, r2, t) {
+  return (r2 = _toPropertyKey$f(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$j(t) {
-  var i = _toPrimitive$j(t, "string");
+function _toPropertyKey$f(t) {
+  var i = _toPrimitive$f(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$j(t, r2) {
+function _toPrimitive$f(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -37865,7 +37865,7 @@ var defaultConfig = {
   cacheSize: 2e3,
   enableCache: true
 };
-var currentConfig = _objectSpread$i({}, defaultConfig);
+var currentConfig = _objectSpread$e({}, defaultConfig);
 var stringCache = new LRUCache(currentConfig.cacheSize);
 var SPAN_STYLE = {
   position: "absolute",
@@ -37930,14 +37930,14 @@ var getStringSize = function getStringSize2(text) {
   return result;
 };
 var _DecimalCSS;
-function _defineProperty$i(e, r2, t) {
-  return (r2 = _toPropertyKey$i(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$e(e, r2, t) {
+  return (r2 = _toPropertyKey$e(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$i(t) {
-  var i = _toPrimitive$i(t, "string");
+function _toPropertyKey$e(t) {
+  var i = _toPrimitive$e(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$i(t, r2) {
+function _toPrimitive$e(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -38026,7 +38026,7 @@ class DecimalCSS {
   }
 }
 _DecimalCSS = DecimalCSS;
-_defineProperty$i(DecimalCSS, "NaN", new _DecimalCSS(NaN, ""));
+_defineProperty$e(DecimalCSS, "NaN", new _DecimalCSS(NaN, ""));
 function calculateArithmetic(expr) {
   if (expr == null || expr.includes(STR_NAN)) {
     return STR_NAN;
@@ -38086,26 +38086,26 @@ function reduceCSSCalc(expression) {
   }
   return result;
 }
-var _excluded$f = ["x", "y", "lineHeight", "capHeight", "fill", "scaleToFit", "textAnchor", "verticalAnchor"], _excluded2$8 = ["dx", "dy", "angle", "className", "breakAll"];
-function _extends$f() {
-  return _extends$f = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$d = ["x", "y", "lineHeight", "capHeight", "fill", "scaleToFit", "textAnchor", "verticalAnchor"], _excluded2$7 = ["dx", "dy", "angle", "className", "breakAll"];
+function _extends$d() {
+  return _extends$d = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$f.apply(null, arguments);
+  }, _extends$d.apply(null, arguments);
 }
-function _objectWithoutProperties$f(e, t) {
+function _objectWithoutProperties$d(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$f(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$d(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$f(r2, e) {
+function _objectWithoutPropertiesLoose$d(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -38290,7 +38290,7 @@ var Text = /* @__PURE__ */ reactExports.forwardRef((outsideProps, ref) => {
     scaleToFit,
     textAnchor,
     verticalAnchor
-  } = _resolveDefaultProps, props = _objectWithoutProperties$f(_resolveDefaultProps, _excluded$f);
+  } = _resolveDefaultProps, props = _objectWithoutProperties$d(_resolveDefaultProps, _excluded$d);
   var wordsByLines = reactExports.useMemo(() => {
     return getWordsByLines({
       breakAll: props.breakAll,
@@ -38307,7 +38307,7 @@ var Text = /* @__PURE__ */ reactExports.forwardRef((outsideProps, ref) => {
     angle,
     className,
     breakAll
-  } = props, textProps = _objectWithoutProperties$f(props, _excluded2$8);
+  } = props, textProps = _objectWithoutProperties$d(props, _excluded2$7);
   if (!isNumOrStr(propsX) || !isNumOrStr(propsY) || wordsByLines.length === 0) {
     return null;
   }
@@ -38343,7 +38343,7 @@ var Text = /* @__PURE__ */ reactExports.forwardRef((outsideProps, ref) => {
   if (transforms.length) {
     textProps.transform = transforms.join(" ");
   }
-  return /* @__PURE__ */ reactExports.createElement("text", _extends$f({}, svgPropertiesAndEvents(textProps), {
+  return /* @__PURE__ */ reactExports.createElement("text", _extends$d({}, svgPropertiesAndEvents(textProps), {
     ref,
     x: x2,
     y: y2,
@@ -38363,7 +38363,7 @@ var Text = /* @__PURE__ */ reactExports.forwardRef((outsideProps, ref) => {
   }));
 });
 Text.displayName = "Text";
-function ownKeys$h(e, r2) {
+function ownKeys$d(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -38373,25 +38373,25 @@ function ownKeys$h(e, r2) {
   }
   return t;
 }
-function _objectSpread$h(e) {
+function _objectSpread$d(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$h(Object(t), true).forEach(function(r3) {
-      _defineProperty$h(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$h(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$d(Object(t), true).forEach(function(r3) {
+      _defineProperty$d(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$h(e, r2, t) {
-  return (r2 = _toPropertyKey$h(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$d(e, r2, t) {
+  return (r2 = _toPropertyKey$d(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$h(t) {
-  var i = _toPrimitive$h(t, "string");
+function _toPropertyKey$d(t) {
+  var i = _toPrimitive$d(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$h(t, r2) {
+function _toPrimitive$d(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -38486,7 +38486,7 @@ var getCartesianPosition = (options) => {
     height
   } : {};
   if (position === "insideLeft") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: middleX + horizontalOffset,
       y: y2 + height / 2,
       horizontalAnchor: horizontalStart,
@@ -38494,7 +38494,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideRight") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: middleX + midHeightWidth - horizontalOffset,
       y: y2 + height / 2,
       horizontalAnchor: horizontalEnd,
@@ -38502,7 +38502,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideTop") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: upperX + upperWidth / 2,
       y: y2 + verticalOffset,
       horizontalAnchor: "middle",
@@ -38510,7 +38510,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideBottom") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: lowerX + lowerWidth / 2,
       y: y2 + height - verticalOffset,
       horizontalAnchor: "middle",
@@ -38518,7 +38518,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideTopLeft") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: upperX + horizontalOffset,
       y: y2 + verticalOffset,
       horizontalAnchor: horizontalStart,
@@ -38526,7 +38526,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideTopRight") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: upperX + upperWidth - horizontalOffset,
       y: y2 + verticalOffset,
       horizontalAnchor: horizontalEnd,
@@ -38534,7 +38534,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideBottomLeft") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: lowerX + horizontalOffset,
       y: y2 + height - verticalOffset,
       horizontalAnchor: horizontalStart,
@@ -38542,7 +38542,7 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (position === "insideBottomRight") {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: lowerX + lowerWidth - horizontalOffset,
       y: y2 + height - verticalOffset,
       horizontalAnchor: horizontalEnd,
@@ -38550,31 +38550,31 @@ var getCartesianPosition = (options) => {
     }, sizeAttrs);
   }
   if (!!position && typeof position === "object" && (isNumber(position.x) || isPercent(position.x)) && (isNumber(position.y) || isPercent(position.y))) {
-    return _objectSpread$h({
+    return _objectSpread$d({
       x: x2 + getPercentValue(position.x, midHeightWidth),
       y: y2 + getPercentValue(position.y, height),
       horizontalAnchor: "end",
       verticalAnchor: "end"
     }, sizeAttrs);
   }
-  return _objectSpread$h({
+  return _objectSpread$d({
     x: centerX,
     y: y2 + height / 2,
     horizontalAnchor: "middle",
     verticalAnchor: "middle"
   }, sizeAttrs);
 };
-var _excluded$e = ["labelRef"], _excluded2$7 = ["content"];
-function _objectWithoutProperties$e(e, t) {
+var _excluded$c = ["labelRef"], _excluded2$6 = ["content"];
+function _objectWithoutProperties$c(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$e(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$c(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$e(r2, e) {
+function _objectWithoutPropertiesLoose$c(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -38583,7 +38583,7 @@ function _objectWithoutPropertiesLoose$e(r2, e) {
   }
   return t;
 }
-function ownKeys$g(e, r2) {
+function ownKeys$c(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -38593,25 +38593,25 @@ function ownKeys$g(e, r2) {
   }
   return t;
 }
-function _objectSpread$g(e) {
+function _objectSpread$c(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$g(Object(t), true).forEach(function(r3) {
-      _defineProperty$g(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$g(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$c(Object(t), true).forEach(function(r3) {
+      _defineProperty$c(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$g(e, r2, t) {
-  return (r2 = _toPropertyKey$g(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$c(e, r2, t) {
+  return (r2 = _toPropertyKey$c(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$g(t) {
-  var i = _toPrimitive$g(t, "string");
+function _toPropertyKey$c(t) {
+  var i = _toPrimitive$c(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$g(t, r2) {
+function _toPrimitive$c(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -38621,14 +38621,14 @@ function _toPrimitive$g(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends$e() {
-  return _extends$e = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$c() {
+  return _extends$c = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$e.apply(null, arguments);
+  }, _extends$c.apply(null, arguments);
 }
 var CartesianLabelContext = /* @__PURE__ */ reactExports.createContext(null);
 var CartesianLabelContextProvider = (_ref2) => {
@@ -38722,7 +38722,7 @@ var renderRadialLabel = (labelProps, position, label, attrs, viewBox) => {
   var endPoint = polarToCartesian(cx, cy, radius, labelAngle + (direction ? 1 : -1) * 359);
   var path = "M".concat(startPoint.x, ",").concat(startPoint.y, "\n    A").concat(radius, ",").concat(radius, ",0,1,").concat(direction ? 0 : 1, ",\n    ").concat(endPoint.x, ",").concat(endPoint.y);
   var id2 = isNullish(labelProps.id) ? uniqueId("recharts-radial-line-") : labelProps.id;
-  return /* @__PURE__ */ reactExports.createElement("text", _extends$e({}, attrs, {
+  return /* @__PURE__ */ reactExports.createElement("text", _extends$c({}, attrs, {
     dominantBaseline: "central",
     className: clsx("recharts-radial-bar-label", className)
   }), /* @__PURE__ */ reactExports.createElement("defs", null, /* @__PURE__ */ reactExports.createElement("path", {
@@ -38845,19 +38845,19 @@ function Label(outerProps) {
   if (!viewBox || isNullish(value) && isNullish(children) && !/* @__PURE__ */ reactExports.isValidElement(content) && typeof content !== "function") {
     return null;
   }
-  var propsWithViewBox = _objectSpread$g(_objectSpread$g({}, props), {}, {
+  var propsWithViewBox = _objectSpread$c(_objectSpread$c({}, props), {}, {
     viewBox
   });
   if (/* @__PURE__ */ reactExports.isValidElement(content)) {
     var {
       labelRef: _
-    } = propsWithViewBox, propsWithoutLabelRef = _objectWithoutProperties$e(propsWithViewBox, _excluded$e);
+    } = propsWithViewBox, propsWithoutLabelRef = _objectWithoutProperties$c(propsWithViewBox, _excluded$c);
     return /* @__PURE__ */ reactExports.cloneElement(content, propsWithoutLabelRef);
   }
   if (typeof content === "function") {
     var {
       content: _2
-    } = propsWithViewBox, propsForContent = _objectWithoutProperties$e(propsWithViewBox, _excluded2$7);
+    } = propsWithViewBox, propsForContent = _objectWithoutProperties$c(propsWithViewBox, _excluded2$6);
     label = /* @__PURE__ */ reactExports.createElement(content, propsForContent);
     if (/* @__PURE__ */ reactExports.isValidElement(label)) {
       return label;
@@ -38881,7 +38881,7 @@ function Label(outerProps) {
       offset: props.offset,
       parentViewBox: isPolar(parentViewBox) ? void 0 : parentViewBox
     });
-    positionAttrs = _objectSpread$g(_objectSpread$g({
+    positionAttrs = _objectSpread$c(_objectSpread$c({
       x: cartesianResult.x,
       y: cartesianResult.y,
       textAnchor: cartesianResult.horizontalAnchor,
@@ -38894,7 +38894,7 @@ function Label(outerProps) {
   }
   return /* @__PURE__ */ reactExports.createElement(ZIndexLayer, {
     zIndex: props.zIndex
-  }, /* @__PURE__ */ reactExports.createElement(Text, _extends$e({
+  }, /* @__PURE__ */ reactExports.createElement(Text, _extends$c({
     ref: labelRef,
     className: clsx("recharts-label", className)
   }, attrs, positionAttrs, {
@@ -38916,35 +38916,35 @@ var parseLabel = (label, viewBox, labelRef) => {
     labelRef
   };
   if (label === true) {
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$e({
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$c({
       key: "label-implicit"
     }, commonProps));
   }
   if (isNumOrStr(label)) {
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$e({
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$c({
       key: "label-implicit",
       value: label
     }, commonProps));
   }
   if (/* @__PURE__ */ reactExports.isValidElement(label)) {
     if (label.type === Label) {
-      return /* @__PURE__ */ reactExports.cloneElement(label, _objectSpread$g({
+      return /* @__PURE__ */ reactExports.cloneElement(label, _objectSpread$c({
         key: "label-implicit"
       }, commonProps));
     }
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$e({
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$c({
       key: "label-implicit",
       content: label
     }, commonProps));
   }
   if (isLabelContentAFunction(label)) {
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$e({
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$c({
       key: "label-implicit",
       content: label
     }, commonProps));
   }
   if (label && typeof label === "object") {
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$e({}, label, {
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$c({}, label, {
       key: "label-implicit"
     }, commonProps));
   }
@@ -38958,26 +38958,26 @@ function CartesianLabelFromLabelProp(_ref3) {
   var viewBox = useCartesianLabelContext();
   return parseLabel(label, viewBox, labelRef) || null;
 }
-var _excluded$d = ["valueAccessor"], _excluded2$6 = ["dataKey", "clockWise", "id", "textBreakAll", "zIndex"];
-function _extends$d() {
-  return _extends$d = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$b = ["valueAccessor"], _excluded2$5 = ["dataKey", "clockWise", "id", "textBreakAll", "zIndex"];
+function _extends$b() {
+  return _extends$b = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$d.apply(null, arguments);
+  }, _extends$b.apply(null, arguments);
 }
-function _objectWithoutProperties$d(e, t) {
+function _objectWithoutProperties$b(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$d(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$b(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$d(r2, e) {
+function _objectWithoutPropertiesLoose$b(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -38996,7 +38996,7 @@ var defaultAccessor = (entry) => {
 var CartesianLabelListContext = /* @__PURE__ */ reactExports.createContext(void 0);
 var CartesianLabelListContextProvider = CartesianLabelListContext.Provider;
 var PolarLabelListContext = /* @__PURE__ */ reactExports.createContext(void 0);
-var PolarLabelListContextProvider = PolarLabelListContext.Provider;
+PolarLabelListContext.Provider;
 function useCartesianLabelListContext() {
   return reactExports.useContext(CartesianLabelListContext);
 }
@@ -39006,14 +39006,14 @@ function usePolarLabelListContext() {
 function LabelList(_ref2) {
   var {
     valueAccessor = defaultAccessor
-  } = _ref2, restProps = _objectWithoutProperties$d(_ref2, _excluded$d);
+  } = _ref2, restProps = _objectWithoutProperties$b(_ref2, _excluded$b);
   var {
     dataKey,
     clockWise,
     id: id2,
     textBreakAll,
     zIndex
-  } = restProps, others = _objectWithoutProperties$d(restProps, _excluded2$6);
+  } = restProps, others = _objectWithoutProperties$b(restProps, _excluded2$5);
   var cartesianData = useCartesianLabelListContext();
   var polarData = usePolarLabelListContext();
   var data = cartesianData || polarData;
@@ -39030,7 +39030,7 @@ function LabelList(_ref2) {
     var idProps = isNullish(id2) ? {} : {
       id: "".concat(id2, "-").concat(index)
     };
-    return /* @__PURE__ */ reactExports.createElement(Label, _extends$d({
+    return /* @__PURE__ */ reactExports.createElement(Label, _extends$b({
       key: "label-".concat(index)
     }, svgPropertiesAndEvents(entry), others, idProps, {
       /*
@@ -39069,7 +39069,7 @@ function LabelListFromLabelProp(_ref2) {
     });
   }
   if (typeof label === "object") {
-    return /* @__PURE__ */ reactExports.createElement(LabelList, _extends$d({
+    return /* @__PURE__ */ reactExports.createElement(LabelList, _extends$b({
       key: "labelList-implicit"
     }, label, {
       type: String(label.type)
@@ -39077,44 +39077,6 @@ function LabelListFromLabelProp(_ref2) {
   }
   return null;
 }
-var selectUnfilteredPolarItems = (state) => state.graphicalItems.polarItems;
-var selectAxisPredicate = createSelector([pickAxisType, pickAxisId], itemAxisPredicate);
-var selectPolarItemsSettings = createSelector([selectUnfilteredPolarItems, selectBaseAxis, selectAxisPredicate], combineGraphicalItemsSettings);
-var selectPolarGraphicalItemsData = createSelector([selectPolarItemsSettings], combineGraphicalItemsData);
-var selectPolarDisplayedData = createSelector([selectPolarGraphicalItemsData, selectChartDataAndAlwaysIgnoreIndexes], combineDisplayedData);
-var selectPolarAppliedValues = createSelector([selectPolarDisplayedData, selectBaseAxis, selectPolarItemsSettings], combineAppliedValues);
-createSelector([selectPolarDisplayedData, selectBaseAxis, selectPolarItemsSettings], (data, axisSettings, items) => {
-  if (items.length > 0) {
-    return data.flatMap((entry) => {
-      return items.flatMap((item) => {
-        var _axisSettings$dataKey;
-        var valueByDataKey = getValueByDataKey(entry, (_axisSettings$dataKey = axisSettings.dataKey) !== null && _axisSettings$dataKey !== void 0 ? _axisSettings$dataKey : item.dataKey);
-        return {
-          value: valueByDataKey,
-          errorDomain: []
-          // polar charts do not have error bars
-        };
-      });
-    }).filter(Boolean);
-  }
-  if ((axisSettings === null || axisSettings === void 0 ? void 0 : axisSettings.dataKey) != null) {
-    return data.map((item) => ({
-      value: getValueByDataKey(item, axisSettings.dataKey),
-      errorDomain: []
-    }));
-  }
-  return data.map((entry) => ({
-    value: entry,
-    errorDomain: []
-  }));
-});
-var unsupportedInPolarChart = () => void 0;
-var selectDomainOfAllPolarAppliedNumericalValues = createSelector([selectPolarDisplayedData, selectBaseAxis, selectPolarItemsSettings, selectAllErrorBarSettings, pickAxisType, selectChartDataSliceIgnoringIndexes], combineDomainOfAllAppliedNumericalValuesIncludingErrorValues);
-var selectPolarNumericalDomain = createSelector([selectBaseAxis, selectDomainDefinition, selectDomainFromUserPreference, unsupportedInPolarChart, selectDomainOfAllPolarAppliedNumericalValues, unsupportedInPolarChart, selectChartLayout, pickAxisType], combineNumericalDomain);
-var selectPolarAxisDomain = createSelector([selectBaseAxis, selectChartLayout, selectPolarDisplayedData, selectPolarAppliedValues, selectStackOffsetType, pickAxisType, selectPolarNumericalDomain], combineAxisDomain);
-var selectPolarNiceTicks = createSelector([selectPolarAxisDomain, selectRenderableAxisSettings, selectRealScaleType], combineNiceTicks);
-var selectPolarAxisDomainIncludingNiceTicks = createSelector([selectBaseAxis, selectPolarAxisDomain, selectPolarNiceTicks, pickAxisType], combineAxisDomainWithNiceTicks);
-createSelector([selectRealScaleType, selectPolarAxisDomainIncludingNiceTicks], combineCheckedDomain);
 var initialState$8 = {
   radiusAxis: {},
   angleAxis: {}
@@ -39150,109 +39112,6 @@ function getClassNameFromUnknown(u) {
   }
   return "";
 }
-function ownKeys$f(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread$f(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$f(Object(t), true).forEach(function(r3) {
-      _defineProperty$f(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$f(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty$f(e, r2, t) {
-  return (r2 = _toPropertyKey$f(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey$f(t) {
-  var i = _toPrimitive$f(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive$f(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2);
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-var pickId = (_state, id2) => id2;
-var selectSynchronisedPieSettings = createSelector([selectUnfilteredPolarItems, pickId], (graphicalItems, id2) => graphicalItems.filter((item) => item.type === "pie").find((item) => item.id === id2));
-var emptyArray = [];
-var pickCells$1 = (_state, _id, cells) => {
-  if ((cells === null || cells === void 0 ? void 0 : cells.length) === 0) {
-    return emptyArray;
-  }
-  return cells;
-};
-var selectDisplayedData = createSelector([selectChartDataAndAlwaysIgnoreIndexes, selectSynchronisedPieSettings, pickCells$1], (_ref2, pieSettings, cells) => {
-  var {
-    chartData
-  } = _ref2;
-  if (pieSettings == null) {
-    return void 0;
-  }
-  var displayedData;
-  if ((pieSettings === null || pieSettings === void 0 ? void 0 : pieSettings.data) != null && pieSettings.data.length > 0) {
-    displayedData = pieSettings.data;
-  } else {
-    displayedData = chartData;
-  }
-  if ((!displayedData || !displayedData.length) && cells != null) {
-    displayedData = cells.map((cell) => _objectSpread$f(_objectSpread$f({}, pieSettings.presentationProps), cell.props));
-  }
-  if (displayedData == null) {
-    return void 0;
-  }
-  return displayedData;
-});
-var selectPieLegend = createSelector([selectDisplayedData, selectSynchronisedPieSettings, pickCells$1], (displayedData, pieSettings, cells) => {
-  if (displayedData == null || pieSettings == null) {
-    return void 0;
-  }
-  return displayedData.map((entry, i) => {
-    var _cells$i;
-    var name = getValueByDataKey(entry, pieSettings.nameKey, pieSettings.name);
-    var color2;
-    if (cells !== null && cells !== void 0 && (_cells$i = cells[i]) !== null && _cells$i !== void 0 && (_cells$i = _cells$i.props) !== null && _cells$i !== void 0 && _cells$i.fill) {
-      color2 = cells[i].props.fill;
-    } else if (typeof entry === "object" && entry != null && "fill" in entry) {
-      color2 = entry.fill;
-    } else {
-      color2 = pieSettings.fill;
-    }
-    return {
-      value: getTooltipNameProp(name, pieSettings.dataKey),
-      color: color2,
-      // @ts-expect-error Legend payload.payload says it wants objects but our data can be unknown
-      payload: entry,
-      type: pieSettings.legendType
-    };
-  });
-});
-var selectPieSectors = createSelector([selectDisplayedData, selectSynchronisedPieSettings, pickCells$1, selectChartOffsetInternal], (displayedData, pieSettings, cells, offset) => {
-  if (pieSettings == null || displayedData == null) {
-    return void 0;
-  }
-  return computePieSectors({
-    offset,
-    pieSettings,
-    displayedData,
-    cells
-  });
-});
 var reactIs = { exports: {} };
 var reactIs_production = {};
 var hasRequiredReactIs_production;
@@ -39448,7 +39307,7 @@ function requireIsPlainObject() {
 var isPlainObjectExports = /* @__PURE__ */ requireIsPlainObject();
 const isPlainObject = /* @__PURE__ */ getDefaultExportFromCjs(isPlainObjectExports);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5;
-function ownKeys$e(e, r2) {
+function ownKeys$b(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -39458,25 +39317,25 @@ function ownKeys$e(e, r2) {
   }
   return t;
 }
-function _objectSpread$e(e) {
+function _objectSpread$b(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$e(Object(t), true).forEach(function(r3) {
-      _defineProperty$e(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$e(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$b(Object(t), true).forEach(function(r3) {
+      _defineProperty$b(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$e(e, r2, t) {
-  return (r2 = _toPropertyKey$e(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$b(e, r2, t) {
+  return (r2 = _toPropertyKey$b(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$e(t) {
-  var i = _toPrimitive$e(t, "string");
+function _toPropertyKey$b(t) {
+  var i = _toPrimitive$b(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$e(t, r2) {
+function _toPrimitive$b(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -39486,14 +39345,14 @@ function _toPrimitive$e(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends$c() {
-  return _extends$c = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$a() {
+  return _extends$a = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$c.apply(null, arguments);
+  }, _extends$a.apply(null, arguments);
 }
 function _taggedTemplateLiteral(e, t) {
   return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
@@ -39559,7 +39418,7 @@ var Trapezoid = (outsideProps) => {
   }
   var layerClass = clsx("recharts-trapezoid", className);
   if (!isUpdateAnimationActive) {
-    return /* @__PURE__ */ reactExports.createElement("g", null, /* @__PURE__ */ reactExports.createElement("path", _extends$c({}, svgPropertiesAndEvents(trapezoidProps), {
+    return /* @__PURE__ */ reactExports.createElement("g", null, /* @__PURE__ */ reactExports.createElement("path", _extends$a({}, svgPropertiesAndEvents(trapezoidProps), {
       className: layerClass,
       d: getTrapezoidPath(x2, y2, upperWidth, lowerWidth, height)
     })));
@@ -39599,25 +39458,25 @@ var Trapezoid = (outsideProps) => {
     } : {
       strokeDasharray: from2
     };
-    return /* @__PURE__ */ reactExports.createElement("path", _extends$c({}, svgPropertiesAndEvents(trapezoidProps), {
+    return /* @__PURE__ */ reactExports.createElement("path", _extends$a({}, svgPropertiesAndEvents(trapezoidProps), {
       className: layerClass,
       d: getTrapezoidPath(currX, currY, currUpperWidth, currLowerWidth, currHeight),
       ref: pathRef,
-      style: _objectSpread$e(_objectSpread$e({}, animationStyle), trapezoidProps.style)
+      style: _objectSpread$b(_objectSpread$b({}, animationStyle), trapezoidProps.style)
     }));
   });
 };
-var _excluded$c = ["option", "shapeType", "activeClassName", "inActiveClassName"];
-function _objectWithoutProperties$c(e, t) {
+var _excluded$a = ["option", "shapeType", "activeClassName", "inActiveClassName"];
+function _objectWithoutProperties$a(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$c(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$a(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$c(r2, e) {
+function _objectWithoutPropertiesLoose$a(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -39626,7 +39485,7 @@ function _objectWithoutPropertiesLoose$c(r2, e) {
   }
   return t;
 }
-function ownKeys$d(e, r2) {
+function ownKeys$a(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -39636,25 +39495,25 @@ function ownKeys$d(e, r2) {
   }
   return t;
 }
-function _objectSpread$d(e) {
+function _objectSpread$a(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$d(Object(t), true).forEach(function(r3) {
-      _defineProperty$d(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$d(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$a(Object(t), true).forEach(function(r3) {
+      _defineProperty$a(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$d(e, r2, t) {
-  return (r2 = _toPropertyKey$d(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$a(e, r2, t) {
+  return (r2 = _toPropertyKey$a(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$d(t) {
-  var i = _toPrimitive$d(t, "string");
+function _toPropertyKey$a(t) {
+  var i = _toPrimitive$a(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$d(t, r2) {
+function _toPrimitive$a(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -39665,7 +39524,7 @@ function _toPrimitive$d(t, r2) {
   return ("string" === r2 ? String : Number)(t);
 }
 function defaultPropTransformer(option, props) {
-  return _objectSpread$d(_objectSpread$d({}, props), option);
+  return _objectSpread$a(_objectSpread$a({}, props), option);
 }
 function isSymbolsProps(shapeType, _elementProps) {
   return shapeType === "symbols";
@@ -39705,10 +39564,10 @@ function Shape(_ref2) {
     shapeType,
     activeClassName = "recharts-active-shape",
     inActiveClassName = "recharts-shape"
-  } = _ref2, props = _objectWithoutProperties$c(_ref2, _excluded$c);
+  } = _ref2, props = _objectWithoutProperties$a(_ref2, _excluded$a);
   var shape;
   if (/* @__PURE__ */ reactExports.isValidElement(option)) {
-    shape = /* @__PURE__ */ reactExports.cloneElement(option, _objectSpread$d(_objectSpread$d({}, props), getPropsFromShapeOption(option)));
+    shape = /* @__PURE__ */ reactExports.cloneElement(option, _objectSpread$a(_objectSpread$a({}, props), getPropsFromShapeOption(option)));
   } else if (typeof option === "function") {
     shape = option(props, props.index);
   } else if (isPlainObject(option) && typeof option !== "boolean") {
@@ -39816,37 +39675,6 @@ function SetLegendPayload(_ref2) {
     }
     prevPayloadRef.current = legendPayload;
   }, [dispatch, isPanorama, legendPayload]);
-  reactExports.useLayoutEffect(() => {
-    return () => {
-      if (prevPayloadRef.current) {
-        dispatch(removeLegendPayload(prevPayloadRef.current));
-        prevPayloadRef.current = null;
-      }
-    };
-  }, [dispatch]);
-  return null;
-}
-function SetPolarLegendPayload(_ref2) {
-  var {
-    legendPayload
-  } = _ref2;
-  var dispatch = useAppDispatch();
-  var layout2 = useAppSelector(selectChartLayout);
-  var prevPayloadRef = reactExports.useRef(null);
-  reactExports.useLayoutEffect(() => {
-    if (layout2 !== "centric" && layout2 !== "radial") {
-      return;
-    }
-    if (prevPayloadRef.current === null) {
-      dispatch(addLegendPayload(legendPayload));
-    } else if (prevPayloadRef.current !== legendPayload) {
-      dispatch(replaceLegendPayload({
-        prev: prevPayloadRef.current,
-        next: legendPayload
-      }));
-    }
-    prevPayloadRef.current = legendPayload;
-  }, [dispatch, layout2, legendPayload]);
   reactExports.useLayoutEffect(() => {
     return () => {
       if (prevPayloadRef.current) {
@@ -39982,60 +39810,7 @@ var SetCartesianGraphicalItemImpl = (props) => {
   return null;
 };
 var SetCartesianGraphicalItem = /* @__PURE__ */ reactExports.memo(SetCartesianGraphicalItemImpl);
-var SetPolarGraphicalItemImpl = (props) => {
-  var dispatch = useAppDispatch();
-  var prevPropsRef = reactExports.useRef(null);
-  reactExports.useLayoutEffect(() => {
-    if (prevPropsRef.current === null) {
-      dispatch(addPolarGraphicalItem(props));
-    } else if (prevPropsRef.current !== props) {
-      dispatch(replacePolarGraphicalItem({
-        prev: prevPropsRef.current,
-        next: props
-      }));
-    }
-    prevPropsRef.current = props;
-  }, [dispatch, props]);
-  reactExports.useLayoutEffect(() => {
-    return () => {
-      if (prevPropsRef.current) {
-        dispatch(removePolarGraphicalItem(prevPropsRef.current));
-        prevPropsRef.current = null;
-      }
-    };
-  }, [dispatch]);
-  return null;
-};
-var SetPolarGraphicalItem = /* @__PURE__ */ reactExports.memo(SetPolarGraphicalItemImpl);
-var _excluded$b = ["key"], _excluded2$5 = ["onMouseEnter", "onClick", "onMouseLeave"], _excluded3$4 = ["id"], _excluded4$2 = ["id"];
-function _extends$b() {
-  return _extends$b = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends$b.apply(null, arguments);
-}
-function _objectWithoutProperties$b(e, t) {
-  if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$b(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose$b(r2, e) {
-  if (null == r2) return {};
-  var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
-  }
-  return t;
-}
-function ownKeys$c(e, r2) {
+function ownKeys$9(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -40045,643 +39820,25 @@ function ownKeys$c(e, r2) {
   }
   return t;
 }
-function _objectSpread$c(e) {
+function _objectSpread$9(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$c(Object(t), true).forEach(function(r3) {
-      _defineProperty$c(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$c(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$9(Object(t), true).forEach(function(r3) {
+      _defineProperty$9(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$9(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$c(e, r2, t) {
-  return (r2 = _toPropertyKey$c(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$9(e, r2, t) {
+  return (r2 = _toPropertyKey$9(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$c(t) {
-  var i = _toPrimitive$c(t, "string");
+function _toPropertyKey$9(t) {
+  var i = _toPrimitive$9(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$c(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2);
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-function SetPiePayloadLegend(props) {
-  var cells = reactExports.useMemo(() => findAllByType(props.children, Cell), [props.children]);
-  var legendPayload = useAppSelector((state) => selectPieLegend(state, props.id, cells));
-  if (legendPayload == null) {
-    return null;
-  }
-  return /* @__PURE__ */ reactExports.createElement(SetPolarLegendPayload, {
-    legendPayload
-  });
-}
-function getActiveShapeFill(activeShape) {
-  if (activeShape == null || typeof activeShape === "boolean" || typeof activeShape === "function") {
-    return void 0;
-  }
-  if (/* @__PURE__ */ reactExports.isValidElement(activeShape)) {
-    var _activeShape$props;
-    var _fill = (_activeShape$props = activeShape.props) === null || _activeShape$props === void 0 ? void 0 : _activeShape$props.fill;
-    return typeof _fill === "string" ? _fill : void 0;
-  }
-  var {
-    fill
-  } = activeShape;
-  return typeof fill === "string" ? fill : void 0;
-}
-var SetPieTooltipEntrySettings = /* @__PURE__ */ reactExports.memo((_ref2) => {
-  var {
-    dataKey,
-    nameKey,
-    sectors,
-    stroke,
-    strokeWidth,
-    fill,
-    name,
-    hide,
-    tooltipType,
-    id: id2,
-    activeShape
-  } = _ref2;
-  var activeShapeFill = getActiveShapeFill(activeShape);
-  var tooltipDataDefinedOnItem = sectors.map((sector) => {
-    var sectorTooltipPayload = sector.tooltipPayload;
-    if (activeShapeFill == null || sectorTooltipPayload == null) {
-      return sectorTooltipPayload;
-    }
-    return sectorTooltipPayload.map((item) => _objectSpread$c(_objectSpread$c({}, item), {}, {
-      color: activeShapeFill,
-      fill: activeShapeFill
-    }));
-  });
-  var tooltipEntrySettings = {
-    dataDefinedOnItem: tooltipDataDefinedOnItem,
-    getPosition: (index) => {
-      var _sectors$Number;
-      return (_sectors$Number = sectors[Number(index)]) === null || _sectors$Number === void 0 ? void 0 : _sectors$Number.tooltipPosition;
-    },
-    settings: {
-      stroke,
-      strokeWidth,
-      fill,
-      dataKey,
-      nameKey,
-      name: getTooltipNameProp(name, dataKey),
-      hide,
-      type: tooltipType,
-      color: fill,
-      unit: "",
-      // why doesn't Pie support unit?
-      graphicalItemId: id2
-    }
-  };
-  return /* @__PURE__ */ reactExports.createElement(SetTooltipEntrySettings, {
-    tooltipEntrySettings
-  });
-});
-var getTextAnchor = (x2, cx) => {
-  if (x2 > cx) {
-    return "start";
-  }
-  if (x2 < cx) {
-    return "end";
-  }
-  return "middle";
-};
-var getOuterRadius = (dataPoint, outerRadius, maxPieRadius) => {
-  if (typeof outerRadius === "function") {
-    return getPercentValue(outerRadius(dataPoint), maxPieRadius, maxPieRadius * 0.8);
-  }
-  return getPercentValue(outerRadius, maxPieRadius, maxPieRadius * 0.8);
-};
-var parseCoordinateOfPie = (pieSettings, offset, dataPoint) => {
-  var {
-    top,
-    left,
-    width,
-    height
-  } = offset;
-  var maxPieRadius = getMaxRadius(width, height);
-  var cx = left + getPercentValue(pieSettings.cx, width, width / 2);
-  var cy = top + getPercentValue(pieSettings.cy, height, height / 2);
-  var innerRadius = getPercentValue(pieSettings.innerRadius, maxPieRadius, 0);
-  var outerRadius = getOuterRadius(dataPoint, pieSettings.outerRadius, maxPieRadius);
-  var maxRadius = pieSettings.maxRadius || Math.sqrt(width * width + height * height) / 2;
-  return {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    maxRadius
-  };
-};
-var parseDeltaAngle = (startAngle, endAngle) => {
-  var sign2 = mathSign(endAngle - startAngle);
-  var deltaAngle = Math.min(Math.abs(endAngle - startAngle), 360);
-  return sign2 * deltaAngle;
-};
-var renderLabelLineItem = (option, props) => {
-  if (/* @__PURE__ */ reactExports.isValidElement(option)) {
-    return /* @__PURE__ */ reactExports.cloneElement(option, props);
-  }
-  if (typeof option === "function") {
-    return option(props);
-  }
-  var className = clsx("recharts-pie-label-line", typeof option !== "boolean" ? option.className : "");
-  var {
-    key
-  } = props, otherProps = _objectWithoutProperties$b(props, _excluded$b);
-  return /* @__PURE__ */ reactExports.createElement(Curve, _extends$b({}, otherProps, {
-    type: "linear",
-    className
-  }));
-};
-var renderLabelItem = (option, props, value) => {
-  if (/* @__PURE__ */ reactExports.isValidElement(option)) {
-    return /* @__PURE__ */ reactExports.cloneElement(option, props);
-  }
-  var label = value;
-  if (typeof option === "function") {
-    label = option(props);
-    if (/* @__PURE__ */ reactExports.isValidElement(label)) {
-      return label;
-    }
-  }
-  var className = clsx("recharts-pie-label-text", getClassNameFromUnknown(option));
-  return /* @__PURE__ */ reactExports.createElement(Text, _extends$b({}, props, {
-    alignmentBaseline: "middle",
-    className
-  }), label);
-};
-function PieLabels(_ref2) {
-  var {
-    sectors,
-    props,
-    showLabels
-  } = _ref2;
-  var {
-    label,
-    labelLine,
-    dataKey
-  } = props;
-  if (!showLabels || !label || !sectors) {
-    return null;
-  }
-  var pieProps = svgPropertiesNoEvents(props);
-  var customLabelProps = svgPropertiesNoEventsFromUnknown(label);
-  var customLabelLineProps = svgPropertiesNoEventsFromUnknown(labelLine);
-  var offsetRadius = typeof label === "object" && "offsetRadius" in label && typeof label.offsetRadius === "number" && label.offsetRadius || 20;
-  var labels = sectors.map((entry, i) => {
-    var midAngle = (entry.startAngle + entry.endAngle) / 2;
-    var endPoint = polarToCartesian(entry.cx, entry.cy, entry.outerRadius + offsetRadius, midAngle);
-    var labelProps = _objectSpread$c(_objectSpread$c(_objectSpread$c(_objectSpread$c({}, pieProps), entry), {}, {
-      // @ts-expect-error customLabelProps is contributing unknown props
-      stroke: "none"
-    }, customLabelProps), {}, {
-      index: i,
-      textAnchor: getTextAnchor(endPoint.x, entry.cx)
-    }, endPoint);
-    var lineProps = _objectSpread$c(_objectSpread$c(_objectSpread$c(_objectSpread$c({}, pieProps), entry), {}, {
-      // @ts-expect-error customLabelLineProps is contributing unknown props
-      fill: "none",
-      // @ts-expect-error customLabelLineProps is contributing unknown props
-      stroke: entry.fill
-    }, customLabelLineProps), {}, {
-      index: i,
-      points: [polarToCartesian(entry.cx, entry.cy, entry.outerRadius, midAngle), endPoint],
-      key: "line"
-    });
-    return /* @__PURE__ */ reactExports.createElement(ZIndexLayer, {
-      zIndex: DefaultZIndexes.label,
-      key: "label-".concat(entry.startAngle, "-").concat(entry.endAngle, "-").concat(entry.midAngle, "-").concat(i)
-    }, /* @__PURE__ */ reactExports.createElement(Layer, null, labelLine && renderLabelLineItem(labelLine, lineProps), renderLabelItem(label, labelProps, getValueByDataKey(entry, dataKey))));
-  });
-  return /* @__PURE__ */ reactExports.createElement(Layer, {
-    className: "recharts-pie-labels"
-  }, labels);
-}
-function PieLabelList(_ref3) {
-  var {
-    sectors,
-    props,
-    showLabels
-  } = _ref3;
-  var {
-    label
-  } = props;
-  if (typeof label === "object" && label != null && "position" in label) {
-    return /* @__PURE__ */ reactExports.createElement(LabelListFromLabelProp, {
-      label
-    });
-  }
-  return /* @__PURE__ */ reactExports.createElement(PieLabels, {
-    sectors,
-    props,
-    showLabels
-  });
-}
-function PieSectors(props) {
-  var {
-    sectors,
-    activeShape,
-    inactiveShape: inactiveShapeProp,
-    allOtherPieProps,
-    shape,
-    id: id2
-  } = props;
-  var activeIndex = useAppSelector(selectActiveTooltipIndex);
-  var activeDataKey = useAppSelector(selectActiveTooltipDataKey);
-  var activeGraphicalItemId = useAppSelector(selectActiveTooltipGraphicalItemId);
-  var {
-    onMouseEnter: onMouseEnterFromProps,
-    onClick: onItemClickFromProps,
-    onMouseLeave: onMouseLeaveFromProps
-  } = allOtherPieProps, restOfAllOtherProps = _objectWithoutProperties$b(allOtherPieProps, _excluded2$5);
-  var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, allOtherPieProps.dataKey, id2);
-  var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
-  var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, allOtherPieProps.dataKey, id2);
-  if (sectors == null || sectors.length === 0) {
-    return null;
-  }
-  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, sectors.map((entry, i) => {
-    if ((entry === null || entry === void 0 ? void 0 : entry.startAngle) === 0 && (entry === null || entry === void 0 ? void 0 : entry.endAngle) === 0 && sectors.length !== 1) return null;
-    var graphicalItemMatches = activeGraphicalItemId == null || activeGraphicalItemId === id2;
-    var isActive = String(i) === activeIndex && (activeDataKey == null || allOtherPieProps.dataKey === activeDataKey) && graphicalItemMatches;
-    var inactiveShape = activeIndex ? inactiveShapeProp : null;
-    var sectorOptions = activeShape && isActive ? activeShape : inactiveShape;
-    var sectorProps = _objectSpread$c(_objectSpread$c({}, entry), {}, {
-      stroke: entry.stroke,
-      tabIndex: -1,
-      [DATA_ITEM_INDEX_ATTRIBUTE_NAME]: i,
-      [DATA_ITEM_GRAPHICAL_ITEM_ID_ATTRIBUTE_NAME]: id2
-    });
-    return /* @__PURE__ */ reactExports.createElement(Layer, _extends$b({
-      key: "sector-".concat(entry === null || entry === void 0 ? void 0 : entry.startAngle, "-").concat(entry === null || entry === void 0 ? void 0 : entry.endAngle, "-").concat(entry.midAngle, "-").concat(i),
-      tabIndex: -1,
-      className: "recharts-pie-sector"
-    }, adaptEventsOfChild(restOfAllOtherProps, entry, i), {
-      onMouseEnter: onMouseEnterFromContext(entry, i),
-      onMouseLeave: onMouseLeaveFromContext(entry, i),
-      onClick: onClickFromContext(entry, i)
-    }), /* @__PURE__ */ reactExports.createElement(Shape, _extends$b({
-      option: shape !== null && shape !== void 0 ? shape : sectorOptions,
-      index: i,
-      shapeType: "sector",
-      isActive
-    }, sectorProps)));
-  }));
-}
-function computePieSectors(_ref4) {
-  var _pieSettings$paddingA;
-  var {
-    pieSettings,
-    displayedData,
-    cells,
-    offset
-  } = _ref4;
-  var {
-    cornerRadius,
-    startAngle,
-    endAngle,
-    dataKey,
-    nameKey,
-    tooltipType
-  } = pieSettings;
-  var minAngle = Math.abs(pieSettings.minAngle);
-  var deltaAngle = parseDeltaAngle(startAngle, endAngle);
-  var absDeltaAngle = Math.abs(deltaAngle);
-  var paddingAngle = displayedData.length <= 1 ? 0 : (_pieSettings$paddingA = pieSettings.paddingAngle) !== null && _pieSettings$paddingA !== void 0 ? _pieSettings$paddingA : 0;
-  var notZeroItemCount = displayedData.filter((entry) => getValueByDataKey(entry, dataKey, 0) !== 0).length;
-  var totalPaddingAngle = (absDeltaAngle >= 360 ? notZeroItemCount : notZeroItemCount - 1) * paddingAngle;
-  var sum = displayedData.reduce((result, entry) => {
-    var val = getValueByDataKey(entry, dataKey, 0);
-    return result + (isNumber(val) ? val : 0);
-  }, 0);
-  var needsMinAngleAdjustment = minAngle > 0 && sum > 0 && displayedData.some((entry) => {
-    var val = getValueByDataKey(entry, dataKey, 0);
-    var percent2 = (isNumber(val) ? val : 0) / sum;
-    return val !== 0 && percent2 * absDeltaAngle < minAngle;
-  });
-  var effectiveMinAngle = needsMinAngleAdjustment ? minAngle : 0;
-  var realTotalAngle = absDeltaAngle - notZeroItemCount * effectiveMinAngle - totalPaddingAngle;
-  var sectors;
-  if (sum > 0) {
-    var prev;
-    sectors = displayedData.map((entry, i) => {
-      var val = getValueByDataKey(entry, dataKey, 0);
-      var name = getValueByDataKey(entry, nameKey, i);
-      var coordinate = parseCoordinateOfPie(pieSettings, offset, entry);
-      var percent2 = (isNumber(val) ? val : 0) / sum;
-      var tempStartAngle;
-      var entryWithCellInfo = _objectSpread$c(_objectSpread$c({}, entry), cells && cells[i] && cells[i].props);
-      var sectorColor = entryWithCellInfo != null && "fill" in entryWithCellInfo && typeof entryWithCellInfo.fill === "string" ? entryWithCellInfo.fill : pieSettings.fill;
-      if (i) {
-        tempStartAngle = prev.endAngle + mathSign(deltaAngle) * paddingAngle * (val !== 0 ? 1 : 0);
-      } else {
-        tempStartAngle = startAngle;
-      }
-      var tempEndAngle = tempStartAngle + mathSign(deltaAngle) * ((val !== 0 ? effectiveMinAngle : 0) + percent2 * realTotalAngle);
-      var midAngle = (tempStartAngle + tempEndAngle) / 2;
-      var middleRadius = (coordinate.innerRadius + coordinate.outerRadius) / 2;
-      var tooltipPayload = [{
-        name,
-        value: val,
-        payload: entryWithCellInfo,
-        dataKey,
-        type: tooltipType,
-        color: sectorColor,
-        fill: sectorColor,
-        graphicalItemId: pieSettings.id
-      }];
-      var tooltipPosition = polarToCartesian(coordinate.cx, coordinate.cy, middleRadius, midAngle);
-      prev = _objectSpread$c(_objectSpread$c(_objectSpread$c(_objectSpread$c({}, pieSettings.presentationProps), {}, {
-        percent: percent2,
-        cornerRadius: typeof cornerRadius === "string" ? parseFloat(cornerRadius) : cornerRadius,
-        name,
-        tooltipPayload,
-        midAngle,
-        middleRadius,
-        tooltipPosition
-      }, entryWithCellInfo), coordinate), {}, {
-        value: val,
-        dataKey,
-        startAngle: tempStartAngle,
-        endAngle: tempEndAngle,
-        payload: entryWithCellInfo,
-        paddingAngle: val !== 0 ? mathSign(deltaAngle) * paddingAngle : 0
-      });
-      return prev;
-    });
-  }
-  return sectors;
-}
-function PieLabelListProvider(_ref5) {
-  var {
-    showLabels,
-    sectors,
-    children
-  } = _ref5;
-  var labelListEntries = reactExports.useMemo(() => {
-    if (!showLabels || !sectors) {
-      return [];
-    }
-    return sectors.map((entry) => ({
-      value: entry.value,
-      payload: entry.payload,
-      clockWise: false,
-      parentViewBox: void 0,
-      viewBox: {
-        cx: entry.cx,
-        cy: entry.cy,
-        innerRadius: entry.innerRadius,
-        outerRadius: entry.outerRadius,
-        startAngle: entry.startAngle,
-        endAngle: entry.endAngle,
-        clockWise: false
-      },
-      fill: entry.fill
-    }));
-  }, [sectors, showLabels]);
-  return /* @__PURE__ */ reactExports.createElement(PolarLabelListContextProvider, {
-    value: showLabels ? labelListEntries : void 0
-  }, children);
-}
-function SectorsWithAnimation(_ref6) {
-  var {
-    props,
-    previousSectorsRef,
-    id: id2
-  } = _ref6;
-  var {
-    sectors,
-    isAnimationActive,
-    animationBegin,
-    animationDuration,
-    animationEasing,
-    activeShape,
-    inactiveShape,
-    onAnimationStart,
-    onAnimationEnd
-  } = props;
-  var animationId = useAnimationId(props, "recharts-pie-");
-  var prevSectors = previousSectorsRef.current;
-  var [isAnimating, setIsAnimating] = reactExports.useState(false);
-  var handleAnimationEnd = reactExports.useCallback(() => {
-    if (typeof onAnimationEnd === "function") {
-      onAnimationEnd();
-    }
-    setIsAnimating(false);
-  }, [onAnimationEnd]);
-  var handleAnimationStart = reactExports.useCallback(() => {
-    if (typeof onAnimationStart === "function") {
-      onAnimationStart();
-    }
-    setIsAnimating(true);
-  }, [onAnimationStart]);
-  return /* @__PURE__ */ reactExports.createElement(PieLabelListProvider, {
-    showLabels: !isAnimating,
-    sectors
-  }, /* @__PURE__ */ reactExports.createElement(JavascriptAnimate, {
-    animationId,
-    begin: animationBegin,
-    duration: animationDuration,
-    isActive: isAnimationActive,
-    easing: animationEasing,
-    onAnimationStart: handleAnimationStart,
-    onAnimationEnd: handleAnimationEnd,
-    key: animationId
-  }, (t) => {
-    var _first$startAngle;
-    var stepData = [];
-    var first = sectors && sectors[0];
-    var curAngle = (_first$startAngle = first === null || first === void 0 ? void 0 : first.startAngle) !== null && _first$startAngle !== void 0 ? _first$startAngle : 0;
-    sectors === null || sectors === void 0 || sectors.forEach((entry, index) => {
-      var prev = prevSectors && prevSectors[index];
-      var paddingAngle = index > 0 ? get$1(entry, "paddingAngle", 0) : 0;
-      if (prev) {
-        var angle = interpolate$1(prev.endAngle - prev.startAngle, entry.endAngle - entry.startAngle, t);
-        var latest2 = _objectSpread$c(_objectSpread$c({}, entry), {}, {
-          startAngle: curAngle + paddingAngle,
-          endAngle: curAngle + angle + paddingAngle
-        });
-        stepData.push(latest2);
-        curAngle = latest2.endAngle;
-      } else {
-        var {
-          endAngle,
-          startAngle
-        } = entry;
-        var deltaAngle = interpolate$1(0, endAngle - startAngle, t);
-        var _latest = _objectSpread$c(_objectSpread$c({}, entry), {}, {
-          startAngle: curAngle + paddingAngle,
-          endAngle: curAngle + deltaAngle + paddingAngle
-        });
-        stepData.push(_latest);
-        curAngle = _latest.endAngle;
-      }
-    });
-    previousSectorsRef.current = stepData;
-    return /* @__PURE__ */ reactExports.createElement(Layer, null, /* @__PURE__ */ reactExports.createElement(PieSectors, {
-      sectors: stepData,
-      activeShape,
-      inactiveShape,
-      allOtherPieProps: props,
-      shape: props.shape,
-      id: id2
-    }));
-  }), /* @__PURE__ */ reactExports.createElement(PieLabelList, {
-    showLabels: !isAnimating,
-    sectors,
-    props
-  }), props.children);
-}
-var defaultPieProps = {
-  animationBegin: 400,
-  animationDuration: 1500,
-  animationEasing: "ease",
-  cx: "50%",
-  cy: "50%",
-  dataKey: "value",
-  endAngle: 360,
-  fill: "#808080",
-  hide: false,
-  innerRadius: 0,
-  isAnimationActive: "auto",
-  label: false,
-  labelLine: true,
-  legendType: "rect",
-  minAngle: 0,
-  nameKey: "name",
-  outerRadius: "80%",
-  paddingAngle: 0,
-  rootTabIndex: 0,
-  startAngle: 0,
-  stroke: "#fff",
-  zIndex: DefaultZIndexes.area
-};
-function PieImpl(props) {
-  var {
-    id: id2
-  } = props, propsWithoutId = _objectWithoutProperties$b(props, _excluded3$4);
-  var {
-    hide,
-    className,
-    rootTabIndex
-  } = props;
-  var cells = reactExports.useMemo(() => findAllByType(props.children, Cell), [props.children]);
-  var sectors = useAppSelector((state) => selectPieSectors(state, id2, cells));
-  var previousSectorsRef = reactExports.useRef(null);
-  var layerClass = clsx("recharts-pie", className);
-  if (hide || sectors == null) {
-    previousSectorsRef.current = null;
-    return /* @__PURE__ */ reactExports.createElement(Layer, {
-      tabIndex: rootTabIndex,
-      className: layerClass
-    });
-  }
-  return /* @__PURE__ */ reactExports.createElement(ZIndexLayer, {
-    zIndex: props.zIndex
-  }, /* @__PURE__ */ reactExports.createElement(SetPieTooltipEntrySettings, {
-    dataKey: props.dataKey,
-    nameKey: props.nameKey,
-    sectors,
-    stroke: props.stroke,
-    strokeWidth: props.strokeWidth,
-    fill: props.fill,
-    name: props.name,
-    hide: props.hide,
-    tooltipType: props.tooltipType,
-    id: id2,
-    activeShape: props.activeShape
-  }), /* @__PURE__ */ reactExports.createElement(Layer, {
-    tabIndex: rootTabIndex,
-    className: layerClass
-  }, /* @__PURE__ */ reactExports.createElement(SectorsWithAnimation, {
-    props: _objectSpread$c(_objectSpread$c({}, propsWithoutId), {}, {
-      sectors
-    }),
-    previousSectorsRef,
-    id: id2
-  })));
-}
-function PieFn(outsideProps) {
-  var props = resolveDefaultProps(outsideProps, defaultPieProps);
-  var {
-    id: externalId
-  } = props, propsWithoutId = _objectWithoutProperties$b(props, _excluded4$2);
-  var presentationProps = svgPropertiesNoEvents(propsWithoutId);
-  return /* @__PURE__ */ reactExports.createElement(RegisterGraphicalItemId, {
-    id: externalId,
-    type: "pie"
-  }, (id2) => /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(SetPolarGraphicalItem, {
-    type: "pie",
-    id: id2,
-    data: propsWithoutId.data,
-    dataKey: propsWithoutId.dataKey,
-    hide: propsWithoutId.hide,
-    angleAxisId: 0,
-    radiusAxisId: 0,
-    name: propsWithoutId.name,
-    nameKey: propsWithoutId.nameKey,
-    tooltipType: propsWithoutId.tooltipType,
-    legendType: propsWithoutId.legendType,
-    fill: propsWithoutId.fill,
-    cx: propsWithoutId.cx,
-    cy: propsWithoutId.cy,
-    startAngle: propsWithoutId.startAngle,
-    endAngle: propsWithoutId.endAngle,
-    paddingAngle: propsWithoutId.paddingAngle,
-    minAngle: propsWithoutId.minAngle,
-    innerRadius: propsWithoutId.innerRadius,
-    outerRadius: propsWithoutId.outerRadius,
-    cornerRadius: propsWithoutId.cornerRadius,
-    presentationProps,
-    maxRadius: props.maxRadius
-  }), /* @__PURE__ */ reactExports.createElement(SetPiePayloadLegend, _extends$b({}, propsWithoutId, {
-    id: id2
-  })), /* @__PURE__ */ reactExports.createElement(PieImpl, _extends$b({}, propsWithoutId, {
-    id: id2
-  }))));
-}
-var Pie = PieFn;
-Pie.displayName = "Pie";
-function ownKeys$b(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread$b(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$b(Object(t), true).forEach(function(r3) {
-      _defineProperty$b(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$b(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty$b(e, r2, t) {
-  return (r2 = _toPropertyKey$b(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey$b(t) {
-  var i = _toPrimitive$b(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive$b(t, r2) {
+function _toPrimitive$9(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -40795,7 +39952,7 @@ var cartesianAxisSlice = createSlice({
           return;
         }
         var newHistory = [...history, width].slice(-3);
-        state.yAxis[id2] = _objectSpread$b(_objectSpread$b({}, axis), {}, {
+        state.yAxis[id2] = _objectSpread$9(_objectSpread$9({}, axis), {}, {
           width,
           widthHistory: newHistory
         });
@@ -40880,7 +40037,7 @@ var combineBarSizeList = (allBars, globalSize, totalSize) => {
   });
   return [...stackedSizeList, ...unstackedSizeList];
 };
-function ownKeys$a(e, r2) {
+function ownKeys$8(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -40890,25 +40047,25 @@ function ownKeys$a(e, r2) {
   }
   return t;
 }
-function _objectSpread$a(e) {
+function _objectSpread$8(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$a(Object(t), true).forEach(function(r3) {
-      _defineProperty$a(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$a(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$8(Object(t), true).forEach(function(r3) {
+      _defineProperty$8(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$a(e, r2, t) {
-  return (r2 = _toPropertyKey$a(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$8(e, r2, t) {
+  return (r2 = _toPropertyKey$8(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$a(t) {
-  var i = _toPrimitive$a(t, "string");
+function _toPropertyKey$8(t) {
+  var i = _toPrimitive$8(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$a(t, r2) {
+function _toPrimitive$8(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -40985,8 +40142,8 @@ var combineAllBarPositions = (sizeList, globalMaxBarSize, barGap, barCategoryGap
   var maxBarSize = isNullish(childMaxBarSize) ? globalMaxBarSize : childMaxBarSize;
   var allBarPositions = getBarPositions(barGap, barCategoryGap, barBandSize !== bandSize ? barBandSize : bandSize, sizeList, maxBarSize);
   if (barBandSize !== bandSize && allBarPositions != null) {
-    allBarPositions = allBarPositions.map((pos) => _objectSpread$a(_objectSpread$a({}, pos), {}, {
-      position: _objectSpread$a(_objectSpread$a({}, pos.position), {}, {
+    allBarPositions = allBarPositions.map((pos) => _objectSpread$8(_objectSpread$8({}, pos), {}, {
+      position: _objectSpread$8(_objectSpread$8({}, pos.position), {}, {
         offset: pos.position.offset - barBandSize / 2
       })
     }));
@@ -41316,7 +40473,7 @@ function getEquidistantPreserveEndTicks(sign2, boundaries, getTickSize, ticks2, 
   }
   return [];
 }
-function ownKeys$9(e, r2) {
+function ownKeys$7(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -41326,25 +40483,25 @@ function ownKeys$9(e, r2) {
   }
   return t;
 }
-function _objectSpread$9(e) {
+function _objectSpread$7(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$9(Object(t), true).forEach(function(r3) {
-      _defineProperty$9(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$9(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$7(Object(t), true).forEach(function(r3) {
+      _defineProperty$7(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$9(e, r2, t) {
-  return (r2 = _toPropertyKey$9(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$7(e, r2, t) {
+  return (r2 = _toPropertyKey$7(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$9(t) {
-  var i = _toPrimitive$9(t, "string");
+function _toPropertyKey$7(t) {
+  var i = _toPrimitive$7(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$9(t, r2) {
+function _toPrimitive$7(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -41378,11 +40535,11 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
     };
     if (i2 === len - 1) {
       var gap = sign2 * (entry.coordinate + sign2 * getSize2() / 2 - end);
-      result[i2] = entry = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+      result[i2] = entry = _objectSpread$7(_objectSpread$7({}, entry), {}, {
         tickCoord: gap > 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+      result[i2] = entry = _objectSpread$7(_objectSpread$7({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -41390,7 +40547,7 @@ function getTicksEnd(sign2, boundaries, getTickSize, ticks2, minTickGap) {
       var isShow = isVisible(sign2, entry.tickCoord, getSize2, start, end);
       if (isShow) {
         end = entry.tickCoord - sign2 * (getSize2() / 2 + minTickGap);
-        result[i2] = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+        result[i2] = _objectSpread$7(_objectSpread$7({}, entry), {}, {
           isShow: true
         });
       }
@@ -41413,14 +40570,14 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     if (tail != null) {
       var tailSize = getTickSize(tail, len - 1);
       var tailGap = sign2 * (tail.coordinate + sign2 * tailSize / 2 - end);
-      result[len - 1] = tail = _objectSpread$9(_objectSpread$9({}, tail), {}, {
+      result[len - 1] = tail = _objectSpread$7(_objectSpread$7({}, tail), {}, {
         tickCoord: tailGap > 0 ? tail.coordinate - tailGap * sign2 : tail.coordinate
       });
       if (tail.tickCoord != null) {
         var isTailShow = isVisible(sign2, tail.tickCoord, () => tailSize, start, end);
         if (isTailShow) {
           end = tail.tickCoord - sign2 * (tailSize / 2 + minTickGap);
-          result[len - 1] = _objectSpread$9(_objectSpread$9({}, tail), {}, {
+          result[len - 1] = _objectSpread$7(_objectSpread$7({}, tail), {}, {
             isShow: true
           });
         }
@@ -41443,11 +40600,11 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
     };
     if (i2 === 0) {
       var gap = sign2 * (entry.coordinate - sign2 * getSize2() / 2 - start);
-      result[i2] = entry = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+      result[i2] = entry = _objectSpread$7(_objectSpread$7({}, entry), {}, {
         tickCoord: gap < 0 ? entry.coordinate - gap * sign2 : entry.coordinate
       });
     } else {
-      result[i2] = entry = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+      result[i2] = entry = _objectSpread$7(_objectSpread$7({}, entry), {}, {
         tickCoord: entry.coordinate
       });
     }
@@ -41455,7 +40612,7 @@ function getTicksStart(sign2, boundaries, getTickSize, ticks2, minTickGap, prese
       var isShow = isVisible(sign2, entry.tickCoord, getSize2, start, end);
       if (isShow) {
         start = entry.tickCoord + sign2 * (getSize2() / 2 + minTickGap);
-        result[i2] = _objectSpread$9(_objectSpread$9({}, entry), {}, {
+        result[i2] = _objectSpread$7(_objectSpread$7({}, entry), {}, {
           isShow: true
         });
       }
@@ -41577,17 +40734,17 @@ var {
   removeRenderedTicks
 } = renderedTicksSlice.actions;
 var renderedTicksReducer = renderedTicksSlice.reducer;
-var _excluded$a = ["axisLine", "width", "height", "className", "hide", "ticks", "axisType", "axisId"];
-function _objectWithoutProperties$a(e, t) {
+var _excluded$9 = ["axisLine", "width", "height", "className", "hide", "ticks", "axisType", "axisId"];
+function _objectWithoutProperties$9(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$a(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$9(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$a(r2, e) {
+function _objectWithoutPropertiesLoose$9(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -41596,16 +40753,16 @@ function _objectWithoutPropertiesLoose$a(r2, e) {
   }
   return t;
 }
-function _extends$a() {
-  return _extends$a = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$9() {
+  return _extends$9 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$a.apply(null, arguments);
+  }, _extends$9.apply(null, arguments);
 }
-function ownKeys$8(e, r2) {
+function ownKeys$6(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -41615,25 +40772,25 @@ function ownKeys$8(e, r2) {
   }
   return t;
 }
-function _objectSpread$8(e) {
+function _objectSpread$6(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$8(Object(t), true).forEach(function(r3) {
-      _defineProperty$8(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$8(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$6(Object(t), true).forEach(function(r3) {
+      _defineProperty$6(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$8(e, r2, t) {
-  return (r2 = _toPropertyKey$8(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$6(e, r2, t) {
+  return (r2 = _toPropertyKey$6(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$8(t) {
-  var i = _toPrimitive$8(t, "string");
+function _toPropertyKey$6(t) {
+  var i = _toPrimitive$6(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$8(t, r2) {
+function _toPrimitive$6(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -41684,12 +40841,12 @@ function AxisLine(axisLineProps) {
   if (!axisLine) {
     return null;
   }
-  var props = _objectSpread$8(_objectSpread$8(_objectSpread$8({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
+  var props = _objectSpread$6(_objectSpread$6(_objectSpread$6({}, otherSvgProps), svgPropertiesNoEvents(axisLine)), {}, {
     fill: "none"
   });
   if (orientation === "top" || orientation === "bottom") {
     var needHeight = +(orientation === "top" && !mirror || orientation === "bottom" && mirror);
-    props = _objectSpread$8(_objectSpread$8({}, props), {}, {
+    props = _objectSpread$6(_objectSpread$6({}, props), {}, {
       x1: x2,
       y1: y2 + needHeight * height,
       x2: x2 + width,
@@ -41697,14 +40854,14 @@ function AxisLine(axisLineProps) {
     });
   } else {
     var needWidth = +(orientation === "left" && !mirror || orientation === "right" && mirror);
-    props = _objectSpread$8(_objectSpread$8({}, props), {}, {
+    props = _objectSpread$6(_objectSpread$6({}, props), {}, {
       x1: x2 + needWidth * width,
       y1: y2,
       x2: x2 + needWidth * width,
       y2: y2 + height
     });
   }
-  return /* @__PURE__ */ reactExports.createElement("line", _extends$a({}, props, {
+  return /* @__PURE__ */ reactExports.createElement("line", _extends$9({}, props, {
     className: clsx("recharts-cartesian-axis-line", get$1(axisLine, "className"))
   }));
 }
@@ -41786,11 +40943,11 @@ function TickItem(props) {
   var tickItem;
   var combinedClassName = clsx(tickProps.className, "recharts-cartesian-axis-tick-value");
   if (/* @__PURE__ */ reactExports.isValidElement(option)) {
-    tickItem = /* @__PURE__ */ reactExports.cloneElement(option, _objectSpread$8(_objectSpread$8({}, tickProps), {}, {
+    tickItem = /* @__PURE__ */ reactExports.cloneElement(option, _objectSpread$6(_objectSpread$6({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else if (typeof option === "function") {
-    tickItem = option(_objectSpread$8(_objectSpread$8({}, tickProps), {}, {
+    tickItem = option(_objectSpread$6(_objectSpread$6({}, tickProps), {}, {
       className: combinedClassName
     }));
   } else {
@@ -41798,7 +40955,7 @@ function TickItem(props) {
     if (typeof option !== "boolean") {
       className = clsx(className, getClassNameFromUnknown(option));
     }
-    tickItem = /* @__PURE__ */ reactExports.createElement(Text, _extends$a({}, tickProps, {
+    tickItem = /* @__PURE__ */ reactExports.createElement(Text, _extends$9({}, tickProps, {
       className
     }), value);
   }
@@ -41860,7 +41017,7 @@ var Ticks = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     axisType,
     axisId
   } = props;
-  var finalTicks = getTicks(_objectSpread$8(_objectSpread$8({}, getTicksConfig), {}, {
+  var finalTicks = getTicks(_objectSpread$6(_objectSpread$6({}, getTicksConfig), {}, {
     ticks: ticks2
   }), fontSize, letterSpacing);
   var axisProps = svgPropertiesNoEvents(getTicksConfig);
@@ -41871,10 +41028,10 @@ var Ticks = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   if (typeof tickLine === "object") {
     tickLinePropsObject = tickLine;
   }
-  var tickLineProps = _objectSpread$8(_objectSpread$8({}, axisProps), {}, {
+  var tickLineProps = _objectSpread$6(_objectSpread$6({}, axisProps), {}, {
     fill: "none"
   }, tickLinePropsObject);
-  var tickLineCoords = finalTicks.map((entry) => _objectSpread$8({
+  var tickLineCoords = finalTicks.map((entry) => _objectSpread$6({
     entry
   }, getTickLineCoord(entry, x2, y2, width, height, orientation, tickSize, mirror, tickMargin)));
   var tickLines = tickLineCoords.map((_ref2) => {
@@ -41885,7 +41042,7 @@ var Ticks = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     return /* @__PURE__ */ reactExports.createElement(Layer, {
       className: "recharts-cartesian-axis-tick",
       key: "tick-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
-    }, tickLine && /* @__PURE__ */ reactExports.createElement("line", _extends$a({}, tickLineProps, lineCoord, {
+    }, tickLine && /* @__PURE__ */ reactExports.createElement("line", _extends$9({}, tickLineProps, lineCoord, {
       className: clsx("recharts-cartesian-axis-tick-line", get$1(tickLine, "className"))
     })));
   });
@@ -41895,7 +41052,7 @@ var Ticks = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       entry,
       tick: tickCoord
     } = _ref3;
-    var tickProps = _objectSpread$8(_objectSpread$8(_objectSpread$8(_objectSpread$8({
+    var tickProps = _objectSpread$6(_objectSpread$6(_objectSpread$6(_objectSpread$6({
       verticalAnchor
     }, axisProps), {}, {
       textAnchor,
@@ -41910,8 +41067,8 @@ var Ticks = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     }, tickTextProps), {}, {
       angle: (_ref4 = (_tickTextProps$angle = tickTextProps === null || tickTextProps === void 0 ? void 0 : tickTextProps.angle) !== null && _tickTextProps$angle !== void 0 ? _tickTextProps$angle : axisProps.angle) !== null && _ref4 !== void 0 ? _ref4 : 0
     });
-    var finalTickProps = _objectSpread$8(_objectSpread$8({}, tickProps), customTickProps);
-    return /* @__PURE__ */ reactExports.createElement(Layer, _extends$a({
+    var finalTickProps = _objectSpread$6(_objectSpread$6({}, tickProps), customTickProps);
+    return /* @__PURE__ */ reactExports.createElement(Layer, _extends$9({
       className: "recharts-cartesian-axis-tick-label",
       key: "tick-label-".concat(entry.value, "-").concat(entry.coordinate, "-").concat(entry.tickCoord)
     }, adaptEventsOfChild(events, entry, i)), tick && /* @__PURE__ */ reactExports.createElement(TickItem, {
@@ -41945,7 +41102,7 @@ var CartesianAxisComponent = /* @__PURE__ */ reactExports.forwardRef((props, ref
     ticks: ticks2,
     axisType,
     axisId
-  } = props, rest = _objectWithoutProperties$a(props, _excluded$a);
+  } = props, rest = _objectWithoutProperties$9(props, _excluded$9);
   var [fontSize, setFontSize] = reactExports.useState("");
   var [letterSpacing, setLetterSpacing] = reactExports.useState("");
   var tickRefs = reactExports.useRef(null);
@@ -42034,13 +41191,13 @@ var CartesianAxisComponent = /* @__PURE__ */ reactExports.forwardRef((props, ref
 });
 var CartesianAxis = /* @__PURE__ */ reactExports.forwardRef((outsideProps, ref) => {
   var props = resolveDefaultProps(outsideProps, defaultCartesianAxisProps);
-  return /* @__PURE__ */ reactExports.createElement(CartesianAxisComponent, _extends$a({}, props, {
+  return /* @__PURE__ */ reactExports.createElement(CartesianAxisComponent, _extends$9({}, props, {
     ref
   }));
 });
 CartesianAxis.displayName = "CartesianAxis";
-var _excluded$9 = ["x1", "y1", "x2", "y2", "key"], _excluded2$4 = ["offset"], _excluded3$3 = ["xAxisId", "yAxisId"], _excluded4$1 = ["xAxisId", "yAxisId"];
-function ownKeys$7(e, r2) {
+var _excluded$8 = ["x1", "y1", "x2", "y2", "key"], _excluded2$4 = ["offset"], _excluded3$3 = ["xAxisId", "yAxisId"], _excluded4$1 = ["xAxisId", "yAxisId"];
+function ownKeys$5(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -42050,25 +41207,25 @@ function ownKeys$7(e, r2) {
   }
   return t;
 }
-function _objectSpread$7(e) {
+function _objectSpread$5(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$7(Object(t), true).forEach(function(r3) {
-      _defineProperty$7(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$7(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$5(Object(t), true).forEach(function(r3) {
+      _defineProperty$5(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$7(e, r2, t) {
-  return (r2 = _toPropertyKey$7(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$5(e, r2, t) {
+  return (r2 = _toPropertyKey$5(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$7(t) {
-  var i = _toPrimitive$7(t, "string");
+function _toPropertyKey$5(t) {
+  var i = _toPrimitive$5(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$7(t, r2) {
+function _toPrimitive$5(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -42078,25 +41235,25 @@ function _toPrimitive$7(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends$9() {
-  return _extends$9 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$8() {
+  return _extends$8 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$9.apply(null, arguments);
+  }, _extends$8.apply(null, arguments);
 }
-function _objectWithoutProperties$9(e, t) {
+function _objectWithoutProperties$8(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$9(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$8(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$9(r2, e) {
+function _objectWithoutPropertiesLoose$8(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -42150,11 +41307,11 @@ function LineItem(_ref2) {
       x2,
       y2,
       key
-    } = lineItemProps, others = _objectWithoutProperties$9(lineItemProps, _excluded$9);
+    } = lineItemProps, others = _objectWithoutProperties$8(lineItemProps, _excluded$8);
     var _ref22 = (_svgPropertiesNoEvent = svgPropertiesNoEvents(others)) !== null && _svgPropertiesNoEvent !== void 0 ? _svgPropertiesNoEvent : {}, {
       offset: __
-    } = _ref22, restOfFilteredProps = _objectWithoutProperties$9(_ref22, _excluded2$4);
-    lineItem = /* @__PURE__ */ reactExports.createElement("line", _extends$9({}, restOfFilteredProps, {
+    } = _ref22, restOfFilteredProps = _objectWithoutProperties$8(_ref22, _excluded2$4);
+    lineItem = /* @__PURE__ */ reactExports.createElement("line", _extends$8({}, restOfFilteredProps, {
       x1,
       y1,
       x2,
@@ -42178,9 +41335,9 @@ function HorizontalGridLines(props) {
   var {
     xAxisId,
     yAxisId
-  } = props, otherLineItemProps = _objectWithoutProperties$9(props, _excluded3$3);
+  } = props, otherLineItemProps = _objectWithoutProperties$8(props, _excluded3$3);
   var items = horizontalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread$7(_objectSpread$7({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread$5(_objectSpread$5({}, otherLineItemProps), {}, {
       x1: x2,
       y1: entry,
       x2: x2 + width,
@@ -42211,9 +41368,9 @@ function VerticalGridLines(props) {
   var {
     xAxisId,
     yAxisId
-  } = props, otherLineItemProps = _objectWithoutProperties$9(props, _excluded4$1);
+  } = props, otherLineItemProps = _objectWithoutProperties$8(props, _excluded4$1);
   var items = verticalPoints.map((entry, i) => {
-    var lineItemProps = _objectSpread$7(_objectSpread$7({}, otherLineItemProps), {}, {
+    var lineItemProps = _objectSpread$5(_objectSpread$5({}, otherLineItemProps), {}, {
       x1: entry,
       y1: y2,
       x2: entry,
@@ -42322,7 +41479,7 @@ var defaultVerticalCoordinatesGenerator = (_ref3, syncWithTicks) => {
     height,
     offset
   } = _ref3;
-  return getCoordinatesOfGrid(getTicks(_objectSpread$7(_objectSpread$7(_objectSpread$7({}, defaultCartesianAxisProps), xAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread$5(_objectSpread$5(_objectSpread$5({}, defaultCartesianAxisProps), xAxis), {}, {
     ticks: getTicksOfAxis(xAxis),
     viewBox: {
       x: 0,
@@ -42339,7 +41496,7 @@ var defaultHorizontalCoordinatesGenerator = (_ref4, syncWithTicks) => {
     height,
     offset
   } = _ref4;
-  return getCoordinatesOfGrid(getTicks(_objectSpread$7(_objectSpread$7(_objectSpread$7({}, defaultCartesianAxisProps), yAxis), {}, {
+  return getCoordinatesOfGrid(getTicks(_objectSpread$5(_objectSpread$5(_objectSpread$5({}, defaultCartesianAxisProps), yAxis), {}, {
     ticks: getTicksOfAxis(yAxis),
     viewBox: {
       x: 0,
@@ -42370,7 +41527,7 @@ function CartesianGrid(props) {
   var chartWidth = useChartWidth();
   var chartHeight = useChartHeight();
   var offset = useOffsetInternal();
-  var propsIncludingDefaults = _objectSpread$7(_objectSpread$7({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
+  var propsIncludingDefaults = _objectSpread$5(_objectSpread$5({}, resolveDefaultProps(props, defaultCartesianGridProps)), {}, {
     x: isNumber(props.x) ? props.x : offset.left,
     y: isNumber(props.y) ? props.y : offset.top,
     width: isNumber(props.width) ? props.width : offset.width,
@@ -42402,7 +41559,7 @@ function CartesianGrid(props) {
   if ((!horizontalPoints || !horizontalPoints.length) && typeof horizontalCoordinatesGenerator === "function") {
     var isHorizontalValues = horizontalValues && horizontalValues.length;
     var generatorResult = horizontalCoordinatesGenerator({
-      yAxis: yAxis ? _objectSpread$7(_objectSpread$7({}, yAxis), {}, {
+      yAxis: yAxis ? _objectSpread$5(_objectSpread$5({}, yAxis), {}, {
         ticks: isHorizontalValues ? horizontalValues : yAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -42417,7 +41574,7 @@ function CartesianGrid(props) {
   if ((!verticalPoints || !verticalPoints.length) && typeof verticalCoordinatesGenerator === "function") {
     var isVerticalValues = verticalValues && verticalValues.length;
     var _generatorResult = verticalCoordinatesGenerator({
-      xAxis: xAxis ? _objectSpread$7(_objectSpread$7({}, xAxis), {}, {
+      xAxis: xAxis ? _objectSpread$5(_objectSpread$5({}, xAxis), {}, {
         ticks: isVerticalValues ? verticalValues : xAxis.ticks
       }) : void 0,
       width: chartWidth !== null && chartWidth !== void 0 ? chartWidth : width,
@@ -42441,16 +41598,16 @@ function CartesianGrid(props) {
     width: propsIncludingDefaults.width,
     height: propsIncludingDefaults.height,
     ry: propsIncludingDefaults.ry
-  }), /* @__PURE__ */ reactExports.createElement(HorizontalStripes, _extends$9({}, propsIncludingDefaults, {
+  }), /* @__PURE__ */ reactExports.createElement(HorizontalStripes, _extends$8({}, propsIncludingDefaults, {
     horizontalPoints
-  })), /* @__PURE__ */ reactExports.createElement(VerticalStripes, _extends$9({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ reactExports.createElement(VerticalStripes, _extends$8({}, propsIncludingDefaults, {
     verticalPoints
-  })), /* @__PURE__ */ reactExports.createElement(HorizontalGridLines, _extends$9({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ reactExports.createElement(HorizontalGridLines, _extends$8({}, propsIncludingDefaults, {
     offset,
     horizontalPoints,
     xAxis,
     yAxis
-  })), /* @__PURE__ */ reactExports.createElement(VerticalGridLines, _extends$9({}, propsIncludingDefaults, {
+  })), /* @__PURE__ */ reactExports.createElement(VerticalGridLines, _extends$8({}, propsIncludingDefaults, {
     offset,
     verticalPoints,
     xAxis,
@@ -42500,17 +41657,17 @@ var {
   removeErrorBar
 } = errorBarSlice.actions;
 var errorBarReducer = errorBarSlice.reducer;
-var _excluded$8 = ["children"];
-function _objectWithoutProperties$8(e, t) {
+var _excluded$7 = ["children"];
+function _objectWithoutProperties$7(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$8(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$7(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$8(r2, e) {
+function _objectWithoutPropertiesLoose$7(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -42534,7 +41691,7 @@ var ErrorBarContext = /* @__PURE__ */ reactExports.createContext(initialContextS
 function SetErrorBarContext(props) {
   var {
     children
-  } = props, rest = _objectWithoutProperties$8(props, _excluded$8);
+  } = props, rest = _objectWithoutProperties$7(props, _excluded$7);
   return /* @__PURE__ */ reactExports.createElement(ErrorBarContext.Provider, {
     value: rest
   }, children);
@@ -42596,17 +41753,17 @@ function invariant(condition, message) {
     throw new Error(prefix);
   }
 }
-function _extends$8() {
-  return _extends$8 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$7() {
+  return _extends$7 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$8.apply(null, arguments);
+  }, _extends$7.apply(null, arguments);
 }
 function BarRectangle(props) {
-  return /* @__PURE__ */ reactExports.createElement(Shape, _extends$8({
+  return /* @__PURE__ */ reactExports.createElement(Shape, _extends$7({
     shapeType: "rectangle",
     activeClassName: "recharts-active-bar",
     inActiveClassName: "recharts-inactive-bar"
@@ -42773,26 +41930,26 @@ var selectBarRectangles = createSelector([selectChartOffsetInternal, selectAxisV
     dataStartIndex
   });
 });
-var _excluded$7 = ["index"];
-function _extends$7() {
-  return _extends$7 = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$6 = ["index"];
+function _extends$6() {
+  return _extends$6 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$7.apply(null, arguments);
+  }, _extends$6.apply(null, arguments);
 }
-function _objectWithoutProperties$7(e, t) {
+function _objectWithoutProperties$6(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$7(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$6(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$7(r2, e) {
+function _objectWithoutPropertiesLoose$6(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -42828,24 +41985,24 @@ var useBarStackClipPathUrl = (index) => {
 var BarStackClipLayer = (_ref2) => {
   var {
     index
-  } = _ref2, rest = _objectWithoutProperties$7(_ref2, _excluded$7);
+  } = _ref2, rest = _objectWithoutProperties$6(_ref2, _excluded$6);
   var clipPathUrl = useBarStackClipPathUrl(index);
-  return /* @__PURE__ */ reactExports.createElement(Layer, _extends$7({
+  return /* @__PURE__ */ reactExports.createElement(Layer, _extends$6({
     className: "recharts-bar-stack-layer",
     clipPath: clipPathUrl
   }, rest));
 };
-var _excluded$6 = ["onMouseEnter", "onMouseLeave", "onClick"], _excluded2$3 = ["value", "background", "tooltipPosition"], _excluded3$2 = ["id"], _excluded4 = ["onMouseEnter", "onClick", "onMouseLeave"];
-function _extends$6() {
-  return _extends$6 = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$5 = ["onMouseEnter", "onMouseLeave", "onClick"], _excluded2$3 = ["value", "background", "tooltipPosition"], _excluded3$2 = ["id"], _excluded4 = ["onMouseEnter", "onClick", "onMouseLeave"];
+function _extends$5() {
+  return _extends$5 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$6.apply(null, arguments);
+  }, _extends$5.apply(null, arguments);
 }
-function ownKeys$6(e, r2) {
+function ownKeys$4(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -42855,25 +42012,25 @@ function ownKeys$6(e, r2) {
   }
   return t;
 }
-function _objectSpread$6(e) {
+function _objectSpread$4(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$6(Object(t), true).forEach(function(r3) {
-      _defineProperty$6(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$6(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$4(Object(t), true).forEach(function(r3) {
+      _defineProperty$4(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$6(e, r2, t) {
-  return (r2 = _toPropertyKey$6(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$4(e, r2, t) {
+  return (r2 = _toPropertyKey$4(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$6(t) {
-  var i = _toPrimitive$6(t, "string");
+function _toPropertyKey$4(t) {
+  var i = _toPrimitive$4(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$6(t, r2) {
+function _toPrimitive$4(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -42883,16 +42040,16 @@ function _toPrimitive$6(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$6(e, t) {
+function _objectWithoutProperties$5(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$6(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$5(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$6(r2, e) {
+function _objectWithoutPropertiesLoose$5(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -42963,7 +42120,7 @@ function BarBackground(props) {
     onMouseEnter: onMouseEnterFromProps,
     onMouseLeave: onMouseLeaveFromProps,
     onClick: onItemClickFromProps
-  } = allOtherBarProps, restOfAllOtherProps = _objectWithoutProperties$6(allOtherBarProps, _excluded$6);
+  } = allOtherBarProps, restOfAllOtherProps = _objectWithoutProperties$5(allOtherBarProps, _excluded$5);
   var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, dataKey, allOtherBarProps.id);
   var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
   var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, dataKey, allOtherBarProps.id);
@@ -42978,14 +42135,14 @@ function BarBackground(props) {
       value,
       background: backgroundFromDataEntry,
       tooltipPosition
-    } = entry, rest = _objectWithoutProperties$6(entry, _excluded2$3);
+    } = entry, rest = _objectWithoutProperties$5(entry, _excluded2$3);
     if (!backgroundFromDataEntry) {
       return null;
     }
     var onMouseEnter = onMouseEnterFromContext(entry, i);
     var onMouseLeave = onMouseLeaveFromContext(entry, i);
     var onClick = onClickFromContext(entry, i);
-    var barRectangleProps = _objectSpread$6(_objectSpread$6(_objectSpread$6(_objectSpread$6(_objectSpread$6({
+    var barRectangleProps = _objectSpread$4(_objectSpread$4(_objectSpread$4(_objectSpread$4(_objectSpread$4({
       option: backgroundFromProps,
       isActive: String(i) === activeIndex
     }, rest), {}, {
@@ -42999,7 +42156,7 @@ function BarBackground(props) {
       index: i,
       className: "recharts-bar-background-rectangle"
     });
-    return /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$6({
+    return /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$5({
       key: "background-bar-".concat(i)
     }, barRectangleProps));
   }));
@@ -43019,7 +42176,7 @@ function BarLabelListProvider(_ref2) {
       upperWidth: entry.width,
       height: entry.height
     };
-    return _objectSpread$6(_objectSpread$6({}, viewBox), {}, {
+    return _objectSpread$4(_objectSpread$4({}, viewBox), {}, {
       value: entry.value,
       payload: entry.payload,
       parentViewBox: entry.parentViewBox,
@@ -43076,7 +42233,7 @@ function BarRectangleWithActiveState(props) {
   } else {
     option = shape;
   }
-  var content = /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$6({}, baseProps, {
+  var content = /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$5({}, baseProps, {
     name: String(baseProps.name)
   }, entry, {
     isActive: isVisuallyActive,
@@ -43102,7 +42259,7 @@ function BarRectangleNeverActive(props) {
     index,
     dataKey
   } = props;
-  return /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$6({}, baseProps, {
+  return /* @__PURE__ */ reactExports.createElement(BarRectangle, _extends$5({}, baseProps, {
     name: String(baseProps.name)
   }, entry, {
     isActive: false,
@@ -43119,7 +42276,7 @@ function BarRectangles(_ref3) {
   } = _ref3;
   var _ref4 = (_svgPropertiesNoEvent = svgPropertiesNoEvents(props)) !== null && _svgPropertiesNoEvent !== void 0 ? _svgPropertiesNoEvent : {}, {
     id: id2
-  } = _ref4, baseProps = _objectWithoutProperties$6(_ref4, _excluded3$2);
+  } = _ref4, baseProps = _objectWithoutProperties$5(_ref4, _excluded3$2);
   var {
     shape,
     dataKey,
@@ -43129,7 +42286,7 @@ function BarRectangles(_ref3) {
     onMouseEnter: onMouseEnterFromProps,
     onClick: onItemClickFromProps,
     onMouseLeave: onMouseLeaveFromProps
-  } = props, restOfAllOtherProps = _objectWithoutProperties$6(props, _excluded4);
+  } = props, restOfAllOtherProps = _objectWithoutProperties$5(props, _excluded4);
   var onMouseEnterFromContext = useMouseEnterItemDispatch(onMouseEnterFromProps, dataKey, id2);
   var onMouseLeaveFromContext = useMouseLeaveItemDispatch(onMouseLeaveFromProps);
   var onClickFromContext = useMouseClickItemDispatch(onItemClickFromProps, dataKey, id2);
@@ -43137,7 +42294,7 @@ function BarRectangles(_ref3) {
     return null;
   }
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, data.map((entry, i) => {
-    return /* @__PURE__ */ reactExports.createElement(BarStackClipLayer, _extends$6({
+    return /* @__PURE__ */ reactExports.createElement(BarStackClipLayer, _extends$5({
       index: entry.originalDataIndex,
       key: "rectangle-".concat(entry === null || entry === void 0 ? void 0 : entry.x, "-").concat(entry === null || entry === void 0 ? void 0 : entry.y, "-").concat(entry === null || entry === void 0 ? void 0 : entry.value, "-").concat(i),
       className: "recharts-bar-rectangle"
@@ -43219,7 +42376,7 @@ function RectanglesWithAnimation(_ref5) {
     var stepData = t === 1 ? data : data === null || data === void 0 ? void 0 : data.map((entry, index) => {
       var prev = prevData && prevData[index];
       if (prev) {
-        return _objectSpread$6(_objectSpread$6({}, entry), {}, {
+        return _objectSpread$4(_objectSpread$4({}, entry), {}, {
           x: interpolate$1(prev.x, entry.x, t),
           y: interpolate$1(prev.y, entry.y, t),
           width: interpolate$1(prev.width, entry.width, t),
@@ -43229,14 +42386,14 @@ function RectanglesWithAnimation(_ref5) {
       if (layout2 === "horizontal") {
         var height = interpolate$1(0, entry.height, t);
         var y2 = interpolate$1(entry.stackedBarStart, entry.y, t);
-        return _objectSpread$6(_objectSpread$6({}, entry), {}, {
+        return _objectSpread$4(_objectSpread$4({}, entry), {}, {
           y: y2,
           height
         });
       }
       var w = interpolate$1(0, entry.width, t);
       var x2 = interpolate$1(entry.stackedBarStart, entry.x, t);
-      return _objectSpread$6(_objectSpread$6({}, entry), {}, {
+      return _objectSpread$4(_objectSpread$4({}, entry), {}, {
         width: w,
         x: x2
       });
@@ -43360,7 +42517,7 @@ function BarImpl(props) {
     data: rects,
     dataPointFormatter: errorBarDataPointFormatter,
     errorBarOffset
-  }, /* @__PURE__ */ reactExports.createElement(BarWithState, _extends$6({}, props, {
+  }, /* @__PURE__ */ reactExports.createElement(BarWithState, _extends$5({}, props, {
     layout: layout2,
     needClip,
     data: rects,
@@ -43479,7 +42636,7 @@ function computeBarRectangles(_ref6) {
     if (x2 == null || y2 == null || width == null || height == null || !hasCustomShape && (width === 0 || height === 0)) {
       return null;
     }
-    var barRectangleItem = _objectSpread$6(_objectSpread$6({}, entry), {}, {
+    var barRectangleItem = _objectSpread$4(_objectSpread$4({}, entry), {}, {
       stackedBarStart,
       x: x2,
       y: y2,
@@ -43534,23 +42691,23 @@ function BarFn(outsideProps) {
     hasCustomShape: props.shape != null
   }), /* @__PURE__ */ reactExports.createElement(ZIndexLayer, {
     zIndex: props.zIndex
-  }, /* @__PURE__ */ reactExports.createElement(BarImpl, _extends$6({}, props, {
+  }, /* @__PURE__ */ reactExports.createElement(BarImpl, _extends$5({}, props, {
     id: id2
   })))));
 }
 var Bar = /* @__PURE__ */ reactExports.memo(BarFn, propsAreEqual);
 Bar.displayName = "Bar";
-var _excluded$5 = ["domain", "range"], _excluded2$2 = ["domain", "range"];
-function _objectWithoutProperties$5(e, t) {
+var _excluded$4 = ["domain", "range"], _excluded2$2 = ["domain", "range"];
+function _objectWithoutProperties$4(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$5(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$4(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$5(r2, e) {
+function _objectWithoutPropertiesLoose$4(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -43575,11 +42732,11 @@ function axisPropsAreEqual(prevProps, nextProps) {
   var {
     domain: prevDomain,
     range: prevRange
-  } = prevProps, prevRest = _objectWithoutProperties$5(prevProps, _excluded$5);
+  } = prevProps, prevRest = _objectWithoutProperties$4(prevProps, _excluded$4);
   var {
     domain: nextDomain,
     range: nextRange
-  } = nextProps, nextRest = _objectWithoutProperties$5(nextProps, _excluded2$2);
+  } = nextProps, nextRest = _objectWithoutProperties$4(nextProps, _excluded2$2);
   if (!shortArraysAreEqual(prevDomain, nextDomain)) {
     return false;
   }
@@ -43588,17 +42745,17 @@ function axisPropsAreEqual(prevProps, nextProps) {
   }
   return propsAreEqual(prevRest, nextRest);
 }
-var _excluded$4 = ["type"], _excluded2$1 = ["dangerouslySetInnerHTML", "ticks", "scale"], _excluded3$1 = ["id", "scale"];
-function _extends$5() {
-  return _extends$5 = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$3 = ["type"], _excluded2$1 = ["dangerouslySetInnerHTML", "ticks", "scale"], _excluded3$1 = ["id", "scale"];
+function _extends$4() {
+  return _extends$4 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$5.apply(null, arguments);
+  }, _extends$4.apply(null, arguments);
 }
-function ownKeys$5(e, r2) {
+function ownKeys$3(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -43608,25 +42765,25 @@ function ownKeys$5(e, r2) {
   }
   return t;
 }
-function _objectSpread$5(e) {
+function _objectSpread$3(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$5(Object(t), true).forEach(function(r3) {
-      _defineProperty$5(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$5(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$3(Object(t), true).forEach(function(r3) {
+      _defineProperty$3(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$5(e, r2, t) {
-  return (r2 = _toPropertyKey$5(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$3(e, r2, t) {
+  return (r2 = _toPropertyKey$3(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$5(t) {
-  var i = _toPrimitive$5(t, "string");
+function _toPropertyKey$3(t) {
+  var i = _toPrimitive$3(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$5(t, r2) {
+function _toPrimitive$3(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -43636,16 +42793,16 @@ function _toPrimitive$5(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$4(e, t) {
+function _objectWithoutProperties$3(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$4(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$3(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$4(r2, e) {
+function _objectWithoutPropertiesLoose$3(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -43660,13 +42817,13 @@ function SetXAxisSettings(props) {
   var layout2 = useCartesianChartLayout();
   var {
     type: typeFromProps
-  } = props, restProps = _objectWithoutProperties$4(props, _excluded$4);
+  } = props, restProps = _objectWithoutProperties$3(props, _excluded$3);
   var evaluatedType = getAxisTypeBasedOnLayout(layout2, "xAxis", typeFromProps);
   var settings = reactExports.useMemo(() => {
     if (evaluatedType == null) {
       return void 0;
     }
-    return _objectSpread$5(_objectSpread$5({}, restProps), {}, {
+    return _objectSpread$3(_objectSpread$3({}, restProps), {}, {
       type: evaluatedType
     });
   }, [restProps, evaluatedType]);
@@ -43713,12 +42870,12 @@ var XAxisImpl = (props) => {
     dangerouslySetInnerHTML,
     ticks: ticks2,
     scale: del
-  } = props, allOtherProps = _objectWithoutProperties$4(props, _excluded2$1);
+  } = props, allOtherProps = _objectWithoutProperties$3(props, _excluded2$1);
   var {
     id: id2,
     scale: del2
-  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties$4(synchronizedSettings, _excluded3$1);
-  return /* @__PURE__ */ reactExports.createElement(CartesianAxis, _extends$5({}, allOtherProps, restSynchronizedSettings, {
+  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties$3(synchronizedSettings, _excluded3$1);
+  return /* @__PURE__ */ reactExports.createElement(CartesianAxis, _extends$4({}, allOtherProps, restSynchronizedSettings, {
     x: position.x,
     y: position.y,
     width: axisSize.width,
@@ -43787,17 +42944,17 @@ var XAxisSettingsDispatcher = (outsideProps) => {
 };
 var XAxis = /* @__PURE__ */ reactExports.memo(XAxisSettingsDispatcher, axisPropsAreEqual);
 XAxis.displayName = "XAxis";
-var _excluded$3 = ["type"], _excluded2 = ["dangerouslySetInnerHTML", "ticks", "scale"], _excluded3 = ["id", "scale"];
-function _extends$4() {
-  return _extends$4 = Object.assign ? Object.assign.bind() : function(n) {
+var _excluded$2 = ["type"], _excluded2 = ["dangerouslySetInnerHTML", "ticks", "scale"], _excluded3 = ["id", "scale"];
+function _extends$3() {
+  return _extends$3 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$4.apply(null, arguments);
+  }, _extends$3.apply(null, arguments);
 }
-function ownKeys$4(e, r2) {
+function ownKeys$2(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -43807,25 +42964,25 @@ function ownKeys$4(e, r2) {
   }
   return t;
 }
-function _objectSpread$4(e) {
+function _objectSpread$2(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$4(Object(t), true).forEach(function(r3) {
-      _defineProperty$4(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$4(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$2(Object(t), true).forEach(function(r3) {
+      _defineProperty$2(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$4(e, r2, t) {
-  return (r2 = _toPropertyKey$4(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$2(e, r2, t) {
+  return (r2 = _toPropertyKey$2(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$4(t) {
-  var i = _toPrimitive$4(t, "string");
+function _toPropertyKey$2(t) {
+  var i = _toPrimitive$2(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$4(t, r2) {
+function _toPrimitive$2(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -43835,16 +42992,16 @@ function _toPrimitive$4(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _objectWithoutProperties$3(e, t) {
+function _objectWithoutProperties$2(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$3(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$2(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$3(r2, e) {
+function _objectWithoutPropertiesLoose$2(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -43859,13 +43016,13 @@ function SetYAxisSettings(props) {
   var layout2 = useCartesianChartLayout();
   var {
     type: typeFromProps
-  } = props, restProps = _objectWithoutProperties$3(props, _excluded$3);
+  } = props, restProps = _objectWithoutProperties$2(props, _excluded$2);
   var evaluatedType = getAxisTypeBasedOnLayout(layout2, "yAxis", typeFromProps);
   var settings = reactExports.useMemo(() => {
     if (evaluatedType == null) {
       return void 0;
     }
-    return _objectSpread$4(_objectSpread$4({}, restProps), {}, {
+    return _objectSpread$2(_objectSpread$2({}, restProps), {}, {
       type: evaluatedType
     });
   }, [evaluatedType, restProps]);
@@ -43944,12 +43101,12 @@ function YAxisImpl(props) {
     dangerouslySetInnerHTML,
     ticks: ticks2,
     scale: del
-  } = props, allOtherProps = _objectWithoutProperties$3(props, _excluded2);
+  } = props, allOtherProps = _objectWithoutProperties$2(props, _excluded2);
   var {
     id: id2,
     scale: del2
-  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties$3(synchronizedSettings, _excluded3);
-  return /* @__PURE__ */ reactExports.createElement(CartesianAxis, _extends$4({}, allOtherProps, restSynchronizedSettings, {
+  } = synchronizedSettings, restSynchronizedSettings = _objectWithoutProperties$2(synchronizedSettings, _excluded3);
+  return /* @__PURE__ */ reactExports.createElement(CartesianAxis, _extends$3({}, allOtherProps, restSynchronizedSettings, {
     ref: cartesianAxisRef,
     labelRef,
     x: position.x,
@@ -44794,17 +43951,17 @@ function AllZIndexPortals(_ref2) {
     isPanorama
   })));
 }
-var _excluded$2 = ["children"];
-function _objectWithoutProperties$2(e, t) {
+var _excluded$1 = ["children"];
+function _objectWithoutProperties$1(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$2(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose$1(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$2(r2, e) {
+function _objectWithoutPropertiesLoose$1(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -44813,14 +43970,14 @@ function _objectWithoutPropertiesLoose$2(r2, e) {
   }
   return t;
 }
-function _extends$3() {
-  return _extends$3 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$2() {
+  return _extends$2 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$3.apply(null, arguments);
+  }, _extends$2.apply(null, arguments);
 }
 var FULL_WIDTH_AND_HEIGHT = {
   width: "100%",
@@ -44862,7 +44019,7 @@ var MainChartSurface = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       role = hasAccessibilityLayer ? "application" : void 0;
     }
   }
-  return /* @__PURE__ */ reactExports.createElement(Surface, _extends$3({}, otherAttributes, {
+  return /* @__PURE__ */ reactExports.createElement(Surface, _extends$2({}, otherAttributes, {
     title,
     desc,
     role,
@@ -44897,14 +44054,14 @@ var BrushPanoramaSurface = (_ref2) => {
 var RootSurface = /* @__PURE__ */ reactExports.forwardRef((_ref2, ref) => {
   var {
     children
-  } = _ref2, rest = _objectWithoutProperties$2(_ref2, _excluded$2);
+  } = _ref2, rest = _objectWithoutProperties$1(_ref2, _excluded$1);
   var isPanorama = useIsPanorama();
   if (isPanorama) {
     return /* @__PURE__ */ reactExports.createElement(BrushPanoramaSurface, null, /* @__PURE__ */ reactExports.createElement(AllZIndexPortals, {
       isPanorama: true
     }, children));
   }
-  return /* @__PURE__ */ reactExports.createElement(MainChartSurface, _extends$3({
+  return /* @__PURE__ */ reactExports.createElement(MainChartSurface, _extends$2({
     ref
   }, rest), /* @__PURE__ */ reactExports.createElement(AllZIndexPortals, {
     isPanorama: false
@@ -44926,7 +44083,7 @@ function useReportScale() {
   }, [ref, dispatch, scale2]);
   return setRef;
 }
-function ownKeys$3(e, r2) {
+function ownKeys$1(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -44936,25 +44093,25 @@ function ownKeys$3(e, r2) {
   }
   return t;
 }
-function _objectSpread$3(e) {
+function _objectSpread$1(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$3(Object(t), true).forEach(function(r3) {
-      _defineProperty$3(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$3(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys$1(Object(t), true).forEach(function(r3) {
+      _defineProperty$1(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$3(e, r2, t) {
-  return (r2 = _toPropertyKey$3(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty$1(e, r2, t) {
+  return (r2 = _toPropertyKey$1(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$3(t) {
-  var i = _toPrimitive$3(t, "string");
+function _toPropertyKey$1(t) {
+  var i = _toPrimitive$1(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$3(t, r2) {
+function _toPrimitive$1(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -44964,14 +44121,14 @@ function _toPrimitive$3(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-function _extends$2() {
-  return _extends$2 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends$1() {
+  return _extends$1 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$2.apply(null, arguments);
+  }, _extends$1.apply(null, arguments);
 }
 var EventSynchronizer = () => {
   useSynchronisedEventsFromOtherCharts();
@@ -45050,7 +44207,7 @@ var ResponsiveDiv = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ReportChartSize, {
     width: sizes.containerWidth,
     height: sizes.containerHeight
-  }), /* @__PURE__ */ reactExports.createElement("div", _extends$2({
+  }), /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     ref: innerRef
   }, props)));
 });
@@ -45091,7 +44248,7 @@ var ReadSizeOnceDiv = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ReportChartSize, {
     width: sizes.containerWidth,
     height: sizes.containerHeight
-  }), /* @__PURE__ */ reactExports.createElement("div", _extends$2({
+  }), /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     ref: innerRef
   }, props)));
 });
@@ -45103,7 +44260,7 @@ var StaticDiv = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ReportChartSize, {
     width,
     height
-  }), /* @__PURE__ */ reactExports.createElement("div", _extends$2({
+  }), /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     ref
   }, props)));
 });
@@ -45113,12 +44270,12 @@ var NonResponsiveDiv = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     height
   } = props;
   if (typeof width === "string" || typeof height === "string") {
-    return /* @__PURE__ */ reactExports.createElement(ReadSizeOnceDiv, _extends$2({}, props, {
+    return /* @__PURE__ */ reactExports.createElement(ReadSizeOnceDiv, _extends$1({}, props, {
       ref
     }));
   }
   if (typeof width === "number" && typeof height === "number") {
-    return /* @__PURE__ */ reactExports.createElement(StaticDiv, _extends$2({}, props, {
+    return /* @__PURE__ */ reactExports.createElement(StaticDiv, _extends$1({}, props, {
       width,
       height,
       ref
@@ -45127,7 +44284,7 @@ var NonResponsiveDiv = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ReportChartSize, {
     width,
     height
-  }), /* @__PURE__ */ reactExports.createElement("div", _extends$2({
+  }), /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     ref
   }, props)));
 });
@@ -45265,7 +44422,7 @@ var RechartsWrapper = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     width: width !== null && width !== void 0 ? width : style === null || style === void 0 ? void 0 : style.width,
     height: height !== null && height !== void 0 ? height : style === null || style === void 0 ? void 0 : style.height,
     className: clsx("recharts-wrapper", className),
-    style: _objectSpread$3({
+    style: _objectSpread$1({
       position: "relative",
       cursor: "default",
       width,
@@ -45288,17 +44445,17 @@ var RechartsWrapper = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref: innerRef
   }, /* @__PURE__ */ reactExports.createElement(EventSynchronizer, null), children)));
 });
-var _excluded$1 = ["width", "height", "responsive", "children", "className", "style", "compact", "title", "desc"];
-function _objectWithoutProperties$1(e, t) {
+var _excluded = ["width", "height", "responsive", "children", "className", "style", "compact", "title", "desc"];
+function _objectWithoutProperties(e, t) {
   if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose$1(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
     for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
-function _objectWithoutPropertiesLoose$1(r2, e) {
+function _objectWithoutPropertiesLoose(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
@@ -45318,7 +44475,7 @@ var CategoricalChart = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     compact,
     title,
     desc
-  } = props, others = _objectWithoutProperties$1(props, _excluded$1);
+  } = props, others = _objectWithoutProperties(props, _excluded);
   var attrs = svgPropertiesNoEvents(others);
   if (compact) {
     return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ReportChartSize, {
@@ -45354,16 +44511,16 @@ var CategoricalChart = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref
   }, /* @__PURE__ */ reactExports.createElement(ClipPathProvider, null, children)));
 });
-function _extends$1() {
-  return _extends$1 = Object.assign ? Object.assign.bind() : function(n) {
+function _extends() {
+  return _extends = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
       for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
-  }, _extends$1.apply(null, arguments);
+  }, _extends.apply(null, arguments);
 }
-function ownKeys$2(e, r2) {
+function ownKeys(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
@@ -45373,25 +44530,25 @@ function ownKeys$2(e, r2) {
   }
   return t;
 }
-function _objectSpread$2(e) {
+function _objectSpread(e) {
   for (var r2 = 1; r2 < arguments.length; r2++) {
     var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$2(Object(t), true).forEach(function(r3) {
-      _defineProperty$2(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$2(Object(t)).forEach(function(r3) {
+    r2 % 2 ? ownKeys(Object(t), true).forEach(function(r3) {
+      _defineProperty(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r3) {
       Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _defineProperty$2(e, r2, t) {
-  return (r2 = _toPropertyKey$2(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
+function _defineProperty(e, r2, t) {
+  return (r2 = _toPropertyKey(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
 }
-function _toPropertyKey$2(t) {
-  var i = _toPrimitive$2(t, "string");
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive$2(t, r2) {
+function _toPrimitive(t, r2) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
@@ -45401,18 +44558,18 @@ function _toPrimitive$2(t, r2) {
   }
   return ("string" === r2 ? String : Number)(t);
 }
-var defaultMargin$1 = {
+var defaultMargin = {
   top: 5,
   right: 5,
   bottom: 5,
   left: 5
 };
-var defaultCartesianChartProps = _objectSpread$2({
+var defaultCartesianChartProps = _objectSpread({
   accessibilityLayer: true,
   barCategoryGap: "10%",
   barGap: 4,
   layout: "horizontal",
-  margin: defaultMargin$1,
+  margin: defaultMargin,
   responsive: false,
   reverseStackOrder: false,
   stackOffset: "none",
@@ -45460,222 +44617,18 @@ var CartesianChart = /* @__PURE__ */ reactExports.forwardRef(function CartesianC
     syncMethod: rootChartProps.syncMethod,
     className: rootChartProps.className,
     reverseStackOrder: rootChartProps.reverseStackOrder
-  }), /* @__PURE__ */ reactExports.createElement(CategoricalChart, _extends$1({}, rootChartProps, {
+  }), /* @__PURE__ */ reactExports.createElement(CategoricalChart, _extends({}, rootChartProps, {
     ref
   })));
 });
-var allowedTooltipTypes$1 = ["axis", "item"];
+var allowedTooltipTypes = ["axis", "item"];
 var BarChart = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   return /* @__PURE__ */ reactExports.createElement(CartesianChart, {
     chartName: "BarChart",
     defaultTooltipEventType: "axis",
-    validateTooltipEventTypes: allowedTooltipTypes$1,
-    tooltipPayloadSearcher: arrayTooltipSearcher,
-    categoricalChartProps: props,
-    ref
-  });
-});
-function ReportPolarOptions(props) {
-  var dispatch = useAppDispatch();
-  reactExports.useEffect(() => {
-    dispatch(updatePolarOptions(props));
-  }, [dispatch, props]);
-  return null;
-}
-var _excluded = ["layout"];
-function _extends() {
-  return _extends = Object.assign ? Object.assign.bind() : function(n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
-    }
-    return n;
-  }, _extends.apply(null, arguments);
-}
-function _objectWithoutProperties(e, t) {
-  if (null == e) return {};
-  var o, r2, i = _objectWithoutPropertiesLoose(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var n = Object.getOwnPropertySymbols(e);
-    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-function _objectWithoutPropertiesLoose(r2, e) {
-  if (null == r2) return {};
-  var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
-  }
-  return t;
-}
-function ownKeys$1(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread$1(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys$1(Object(t), true).forEach(function(r3) {
-      _defineProperty$1(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys$1(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty$1(e, r2, t) {
-  return (r2 = _toPropertyKey$1(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey$1(t) {
-  var i = _toPrimitive$1(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive$1(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2);
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-var defaultMargin = {
-  top: 5,
-  right: 5,
-  bottom: 5,
-  left: 5
-};
-var defaultPolarChartProps = _objectSpread$1({
-  accessibilityLayer: true,
-  stackOffset: "none",
-  barCategoryGap: "10%",
-  barGap: 4,
-  margin: defaultMargin,
-  reverseStackOrder: false,
-  syncMethod: "index",
-  layout: "radial",
-  responsive: false,
-  cx: "50%",
-  cy: "50%",
-  innerRadius: 0,
-  outerRadius: "80%"
-}, initialEventSettingsState);
-var PolarChart = /* @__PURE__ */ reactExports.forwardRef(function PolarChart2(props, ref) {
-  var _polarChartProps$id;
-  var polarChartProps = resolveDefaultProps(props.categoricalChartProps, defaultPolarChartProps);
-  var {
-    layout: layout2
-  } = polarChartProps, otherCategoricalProps = _objectWithoutProperties(polarChartProps, _excluded);
-  var {
-    chartName,
-    defaultTooltipEventType,
-    validateTooltipEventTypes,
-    tooltipPayloadSearcher
-  } = props;
-  var options = {
-    chartName,
-    defaultTooltipEventType,
-    validateTooltipEventTypes,
-    tooltipPayloadSearcher,
-    eventEmitter: void 0
-  };
-  return /* @__PURE__ */ reactExports.createElement(RechartsStoreProvider, {
-    preloadedState: {
-      options
-    },
-    reduxStoreName: (_polarChartProps$id = polarChartProps.id) !== null && _polarChartProps$id !== void 0 ? _polarChartProps$id : chartName
-  }, /* @__PURE__ */ reactExports.createElement(ChartDataContextProvider, {
-    chartData: polarChartProps.data
-  }), /* @__PURE__ */ reactExports.createElement(ReportMainChartProps, {
-    layout: layout2,
-    margin: polarChartProps.margin
-  }), /* @__PURE__ */ reactExports.createElement(ReportEventSettings, {
-    throttleDelay: polarChartProps.throttleDelay,
-    throttledEvents: polarChartProps.throttledEvents
-  }), /* @__PURE__ */ reactExports.createElement(ReportChartProps, {
-    baseValue: void 0,
-    accessibilityLayer: polarChartProps.accessibilityLayer,
-    barCategoryGap: polarChartProps.barCategoryGap,
-    maxBarSize: polarChartProps.maxBarSize,
-    stackOffset: polarChartProps.stackOffset,
-    barGap: polarChartProps.barGap,
-    barSize: polarChartProps.barSize,
-    syncId: polarChartProps.syncId,
-    syncMethod: polarChartProps.syncMethod,
-    className: polarChartProps.className,
-    reverseStackOrder: polarChartProps.reverseStackOrder
-  }), /* @__PURE__ */ reactExports.createElement(ReportPolarOptions, {
-    cx: polarChartProps.cx,
-    cy: polarChartProps.cy,
-    startAngle: polarChartProps.startAngle,
-    endAngle: polarChartProps.endAngle,
-    innerRadius: polarChartProps.innerRadius,
-    outerRadius: polarChartProps.outerRadius
-  }), /* @__PURE__ */ reactExports.createElement(CategoricalChart, _extends({}, otherCategoricalProps, {
-    ref
-  })));
-});
-function ownKeys(e, r2) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r2 && (o = o.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys(Object(t), true).forEach(function(r3) {
-      _defineProperty(e, r3, t[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
-    });
-  }
-  return e;
-}
-function _defineProperty(e, r2, t) {
-  return (r2 = _toPropertyKey(r2)) in e ? Object.defineProperty(e, r2, { value: t, enumerable: true, configurable: true, writable: true }) : e[r2] = t, e;
-}
-function _toPropertyKey(t) {
-  var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive(t, r2) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r2);
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r2 ? String : Number)(t);
-}
-var allowedTooltipTypes = ["item"];
-var defaultPieChartProps = _objectSpread(_objectSpread({}, defaultPolarChartProps), {}, {
-  layout: "centric",
-  startAngle: 0,
-  endAngle: 360
-});
-var PieChart = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
-  var propsWithDefaults = resolveDefaultProps(props, defaultPieChartProps);
-  return /* @__PURE__ */ reactExports.createElement(PolarChart, {
-    chartName: "PieChart",
-    defaultTooltipEventType: "item",
     validateTooltipEventTypes: allowedTooltipTypes,
     tooltipPayloadSearcher: arrayTooltipSearcher,
-    categoricalChartProps: propsWithDefaults,
+    categoricalChartProps: props,
     ref
   });
 });
@@ -46190,17 +45143,9 @@ function formatHours(seconds) {
   const hours = Math.round((Number(seconds) || 0) / 3600);
   return `${formatInteger(hours)} ч.`;
 }
-function formatCompactStat(value) {
-  if (!Number.isFinite(value)) return "—";
-  return new Intl.NumberFormat("ru-RU", {
-    notation: value >= 1e4 ? "compact" : "standard",
-    maximumFractionDigits: value >= 1e4 ? 1 : 0
-  }).format(value);
-}
 const OVERWATCH_STATS_MODES = [
   { value: "overview", label: "Общая статистика" },
-  { value: "competitive", label: "Competitive" },
-  { value: "quickplay", label: "Quickplay" }
+  { value: "competitive", label: "Competitive" }
 ];
 const RANK_CHART_COLORS = {
   Champion: "#f6d266",
@@ -46212,7 +45157,6 @@ const RANK_CHART_COLORS = {
   Silver: "#c9d2dc",
   Bronze: "#b4764f"
 };
-const MODE_CHART_COLORS = ["#f3701e", "#4f8df5", "#65d385"];
 const UPDATE_TYPE_STYLES = {
   Hotfix: "border-amber-300/30 bg-amber-500/10 text-amber-100",
   "Bug Fix": "border-rose-300/30 bg-rose-500/10 text-rose-100",
@@ -46808,7 +45752,7 @@ function UpdatesPage({
     ] })
   ] });
 }
-function StatSummaryCard({ icon: Icon2, label, value, caption, tone = "orange" }) {
+function StatSummaryCard({ icon: Icon2, label, value, subLabel = "", caption, tone = "orange" }) {
   const toneClass = {
     orange: "text-bf-orange bg-bf-orange/10 border-bf-orange/20",
     green: "text-emerald-200 bg-emerald-500/10 border-emerald-300/20",
@@ -46822,6 +45766,7 @@ function StatSummaryCard({ icon: Icon2, label, value, caption, tone = "orange" }
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `grid h-10 w-10 place-items-center rounded-xl border ${toneClass}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 19 }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/44", children: label }),
+        subLabel ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-0.5 text-[11px] font-semibold text-bf-cream/42", children: subLabel }) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 truncate text-2xl font-black text-slate-100", children: value })
       ] })
     ] }),
@@ -46856,19 +45801,14 @@ function StatsBanner({ updatedAt, isRefreshing, onRefresh }) {
     ] })
   ] }) });
 }
-function StatsFilterBar({ mode, onModeChange }) {
+function StatsFilterBar() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-bf-cream/10 bg-black/20 p-3", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2", children: OVERWATCH_STATS_MODES.map((item) => {
-      const isModeButton = item.value === "competitive" || item.value === "quickplay";
-      const isActive = item.value === "overview" || mode === item.value;
+      const isActive = item.value === "overview" || item.value === "competitive";
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
+        "span",
         {
-          className: `rounded-xl px-4 py-2 text-xs font-black uppercase transition ${isActive ? "bg-bf-orange/18 text-bf-orange shadow-[0_0_14px_rgba(243,112,30,0.10)]" : "text-bf-cream/48 hover:bg-bf-steel/10 hover:text-slate-100"} ${item.value === "overview" ? "cursor-default" : ""}`,
-          type: "button",
-          onClick: () => {
-            if (isModeButton) onModeChange(item.value);
-          },
+          className: `rounded-xl px-4 py-2 text-xs font-black uppercase transition ${isActive ? "bg-bf-orange/18 text-bf-orange shadow-[0_0_14px_rgba(243,112,30,0.10)]" : "text-bf-cream/48 hover:bg-bf-steel/10 hover:text-slate-100"}`,
           children: item.label
         },
         item.value
@@ -46878,17 +45818,18 @@ function StatsFilterBar({ mode, onModeChange }) {
   ] });
 }
 function PlayerStatsTable({ players }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 overflow-x-auto rounded-xl border border-bf-cream/10", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { className: "min-w-[1120px] w-full border-collapse bg-[#111925]/86 text-left", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 overflow-x-auto rounded-xl border border-bf-cream/10", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { className: "min-w-[1240px] w-full border-collapse bg-[#111925]/86 text-left", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: "border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Игрок" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Ранг" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "SR" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Основной герой" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Winrate" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Матчей" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "W / L" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Последние игры" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "K/D" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Средний урон" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Сред. убийств" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Средняя смерть" })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: players.map((player) => {
@@ -46911,6 +45852,10 @@ function PlayerStatsTable({ players }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: player.rank.label })
         ] }) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-bf-cream/42", children: "—" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady && player.mainHero ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black", children: player.mainHero.heroLabel }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-0.5 text-xs text-bf-cream/42", children: formatHours(player.mainHero.timePlayed) })
+        ] }) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3", children: isReady ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-[110px]", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black text-slate-100", children: formatPercent(player.winrate) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 h-1.5 overflow-hidden rounded-full bg-bf-cream/10", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-full rounded-full bg-emerald-400", style: { width: winrateWidth } }) })
@@ -46929,7 +45874,7 @@ function PlayerStatsTable({ players }) {
         ] }) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-bf-cream/42", children: "Недоступно" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-black text-emerald-300", children: isReady ? formatDecimal(player.kd, 2) : "—" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady ? formatInteger(player.avgDamage) : "—" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady ? formatDecimal(player.avgEliminations, 1) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady ? formatDecimal(player.avgDeaths, 1) : "—" })
       ] }, player.id);
     }) })
@@ -46937,9 +45882,8 @@ function PlayerStatsTable({ players }) {
 }
 function StatsCharts({ stats }) {
   const rankRows = (stats.rankDistribution || []).filter((item) => item.count > 0);
-  const winrateRows = (stats.winrateByMode || []).filter((item) => item.matches > 0);
   const topHeroes = stats.topHeroes || [];
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mt-4 grid gap-4 xl:grid-cols-[1fr_1fr_1.15fr]", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mt-4 grid gap-4 xl:grid-cols-[1fr_1.15fr]", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-sm font-black uppercase text-slate-100", children: "Распределение рангов" }),
       rankRows.length ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-64", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(BarChart, { data: rankRows, layout: "vertical", margin: { top: 4, right: 12, left: 18, bottom: 4 }, children: [
@@ -46950,33 +45894,14 @@ function StatsCharts({ stats }) {
           Tooltip,
           {
             cursor: { fill: "rgba(243,112,30,0.08)" },
-            contentStyle: { background: "#070c14", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, color: "#fff" }
+            contentStyle: { background: "#070c14", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, color: "#fff" },
+            labelStyle: { color: "#fff" },
+            itemStyle: { color: "#fff" },
+            formatter: (value) => [value, "Количество"]
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Bar, { dataKey: "count", radius: [0, 10, 10, 0], children: rankRows.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(Cell, { fill: RANK_CHART_COLORS[item.divisionLabel] || "#f3701e" }, item.division)) })
       ] }) }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52", children: "Ранги появятся после успешной синхронизации competitive профилей." })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-sm font-black uppercase text-slate-100", children: "Winrate по режимам" }),
-      winrateRows.length ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid min-h-64 items-center gap-4 sm:grid-cols-[180px_minmax(0,1fr)] xl:grid-cols-1 2xl:grid-cols-[180px_minmax(0,1fr)]", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-48", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(PieChart, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Pie, { data: winrateRows, dataKey: "winrate", nameKey: "label", innerRadius: 52, outerRadius: 82, paddingAngle: 3, children: winrateRows.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(Cell, { fill: MODE_CHART_COLORS[index % MODE_CHART_COLORS.length] }, item.mode)) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Tooltip,
-            {
-              formatter: (value) => `${formatDecimal(Number(value), 1)}%`,
-              contentStyle: { background: "#070c14", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, color: "#fff" }
-            }
-          )
-        ] }) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid gap-3", children: winrateRows.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between gap-3 text-sm", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-bf-cream/70", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-2.5 w-2.5 rounded-full", style: { backgroundColor: MODE_CHART_COLORS[index % MODE_CHART_COLORS.length] } }),
-            item.label
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black text-slate-100", children: formatPercent(item.winrate) })
-        ] }, item.mode)) })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52", children: "Winrate появится после первой успешной синхронизации." })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-sm font-black uppercase text-slate-100", children: "Топ героев" }),
@@ -46985,13 +45910,13 @@ function StatsCharts({ stats }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Герой" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Winrate" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Матчей" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Урон" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Часы" })
         ] }),
         topHeroes.map((hero) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-[minmax(0,1fr)_80px_80px_90px] items-center gap-3 rounded-xl bg-black/18 px-3 py-2 text-sm", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate font-black text-slate-100", children: hero.heroLabel }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black text-emerald-300", children: formatPercent(hero.winrate) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-bf-cream/72", children: formatInteger(hero.matches) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-bf-cream/72", children: formatCompactStat(hero.avgDamage) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-bf-cream/72", children: formatHours(hero.timePlayed) })
         ] }, hero.hero))
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52", children: "Герои появятся после загрузки статистики OverFast." })
     ] })
@@ -46999,8 +45924,6 @@ function StatsCharts({ stats }) {
 }
 function OverwatchStatsPage({
   stats,
-  mode,
-  onModeChange,
   isLoading,
   isRefreshing,
   error,
@@ -47012,14 +45935,24 @@ function OverwatchStatsPage({
     /* @__PURE__ */ jsxRuntimeExports.jsx(StatsBanner, { updatedAt: stats?.updatedAt, isRefreshing, onRefresh }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 md:grid-cols-2 xl:grid-cols-6", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Trophy, label: "Средний ранг", value: team.averageRank || "—", caption: "SR недоступен в OverFast", tone: "purple" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          StatSummaryCard,
+          {
+            icon: Trophy,
+            label: "Средний рейтинг",
+            value: team.averageRank || "—",
+            subLabel: team.averageRating ? `Рейтинг: ${formatInteger(team.averageRating)}` : "Рейтинг: —",
+            caption: "Competitive",
+            tone: "purple"
+          }
+        ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Check, label: "Процент побед", value: formatPercent(team.winrate), caption: "По загруженным игрокам", tone: "green" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Clock3, label: "Все сыграно", value: formatHours(team.timePlayed), caption: "All-time", tone: "orange" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: ChartColumn, label: "Матчей сыграно", value: formatInteger(team.matches || 0), caption: "Выбранный режим", tone: "blue" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: ChartColumn, label: "Матчей сыграно", value: formatInteger(team.matches || 0), caption: "Competitive", tone: "blue" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Swords, label: "Лучшая серия", value: team.bestStreak || "Недоступно", caption: "Нет истории матчей", tone: "muted" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: TriangleAlert, label: "Худшая серия", value: team.worstStreak || "Недоступно", caption: "Нет истории матчей", tone: "red" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(StatsFilterBar, { mode, onModeChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(StatsFilterBar, {}),
       isLoading && !stats ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-center text-sm text-bf-cream/62", children: "Загружаю кэш статистики..." }) : error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-6 text-sm font-semibold text-red-100", children: error }) : stats?.cacheEmpty ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-orange/25 bg-bf-orange/10 px-4 py-6 text-sm text-bf-cream/74", children: "Данные OverFast еще не загружены. Нажмите «Обновить данные», чтобы собрать статистику по BattleTag игроков." }) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerStatsTable, { players })
     ] }),
@@ -47579,7 +46512,7 @@ function App() {
   const [isLoadingUpdateDetail, setIsLoadingUpdateDetail] = reactExports.useState(false);
   const [updatesError, setUpdatesError] = reactExports.useState("");
   const [selectedUpdateSlug, setSelectedUpdateSlug] = reactExports.useState(() => new URLSearchParams(window.location.search).get("patch") || "");
-  const [statsMode, setStatsMode] = reactExports.useState("competitive");
+  const statsMode = "competitive";
   const [statsByMode, setStatsByMode] = reactExports.useState({});
   const [isLoadingStats, setIsLoadingStats] = reactExports.useState(false);
   const [isRefreshingStats, setIsRefreshingStats] = reactExports.useState(false);
@@ -47817,8 +46750,6 @@ function App() {
           OverwatchStatsPage,
           {
             stats: selectedStats,
-            mode: statsMode,
-            onModeChange: setStatsMode,
             isLoading: isLoadingStats,
             isRefreshing: isRefreshingStats,
             error: statsError,

@@ -6,8 +6,6 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  Pie,
-  PieChart,
   ResponsiveContainer,
   Tooltip as ChartTooltip,
   XAxis,
@@ -274,18 +272,9 @@ function formatHours(seconds) {
   return `${formatInteger(hours)} ч.`;
 }
 
-function formatCompactStat(value) {
-  if (!Number.isFinite(value)) return '—';
-  return new Intl.NumberFormat('ru-RU', {
-    notation: value >= 10000 ? 'compact' : 'standard',
-    maximumFractionDigits: value >= 10000 ? 1 : 0,
-  }).format(value);
-}
-
 const OVERWATCH_STATS_MODES = [
   { value: 'overview', label: 'Общая статистика' },
   { value: 'competitive', label: 'Competitive' },
-  { value: 'quickplay', label: 'Quickplay' },
 ];
 
 const RANK_CHART_COLORS = {
@@ -298,8 +287,6 @@ const RANK_CHART_COLORS = {
   Silver: '#c9d2dc',
   Bronze: '#b4764f',
 };
-
-const MODE_CHART_COLORS = ['#f3701e', '#4f8df5', '#65d385'];
 
 const UPDATE_TYPE_STYLES = {
   Hotfix: 'border-amber-300/30 bg-amber-500/10 text-amber-100',
@@ -1146,7 +1133,7 @@ function UpdatesPage({
   );
 }
 
-function StatSummaryCard({ icon: Icon, label, value, caption, tone = 'orange' }) {
+function StatSummaryCard({ icon: Icon, label, value, subLabel = '', caption, tone = 'orange' }) {
   const toneClass = {
     orange: 'text-bf-orange bg-bf-orange/10 border-bf-orange/20',
     green: 'text-emerald-200 bg-emerald-500/10 border-emerald-300/20',
@@ -1164,6 +1151,7 @@ function StatSummaryCard({ icon: Icon, label, value, caption, tone = 'orange' })
         </div>
         <div className="min-w-0">
           <div className="text-[11px] font-black uppercase tracking-wide text-bf-cream/44">{label}</div>
+          {subLabel ? <div className="mt-0.5 text-[11px] font-semibold text-bf-cream/42">{subLabel}</div> : null}
           <div className="mt-1 truncate text-2xl font-black text-slate-100">{value}</div>
         </div>
       </div>
@@ -1205,28 +1193,23 @@ function StatsBanner({ updatedAt, isRefreshing, onRefresh }) {
   );
 }
 
-function StatsFilterBar({ mode, onModeChange }) {
+function StatsFilterBar() {
   return (
     <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-bf-cream/10 bg-black/20 p-3">
       <div className="flex flex-wrap gap-2">
         {OVERWATCH_STATS_MODES.map((item) => {
-          const isModeButton = item.value === 'competitive' || item.value === 'quickplay';
-          const isActive = item.value === 'overview' || mode === item.value;
+          const isActive = item.value === 'overview' || item.value === 'competitive';
           return (
-            <button
+            <span
               key={item.value}
               className={`rounded-xl px-4 py-2 text-xs font-black uppercase transition ${
                 isActive
                   ? 'bg-bf-orange/18 text-bf-orange shadow-[0_0_14px_rgba(243,112,30,0.10)]'
                   : 'text-bf-cream/48 hover:bg-bf-steel/10 hover:text-slate-100'
-              } ${item.value === 'overview' ? 'cursor-default' : ''}`}
-              type="button"
-              onClick={() => {
-                if (isModeButton) onModeChange(item.value);
-              }}
+              }`}
             >
               {item.label}
-            </button>
+            </span>
           );
         })}
       </div>
@@ -1241,18 +1224,19 @@ function StatsFilterBar({ mode, onModeChange }) {
 function PlayerStatsTable({ players }) {
   return (
     <div className="mt-4 overflow-x-auto rounded-xl border border-bf-cream/10">
-      <table className="min-w-[1120px] w-full border-collapse bg-[#111925]/86 text-left">
+      <table className="min-w-[1240px] w-full border-collapse bg-[#111925]/86 text-left">
         <thead>
           <tr className="border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42">
             <th className="px-4 py-3">Игрок</th>
             <th className="px-4 py-3">Ранг</th>
             <th className="px-4 py-3">SR</th>
+            <th className="px-4 py-3">Основной герой</th>
             <th className="px-4 py-3">Winrate</th>
             <th className="px-4 py-3">Матчей</th>
             <th className="px-4 py-3">W / L</th>
             <th className="px-4 py-3">Последние игры</th>
             <th className="px-4 py-3">K/D</th>
-            <th className="px-4 py-3">Средний урон</th>
+            <th className="px-4 py-3">Сред. убийств</th>
             <th className="px-4 py-3">Средняя смерть</th>
           </tr>
         </thead>
@@ -1290,6 +1274,14 @@ function PlayerStatsTable({ players }) {
                   ) : '—'}
                 </td>
                 <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">—</td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">
+                  {isReady && player.mainHero ? (
+                    <div>
+                      <div className="font-black">{player.mainHero.heroLabel}</div>
+                      <div className="mt-0.5 text-xs text-bf-cream/42">{formatHours(player.mainHero.timePlayed)}</div>
+                    </div>
+                  ) : '—'}
+                </td>
                 <td className="px-4 py-3">
                   {isReady ? (
                     <div className="min-w-[110px]">
@@ -1312,7 +1304,7 @@ function PlayerStatsTable({ players }) {
                 </td>
                 <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">Недоступно</td>
                 <td className="px-4 py-3 text-sm font-black text-emerald-300">{isReady ? formatDecimal(player.kd, 2) : '—'}</td>
-                <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatInteger(player.avgDamage) : '—'}</td>
+                <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatDecimal(player.avgEliminations, 1) : '—'}</td>
                 <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatDecimal(player.avgDeaths, 1) : '—'}</td>
               </tr>
             );
@@ -1325,11 +1317,10 @@ function PlayerStatsTable({ players }) {
 
 function StatsCharts({ stats }) {
   const rankRows = (stats.rankDistribution || []).filter((item) => item.count > 0);
-  const winrateRows = (stats.winrateByMode || []).filter((item) => item.matches > 0);
   const topHeroes = stats.topHeroes || [];
 
   return (
-    <section className="mt-4 grid gap-4 xl:grid-cols-[1fr_1fr_1.15fr]">
+    <section className="mt-4 grid gap-4 xl:grid-cols-[1fr_1.15fr]">
       <div className="glass-panel rounded-xl p-4">
         <div className="mb-4 text-sm font-black uppercase text-slate-100">Распределение рангов</div>
         {rankRows.length ? (
@@ -1342,6 +1333,9 @@ function StatsCharts({ stats }) {
                 <ChartTooltip
                   cursor={{ fill: 'rgba(243,112,30,0.08)' }}
                   contentStyle={{ background: '#070c14', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, color: '#fff' }}
+                  labelStyle={{ color: '#fff' }}
+                  itemStyle={{ color: '#fff' }}
+                  formatter={(value) => [value, 'Количество']}
                 />
                 <Bar dataKey="count" radius={[0, 10, 10, 0]}>
                   {rankRows.map((item) => (
@@ -1359,44 +1353,6 @@ function StatsCharts({ stats }) {
       </div>
 
       <div className="glass-panel rounded-xl p-4">
-        <div className="mb-4 text-sm font-black uppercase text-slate-100">Winrate по режимам</div>
-        {winrateRows.length ? (
-          <div className="grid min-h-64 items-center gap-4 sm:grid-cols-[180px_minmax(0,1fr)] xl:grid-cols-1 2xl:grid-cols-[180px_minmax(0,1fr)]">
-            <div className="h-48">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={winrateRows} dataKey="winrate" nameKey="label" innerRadius={52} outerRadius={82} paddingAngle={3}>
-                    {winrateRows.map((item, index) => (
-                      <Cell key={item.mode} fill={MODE_CHART_COLORS[index % MODE_CHART_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <ChartTooltip
-                    formatter={(value) => `${formatDecimal(Number(value), 1)}%`}
-                    contentStyle={{ background: '#070c14', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, color: '#fff' }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid gap-3">
-              {winrateRows.map((item, index) => (
-                <div key={item.mode} className="flex items-center justify-between gap-3 text-sm">
-                  <div className="flex items-center gap-2 text-bf-cream/70">
-                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MODE_CHART_COLORS[index % MODE_CHART_COLORS.length] }} />
-                    {item.label}
-                  </div>
-                  <div className="font-black text-slate-100">{formatPercent(item.winrate)}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-sm text-bf-cream/52">
-            Winrate появится после первой успешной синхронизации.
-          </div>
-        )}
-      </div>
-
-      <div className="glass-panel rounded-xl p-4">
         <div className="mb-4 text-sm font-black uppercase text-slate-100">Топ героев</div>
         {topHeroes.length ? (
           <div className="grid gap-2">
@@ -1404,14 +1360,14 @@ function StatsCharts({ stats }) {
               <span>Герой</span>
               <span>Winrate</span>
               <span>Матчей</span>
-              <span>Урон</span>
+              <span>Часы</span>
             </div>
             {topHeroes.map((hero) => (
               <div key={hero.hero} className="grid grid-cols-[minmax(0,1fr)_80px_80px_90px] items-center gap-3 rounded-xl bg-black/18 px-3 py-2 text-sm">
                 <div className="truncate font-black text-slate-100">{hero.heroLabel}</div>
                 <div className="font-black text-emerald-300">{formatPercent(hero.winrate)}</div>
                 <div className="font-semibold text-bf-cream/72">{formatInteger(hero.matches)}</div>
-                <div className="font-semibold text-bf-cream/72">{formatCompactStat(hero.avgDamage)}</div>
+                <div className="font-semibold text-bf-cream/72">{formatHours(hero.timePlayed)}</div>
               </div>
             ))}
           </div>
@@ -1427,8 +1383,6 @@ function StatsCharts({ stats }) {
 
 function OverwatchStatsPage({
   stats,
-  mode,
-  onModeChange,
   isLoading,
   isRefreshing,
   error,
@@ -1442,15 +1396,22 @@ function OverwatchStatsPage({
       <StatsBanner updatedAt={stats?.updatedAt} isRefreshing={isRefreshing} onRefresh={onRefresh} />
       <section className="glass-panel mt-4 rounded-xl p-4">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
-          <StatSummaryCard icon={Trophy} label="Средний ранг" value={team.averageRank || '—'} caption="SR недоступен в OverFast" tone="purple" />
+          <StatSummaryCard
+            icon={Trophy}
+            label="Средний рейтинг"
+            value={team.averageRank || '—'}
+            subLabel={team.averageRating ? `Рейтинг: ${formatInteger(team.averageRating)}` : 'Рейтинг: —'}
+            caption="Competitive"
+            tone="purple"
+          />
           <StatSummaryCard icon={Check} label="Процент побед" value={formatPercent(team.winrate)} caption="По загруженным игрокам" tone="green" />
           <StatSummaryCard icon={Clock3} label="Все сыграно" value={formatHours(team.timePlayed)} caption="All-time" tone="orange" />
-          <StatSummaryCard icon={BarChart3} label="Матчей сыграно" value={formatInteger(team.matches || 0)} caption="Выбранный режим" tone="blue" />
+          <StatSummaryCard icon={BarChart3} label="Матчей сыграно" value={formatInteger(team.matches || 0)} caption="Competitive" tone="blue" />
           <StatSummaryCard icon={Swords} label="Лучшая серия" value={team.bestStreak || 'Недоступно'} caption="Нет истории матчей" tone="muted" />
           <StatSummaryCard icon={AlertTriangle} label="Худшая серия" value={team.worstStreak || 'Недоступно'} caption="Нет истории матчей" tone="red" />
         </div>
 
-        <StatsFilterBar mode={mode} onModeChange={onModeChange} />
+        <StatsFilterBar />
 
         {isLoading && !stats ? (
           <div className="mt-4 rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-center text-sm text-bf-cream/62">
@@ -2073,7 +2034,7 @@ export default function App() {
   const [isLoadingUpdateDetail, setIsLoadingUpdateDetail] = useState(false);
   const [updatesError, setUpdatesError] = useState('');
   const [selectedUpdateSlug, setSelectedUpdateSlug] = useState(() => new URLSearchParams(window.location.search).get('patch') || '');
-  const [statsMode, setStatsMode] = useState('competitive');
+  const statsMode = 'competitive';
   const [statsByMode, setStatsByMode] = useState({});
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [isRefreshingStats, setIsRefreshingStats] = useState(false);
@@ -2354,8 +2315,6 @@ export default function App() {
           ) : isStatsPage ? (
             <OverwatchStatsPage
               stats={selectedStats}
-              mode={statsMode}
-              onModeChange={setStatsMode}
               isLoading={isLoadingStats}
               isRefreshing={isRefreshingStats}
               error={statsError}

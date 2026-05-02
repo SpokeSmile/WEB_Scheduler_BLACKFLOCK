@@ -131,6 +131,7 @@ OVERFAST_STATS_SAMPLE = {
         },
         'average': {
             'damage': 10000,
+            'eliminations': 12,
             'deaths': 6,
         },
     },
@@ -139,12 +140,14 @@ OVERFAST_STATS_SAMPLE = {
             'games_played': 5,
             'games_won': 3,
             'games_lost': 2,
+            'time_played': 3600,
             'average': {'damage': 9000},
         },
         'ana': {
             'games_played': 3,
             'games_won': 2,
             'games_lost': 1,
+            'time_played': 1800,
             'average': {'damage': 4200},
         },
     },
@@ -970,20 +973,19 @@ class OverwatchStatsTests(TestCase):
 
     @patch('scheduler.overfast.fetch_overfast_stats')
     @patch('scheduler.overfast.fetch_overfast_summary')
-    def test_refresh_creates_cache_for_both_modes(self, mocked_summary, mocked_stats):
+    def test_refresh_creates_competitive_cache(self, mocked_summary, mocked_stats):
         mocked_summary.return_value = OVERFAST_SUMMARY_SAMPLE
         mocked_stats.return_value = OVERFAST_STATS_SAMPLE
 
         result = refresh_overwatch_stats([self.player])
 
-        self.assertEqual(result['updated'], 2)
+        self.assertEqual(result['updated'], 1)
         mocked_summary.assert_called_once_with('Forin-21436')
         mocked_stats.assert_has_calls([
             call('Forin-21436', OverwatchStatsCache.COMPETITIVE),
-            call('Forin-21436', OverwatchStatsCache.QUICKPLAY),
         ])
         caches = OverwatchStatsCache.objects.filter(player=self.player).order_by('mode')
-        self.assertEqual(caches.count(), 2)
+        self.assertEqual(caches.count(), 1)
         self.assertTrue(all(cache.status == OverwatchStatsCache.STATUS_READY for cache in caches))
         self.assertTrue(all(cache.overfast_player_id == 'Forin-21436' for cache in caches))
 
@@ -993,9 +995,9 @@ class OverwatchStatsTests(TestCase):
 
         result = refresh_overwatch_stats([self.player])
 
-        self.assertEqual(result['errors'], 2)
+        self.assertEqual(result['errors'], 1)
         caches = OverwatchStatsCache.objects.filter(player=self.player)
-        self.assertEqual(caches.count(), 2)
+        self.assertEqual(caches.count(), 1)
         self.assertTrue(all(cache.status == OverwatchStatsCache.STATUS_ERROR for cache in caches))
         self.assertTrue(all(cache.error == 'Профиль не найден или закрыт.' for cache in caches))
 
@@ -1020,11 +1022,15 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(player_row['wins'], 6)
         self.assertEqual(player_row['losses'], 4)
         self.assertEqual(player_row['kd'], 2.0)
+        self.assertEqual(player_row['avgEliminations'], 12)
+        self.assertEqual(player_row['mainHero']['hero'], 'cassidy')
         self.assertFalse(player_row['recentGamesAvailable'])
         self.assertEqual(dashboard['team']['winrate'], 60.0)
         self.assertEqual(dashboard['team']['matches'], 10)
         self.assertEqual(dashboard['team']['averageRank'], 'Diamond 2')
+        self.assertEqual(dashboard['team']['averageRating'], 3300)
         self.assertEqual(dashboard['topHeroes'][0]['hero'], 'cassidy')
+        self.assertEqual(dashboard['topHeroes'][0]['timePlayed'], 3600)
 
     def test_stats_api_returns_dashboard(self):
         OverwatchStatsCache.objects.create(

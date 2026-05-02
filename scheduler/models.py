@@ -466,7 +466,6 @@ class GameUpdate(models.Model):
 
 class OverwatchStatsCache(models.Model):
     COMPETITIVE = 'competitive'
-    QUICKPLAY = 'quickplay'
 
     STATUS_READY = 'ready'
     STATUS_ERROR = 'error'
@@ -474,7 +473,6 @@ class OverwatchStatsCache(models.Model):
 
     MODE_CHOICES = [
         (COMPETITIVE, 'Competitive'),
-        (QUICKPLAY, 'Quickplay'),
     ]
 
     STATUS_CHOICES = [
