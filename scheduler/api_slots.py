@@ -60,7 +60,12 @@ def slot_create(request):
     slot.week_start = selected_week_start
     slot.full_clean()
     slot.save()
-    day_event_map = {slot.day_of_week: DayEventType.objects.filter(day_of_week=slot.day_of_week).first()}
+    day_event_map = {
+        slot.day_of_week: DayEventType.objects.filter(
+            week_start=slot.week_start,
+            day_of_week=slot.day_of_week,
+        ).first(),
+    }
 
     return JsonResponse({'slot': serialize_slot(slot, current_player, day_event_map)}, status=201)
 
@@ -88,7 +93,12 @@ def slot_update(request, pk):
     slot.player = current_player
     slot.full_clean()
     slot.save()
-    day_event_map = {slot.day_of_week: DayEventType.objects.filter(day_of_week=slot.day_of_week).first()}
+    day_event_map = {
+        slot.day_of_week: DayEventType.objects.filter(
+            week_start=slot.week_start,
+            day_of_week=slot.day_of_week,
+        ).first(),
+    }
 
     return JsonResponse({'slot': serialize_slot(slot, current_player, day_event_map)})
 

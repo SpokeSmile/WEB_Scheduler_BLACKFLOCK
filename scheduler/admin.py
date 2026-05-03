@@ -157,8 +157,9 @@ class ScheduleSlotAdmin(admin.ModelAdmin):
 
 @admin.register(DayEventType)
 class DayEventTypeAdmin(admin.ModelAdmin):
-    list_display = ('day_of_week', 'event_type', 'event_label')
-    list_filter = ('event_type',)
+    list_display = ('week_start', 'day_of_week', 'event_type', 'event_label')
+    list_filter = ('week_start', 'event_type')
+    date_hierarchy = 'week_start'
 
 
 @admin.register(GameUpdate)

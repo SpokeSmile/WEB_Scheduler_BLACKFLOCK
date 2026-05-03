@@ -103,6 +103,7 @@ def serialize_staff_member(staff_member, current_staff_member=None):
 
 def serialize_day_event(day_event):
     return {
+        'weekStart': day_event.week_start.isoformat(),
         'dayOfWeek': day_event.day_of_week,
         'eventType': day_event.event_type,
         'eventLabel': day_event.event_label,

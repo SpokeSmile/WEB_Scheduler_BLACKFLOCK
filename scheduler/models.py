@@ -436,10 +436,10 @@ class RosterState(models.Model):
 
 
 class DayEventType(models.Model):
+    week_start = models.DateField('неделя', default=default_week_start, db_index=True)
     day_of_week = models.PositiveSmallIntegerField(
         'день недели',
         choices=ScheduleSlot.DAY_CHOICES,
-        unique=True,
     )
     event_type = models.CharField(
         'тип события',
@@ -450,12 +450,15 @@ class DayEventType(models.Model):
     )
 
     class Meta:
-        ordering = ['day_of_week']
+        ordering = ['week_start', 'day_of_week']
         verbose_name = 'тип события дня'
         verbose_name_plural = 'типы событий по дням'
+        constraints = [
+            models.UniqueConstraint(fields=['week_start', 'day_of_week'], name='unique_day_event_type_per_week'),
+        ]
 
     def __str__(self):
-        return f'{self.get_day_of_week_display()} - {self.event_label or "Без события"}'
+        return f'{self.week_start} - {self.get_day_of_week_display()} - {self.event_label or "Без события"}'
 
     @property
     def event_label(self):

@@ -7,13 +7,14 @@ from django.test import TestCase
 from django.urls import NoReverseMatch, reverse
 
 from .forms import ScheduleSlotForm
-from .models import DayEventType, DiscordConnection, Player, RosterState, ScheduleSlot, StaffMember
+from .models import DayEventType, DiscordConnection, Player, RosterState, ScheduleSlot, StaffMember, default_week_start
 from .roster import ensure_current_roster_week
 
 
 class ScheduleFormTests(TestCase):
     def test_allows_end_time_2400(self):
         DayEventType.objects.update_or_create(
+            week_start=default_week_start(),
             day_of_week=ScheduleSlot.MONDAY,
             defaults={'event_type': ScheduleSlot.SCRIM},
         )
@@ -29,6 +30,7 @@ class ScheduleFormTests(TestCase):
 
     def test_rejects_end_before_or_equal_start(self):
         DayEventType.objects.update_or_create(
+            week_start=default_week_start(),
             day_of_week=ScheduleSlot.MONDAY,
             defaults={'event_type': ScheduleSlot.COMPETITIVE},
         )
@@ -228,6 +230,7 @@ class ScheduleApiTests(TestCase):
 
     def test_bootstrap_returns_roster_data(self):
         DayEventType.objects.update_or_create(
+            week_start=default_week_start(),
             day_of_week=ScheduleSlot.MONDAY,
             defaults={'event_type': ScheduleSlot.SCRIM},
         )
@@ -327,6 +330,31 @@ class ScheduleApiTests(TestCase):
         self.assertEqual([slot['note'] for slot in data['slots']], ['old week'])
         self.assertEqual(data['days'][0]['date'], '20.04')
 
+    def test_bootstrap_filters_day_event_types_by_selected_week(self):
+        current_week = date(2026, 4, 27)
+        previous_week = date(2026, 4, 20)
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': current_week})
+        DayEventType.objects.create(
+            week_start=previous_week,
+            day_of_week=ScheduleSlot.MONDAY,
+            event_type=ScheduleSlot.SCRIM,
+        )
+        DayEventType.objects.update_or_create(
+            week_start=current_week,
+            day_of_week=ScheduleSlot.MONDAY,
+            defaults={'event_type': ScheduleSlot.TOURNAMENT},
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.client.get(reverse('api_bootstrap'), {'week': '2026-04-22'})
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(len(data['dayEventTypes']), 1)
+        self.assertEqual(data['dayEventTypes'][0]['weekStart'], '2026-04-20')
+        self.assertEqual(data['dayEventTypes'][0]['eventType'], ScheduleSlot.SCRIM)
+
     def test_bootstrap_rejects_invalid_week_query(self):
         self.client.login(username='player1', password='secret-pass')
 
@@ -336,6 +364,7 @@ class ScheduleApiTests(TestCase):
 
     def test_api_creates_event_using_day_type(self):
         DayEventType.objects.update_or_create(
+            week_start=default_week_start(),
             day_of_week=ScheduleSlot.SATURDAY,
             defaults={'event_type': ScheduleSlot.TOURNAMENT},
         )

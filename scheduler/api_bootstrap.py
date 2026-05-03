@@ -41,7 +41,7 @@ def bootstrap(request):
     players = list(Player.objects.select_related('user__discord_connection'))
     staff_members = list(StaffMember.objects.select_related('user__discord_connection'))
     slots = ScheduleSlot.objects.select_related('player').filter(week_start=selected_week_start)
-    day_events = list(DayEventType.objects.all())
+    day_events = list(DayEventType.objects.filter(week_start=selected_week_start))
     day_event_map = {day_event.day_of_week: day_event for day_event in day_events}
     user_discord = discord_payload(current_connection)
 
