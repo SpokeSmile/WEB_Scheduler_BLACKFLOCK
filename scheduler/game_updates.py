@@ -10,6 +10,9 @@ from django.utils.text import slugify
 
 from .models import GameUpdate
 
+# Blizzard exposes patch notes as HTML, not as a stable public JSON feed. The
+# parser normalizes that HTML into simple content blocks used by the API/UI.
+
 PATCH_NOTES_URL = 'https://overwatch.blizzard.com/en-us/news/patch-notes/'
 SUMMARY_MAX_LENGTH = 320
 ARCHIVE_MONTHS_TO_REFRESH = 2
@@ -123,6 +126,8 @@ def parse_children(node, blocks):
 
         classes = set(child.get('class', []))
 
+        # The page mixes generic patch sections and hero ability blocks. Treat
+        # both structures as the same small JSON block vocabulary.
         if child.name in {'h2', 'h3', 'h4', 'h5', 'h6'}:
             append_block(blocks, {
                 'type': 'heading',
@@ -243,6 +248,8 @@ def collect_patch_payloads(root_html, full_archive=False):
     archive_months = extract_archive_months(root_html, channel='live')
     months_to_fetch = archive_months if full_archive else archive_months[:ARCHIVE_MONTHS_TO_REFRESH]
 
+    # Normal cron sync is intentionally shallow to keep Vercel execution time
+    # predictable. Manual full-archive sync can backfill older months.
     for month_key in months_to_fetch:
         archive_url = build_archive_url(month_key, channel='live')
         if archive_url in visited_urls:

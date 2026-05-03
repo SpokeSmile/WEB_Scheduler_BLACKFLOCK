@@ -8,6 +8,8 @@ function getCookie(name) {
 }
 
 async function request(path, options = {}) {
+  // Shared fetch wrapper for the Django JSON API. It centralizes cookies/CSRF
+  // so feature components can stay focused on page behavior.
   const response = await fetch(path, {
     credentials: 'same-origin',
     headers: {

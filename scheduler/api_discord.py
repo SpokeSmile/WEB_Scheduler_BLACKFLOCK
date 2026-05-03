@@ -11,6 +11,10 @@ from django.views.decorators.http import require_GET, require_POST
 from .models import DiscordConnection
 from .profile_lookup import get_current_player, get_current_staff_member
 
+# Discord OAuth connect endpoints. This is not a Discord login flow: the user
+# must already be authenticated, and Discord is only a trusted source for avatar
+# and handle data.
+
 DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize'
 DISCORD_TOKEN_URL = 'https://discord.com/api/oauth2/token'
 DISCORD_USER_URL = 'https://discord.com/api/users/@me'
@@ -77,6 +81,8 @@ def discord_connect(request):
     if not discord_oauth_configured():
         return HttpResponseRedirect(build_profile_redirect('error', 'not-configured'))
 
+    # Keep state in the Django session so the callback can reject forged OAuth
+    # responses before exchanging the code for a Discord token.
     state = get_random_string(32)
     request.session[DISCORD_STATE_SESSION_KEY] = state
     query = urlencode({
@@ -124,6 +130,8 @@ def discord_callback(request):
     if not discord_user_id or not username:
         return HttpResponseRedirect(build_profile_redirect('error', 'oauth-failed'))
 
+    # A Discord account is a unique identity source and must not silently move
+    # from one site user to another.
     existing = DiscordConnection.objects.filter(discord_user_id=discord_user_id).exclude(user=request.user).first()
     if existing is not None:
         return HttpResponseRedirect(build_profile_redirect('error', 'already-linked'))

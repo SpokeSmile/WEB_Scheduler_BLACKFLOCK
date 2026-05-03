@@ -16,6 +16,9 @@ from .overfast_metrics import (
 )
 from .overfast_sync import OVERFAST_MODES, primary_battle_tag
 
+# The frontend consumes this payload directly, so missing OverFast features stay
+# explicit as unavailable values instead of inventing match history, SR or streaks.
+
 
 def serialize_rank(rank, role=''):
     score = rank_score(rank)
@@ -165,6 +168,8 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         serialize_player_row(player, cache_map.get((player.id, mode)))
         for player in players
     ]
+    # Team-level cards are weighted by real win/loss counts, not by averaging
+    # player percentages, so low-match accounts do not skew the dashboard.
     team_summary = weighted_mode_summary(selected_caches)
     rank_scores = [row['rank']['score'] for row in rows if row.get('rank')]
     average_rank_score = sum(rank_scores) / len(rank_scores) if rank_scores else None

@@ -1,3 +1,5 @@
+# Pure metric helpers for OverFast data. Keep these deterministic and
+# database-free so they can be tested separately from fetching and cache writes.
 RANK_DIVISIONS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandmaster', 'champion']
 RANK_LABELS = {
     'bronze': 'Bronze',
@@ -58,6 +60,8 @@ def rank_rating_from_score(score):
     normalized_score = max(0, min(float(score), max_score))
     if normalized_score >= max_score:
         return 5000
+    # Internal rank score is 0..39. Product rating maps Bronze 5 to 1000 and
+    # advances by 100 points per division up to Champion 1 at 5000.
     return round(1000 + normalized_score * 100)
 
 

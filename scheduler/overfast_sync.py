@@ -10,6 +10,9 @@ from .overfast_client import (
 
 OVERFAST_MODES = [OverwatchStatsCache.COMPETITIVE]
 
+# The sync is deliberately sequential. That is slower, but kinder to OverFast and
+# keeps partial failures isolated to one player instead of failing the dashboard.
+
 
 def primary_battle_tag(player):
     return player.battle_tags_list[0] if player.battle_tags_list else ''
@@ -70,6 +73,7 @@ def refresh_overwatch_stats(players=None):
     result = {'players': len(players), 'updated': 0, 'errors': 0, 'missingBattleTags': 0}
 
     for player in players:
+        # Product rule: only the first BattleTag is authoritative for stats v1.
         battle_tag = primary_battle_tag(player)
         player_id = normalize_battle_tag(battle_tag)
         if not player_id:

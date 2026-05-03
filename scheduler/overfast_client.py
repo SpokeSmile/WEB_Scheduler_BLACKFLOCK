@@ -2,6 +2,10 @@ from urllib.parse import quote
 
 import requests
 
+# Low-level OverFast HTTP client. Keep this module free of Django model writes;
+# it should only translate HTTP/API failures into errors the sync layer can store
+# per player.
+
 OVERFAST_BASE_URL = 'https://overfast-api.tekrop.fr'
 OVERFAST_TIMEOUT = 18
 
