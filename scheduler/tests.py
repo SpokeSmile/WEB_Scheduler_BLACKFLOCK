@@ -231,6 +231,66 @@ class ScheduleFormTests(TestCase):
         self.assertIsNone(form.cleaned_data['end_time_minutes'])
 
 
+class ScheduleSlotModelTests(TestCase):
+    def setUp(self):
+        self.player = Player.objects.get(name='Игрок 1')
+
+    def test_available_slot_requires_start_and_end_time(self):
+        slot = ScheduleSlot(
+            player=self.player,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+        )
+
+        with self.assertRaises(ValidationError) as context:
+            slot.full_clean()
+
+        self.assertIn('start_time_minutes', context.exception.error_dict)
+        self.assertIn('end_time_minutes', context.exception.error_dict)
+
+    def test_available_slot_requires_end_after_start(self):
+        slot = ScheduleSlot(
+            player=self.player,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=900,
+            end_time_minutes=900,
+        )
+
+        with self.assertRaises(ValidationError) as context:
+            slot.full_clean()
+
+        self.assertIn('end_time_minutes', context.exception.error_dict)
+
+    def test_available_slot_rejects_time_outside_day_range(self):
+        slot = ScheduleSlot(
+            player=self.player,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=900,
+            end_time_minutes=1500,
+        )
+
+        with self.assertRaises(ValidationError) as context:
+            slot.full_clean()
+
+        self.assertIn('end_time_minutes', context.exception.error_dict)
+
+    def test_all_day_status_clears_time_fields(self):
+        slot = ScheduleSlot(
+            player=self.player,
+            slot_type=ScheduleSlot.UNAVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=900,
+            end_time_minutes=1200,
+        )
+
+        slot.full_clean()
+
+        self.assertIsNone(slot.start_time_minutes)
+        self.assertIsNone(slot.end_time_minutes)
+
+
 class ScheduleAccessTests(TestCase):
     def setUp(self):
         self.player_one = Player.objects.get(name='Игрок 1')
@@ -260,66 +320,6 @@ class ScheduleAccessTests(TestCase):
         response = self.client.get(reverse('api_bootstrap'))
         self.assertContains(response, 'Leader')
 
-    def test_player_can_create_own_slot(self):
-        DayEventType.objects.update_or_create(
-            day_of_week=ScheduleSlot.TUESDAY,
-            defaults={'event_type': ScheduleSlot.SCRIM},
-        )
-        self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_create'), {
-            'slot_type': ScheduleSlot.AVAILABLE,
-            'day_of_week': ScheduleSlot.TUESDAY,
-            'start_time_minutes': 540,
-            'end_time_minutes': 1080,
-            'note': 'Скримы',
-        })
-
-        self.assertRedirects(response, reverse('schedule'))
-        self.assertTrue(ScheduleSlot.objects.filter(player=self.player_one).exists())
-        self.assertFalse(ScheduleSlot.objects.filter(player=self.player_two).exists())
-
-    def test_player_can_create_unavailable_day(self):
-        self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_create'), {
-            'slot_type': ScheduleSlot.UNAVAILABLE,
-            'day_of_week': ScheduleSlot.FRIDAY,
-            'note': 'Не могу в этот день',
-        })
-
-        self.assertRedirects(response, reverse('schedule'))
-        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.FRIDAY)
-        self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
-        self.assertIsNone(slot.start_time_minutes)
-        self.assertIsNone(slot.end_time_minutes)
-
-    def test_player_can_create_full_day_available(self):
-        self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_create'), {
-            'slot_type': ScheduleSlot.FULL_DAY_AVAILABLE,
-            'day_of_week': ScheduleSlot.THURSDAY,
-            'note': 'Весь день свободен',
-        })
-
-        self.assertRedirects(response, reverse('schedule'))
-        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.THURSDAY)
-        self.assertEqual(slot.slot_type, ScheduleSlot.FULL_DAY_AVAILABLE)
-        self.assertIsNone(slot.start_time_minutes)
-        self.assertIsNone(slot.end_time_minutes)
-
-    def test_player_can_create_tentative_day(self):
-        self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_create'), {
-            'slot_type': ScheduleSlot.TENTATIVE,
-            'day_of_week': ScheduleSlot.WEDNESDAY,
-            'note': 'Пока не уверен',
-        })
-
-        self.assertRedirects(response, reverse('schedule'))
-        slot = ScheduleSlot.objects.get(player=self.player_one, day_of_week=ScheduleSlot.WEDNESDAY)
-        self.assertEqual(slot.slot_type, ScheduleSlot.TENTATIVE)
-        self.assertIsNone(slot.start_time_minutes)
-        self.assertIsNone(slot.end_time_minutes)
-
     def test_schedule_marks_unavailable_day(self):
         ScheduleSlot.objects.create(
             player=self.player_one,
@@ -335,46 +335,12 @@ class ScheduleAccessTests(TestCase):
         self.assertTrue(any(slot['slotType'] == ScheduleSlot.UNAVAILABLE for slot in data['slots']))
         self.assertTrue(any(slot['label'] == 'Не могу в этот день' for slot in data['slots']))
 
-    def test_player_cannot_edit_another_players_slot(self):
-        slot = ScheduleSlot.objects.create(
-            player=self.player_two,
-            day_of_week=ScheduleSlot.WEDNESDAY,
-            start_time_minutes=600,
-            end_time_minutes=720,
-        )
+    def test_legacy_slot_html_routes_are_removed(self):
         self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_edit', args=[slot.pk]), {
-            'slot_type': ScheduleSlot.AVAILABLE,
-            'day_of_week': ScheduleSlot.THURSDAY,
-            'start_time_minutes': 720,
-            'end_time_minutes': 840,
-            'note': 'Попытка изменения',
-        })
 
-        self.assertEqual(response.status_code, 404)
-        slot.refresh_from_db()
-        self.assertEqual(slot.player, self.player_two)
-        self.assertEqual(slot.day_of_week, ScheduleSlot.WEDNESDAY)
-
-    def test_player_cannot_edit_another_players_unavailable_slot(self):
-        slot = ScheduleSlot.objects.create(
-            player=self.player_two,
-            slot_type=ScheduleSlot.UNAVAILABLE,
-            day_of_week=ScheduleSlot.SUNDAY,
-        )
-        self.client.login(username='player1', password='secret-pass')
-        response = self.client.post(reverse('slot_edit', args=[slot.pk]), {
-            'slot_type': ScheduleSlot.AVAILABLE,
-            'day_of_week': ScheduleSlot.SUNDAY,
-            'start_time_minutes': 720,
-            'end_time_minutes': 840,
-            'note': 'Попытка изменения',
-        })
-
-        self.assertEqual(response.status_code, 404)
-        slot.refresh_from_db()
-        self.assertEqual(slot.slot_type, ScheduleSlot.UNAVAILABLE)
-        self.assertIsNone(slot.start_time_minutes)
+        self.assertEqual(self.client.get('/slot/new/').status_code, 404)
+        self.assertEqual(self.client.get('/slot/1/edit/').status_code, 404)
+        self.assertEqual(self.client.get('/slot/1/delete/').status_code, 404)
 
 
 class ScheduleApiTests(TestCase):
@@ -560,6 +526,46 @@ class ScheduleApiTests(TestCase):
         slot.refresh_from_db()
         self.assertEqual(slot.start_time_minutes, 600)
 
+    def test_api_updates_own_slot(self):
+        slot = ScheduleSlot.objects.create(
+            player=self.player_one,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        response = self.patch_json('api_slot_update', {
+            'slotType': ScheduleSlot.AVAILABLE,
+            'dayOfWeek': ScheduleSlot.WEDNESDAY,
+            'startTimeMinutes': 900,
+            'endTimeMinutes': 1020,
+            'note': 'Новый слот',
+        }, args=[slot.pk])
+
+        self.assertEqual(response.status_code, 200)
+        slot.refresh_from_db()
+        self.assertEqual(slot.day_of_week, ScheduleSlot.WEDNESDAY)
+        self.assertEqual(slot.start_time_minutes, 900)
+        self.assertEqual(slot.end_time_minutes, 1020)
+        self.assertEqual(slot.note, 'Новый слот')
+
+    def test_api_deletes_own_slot(self):
+        slot = ScheduleSlot.objects.create(
+            player=self.player_one,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        response = self.client.delete(reverse('api_slot_delete', args=[slot.pk]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(ScheduleSlot.objects.filter(pk=slot.pk).exists())
+
     def test_api_updates_own_profile(self):
         self.client.login(username='player1', password='secret-pass')
         response = self.patch_json('api_profile_update', {
@@ -731,8 +737,8 @@ class DiscordConnectionTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn('discord.com/oauth2/authorize', response['Location'])
 
-    @patch('scheduler.api.requests.get')
-    @patch('scheduler.api.requests.post')
+    @patch('scheduler.api_discord.requests.get')
+    @patch('scheduler.api_discord.requests.post')
     def test_callback_connects_player_discord(self, mocked_post, mocked_get):
         mocked_post.return_value = Mock(status_code=200)
         mocked_post.return_value.raise_for_status = Mock()
@@ -760,8 +766,8 @@ class DiscordConnectionTests(TestCase):
         self.assertEqual(connection.global_name, 'Black Flock Player')
         self.assertEqual(connection.avatar_hash, 'hash4444')
 
-    @patch('scheduler.api.requests.get')
-    @patch('scheduler.api.requests.post')
+    @patch('scheduler.api_discord.requests.get')
+    @patch('scheduler.api_discord.requests.post')
     def test_callback_connects_staff_discord(self, mocked_post, mocked_get):
         staff_user = User.objects.create_user(username='coach', password='secret-pass')
         staff_member = StaffMember.objects.create(
@@ -802,8 +808,8 @@ class DiscordConnectionTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/profile/?discord=error&reason=invalid-state')
 
-    @patch('scheduler.api.requests.get')
-    @patch('scheduler.api.requests.post')
+    @patch('scheduler.api_discord.requests.get')
+    @patch('scheduler.api_discord.requests.post')
     def test_callback_rejects_already_linked_discord_user(self, mocked_post, mocked_get):
         other_user = User.objects.create_user(username='other-user', password='secret-pass')
         DiscordConnection.objects.create(
@@ -834,8 +840,8 @@ class DiscordConnectionTests(TestCase):
         self.assertEqual(response['Location'], '/profile/?discord=error&reason=already-linked')
         self.assertFalse(DiscordConnection.objects.filter(user=self.user, discord_user_id='7777').exists())
 
-    @patch('scheduler.api.requests.get')
-    @patch('scheduler.api.requests.post')
+    @patch('scheduler.api_discord.requests.get')
+    @patch('scheduler.api_discord.requests.post')
     def test_callback_reconnect_updates_existing_connection(self, mocked_post, mocked_get):
         DiscordConnection.objects.create(
             user=self.user,
@@ -1182,7 +1188,7 @@ class GameUpdateSyncEndpointTests(TestCase):
 
         self.assertEqual(response.status_code, 401)
 
-    @patch('scheduler.api.sync_game_updates')
+    @patch('scheduler.api_updates.sync_game_updates')
     def test_sync_endpoint_accepts_bearer_secret(self, mocked_sync):
         mocked_sync.return_value = {'fetched': 4, 'created': 2, 'updated': 2, 'total': 4}
 

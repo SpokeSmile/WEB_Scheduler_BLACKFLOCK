@@ -21104,88 +21104,6 @@ function EventModal({ event, day, days, onClose, onSaved, onDeleted }) {
     }
   ) });
 }
-function ProfileModal({ player, onClose, onSaved }) {
-  const [battleTagsText, setBattleTagsText] = reactExports.useState(player.battleTagsText || "");
-  const [error, setError] = reactExports.useState("");
-  const [isSaving, setIsSaving] = reactExports.useState(false);
-  async function handleSubmit(submitEvent) {
-    submitEvent.preventDefault();
-    setIsSaving(true);
-    setError("");
-    try {
-      const response = await updateProfile({ battleTagsText });
-      await onSaved(response.profile || response.player);
-    } catch (saveError) {
-      setError(saveError.payload?.error || saveError.message);
-    } finally {
-      setIsSaving(false);
-    }
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    motion.form,
-    {
-      initial: { opacity: 0, y: 24, scale: 0.98 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      className: "w-full max-w-xl rounded-xl border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel",
-      onSubmit: handleSubmit,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Profile editor" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-2xl font-black uppercase text-slate-100", children: "Игровые профили" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              className: "rounded-xl border border-bf-cream/10 p-2 text-bf-cream/60 transition hover:border-bf-orange/40 hover:text-bf-orange",
-              type: "button",
-              onClick: onClose,
-              "aria-label": "Закрыть",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 20 })
-            }
-          )
-        ] }),
-        error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100", children: error }) : null,
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-6 grid gap-5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "grid gap-2 text-sm font-black text-bf-cream/70", children: [
-          "BattleTag'и",
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "textarea",
-            {
-              className: "min-h-32 rounded-xl border border-bf-cream/10 bg-black/30 px-4 py-3 text-slate-100 outline-none placeholder:text-bf-cream/35 focus:border-bf-orange/50",
-              value: battleTagsText,
-              onChange: (inputEvent) => setBattleTagsText(inputEvent.target.value),
-              placeholder: "По одному на строку\nBlackFlock#21234\nBlackFlockAlt#19876"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-bf-cream/45", children: "Если аккаунтов несколько, указывай каждый BattleTag с новой строки." })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 flex justify-end gap-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              className: "min-h-11 rounded-xl border border-bf-cream/10 px-4 font-black text-bf-cream/70 transition hover:border-bf-orange/40",
-              type: "button",
-              onClick: onClose,
-              children: "Отмена"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              className: "inline-flex min-h-11 items-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-bf-orange px-5 font-black text-black transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0",
-              type: "submit",
-              disabled: isSaving,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { size: 18 }),
-                "Сохранить"
-              ]
-            }
-          )
-        ] })
-      ]
-    }
-  ) });
-}
 function r(e) {
   var t, f, n = "";
   if ("string" == typeof e || "number" == typeof e) n += e;
@@ -46547,7 +46465,6 @@ function App() {
   const [isLoading, setIsLoading] = reactExports.useState(true);
   const [error, setError] = reactExports.useState("");
   const [slotModal, setSlotModal] = reactExports.useState(null);
-  const [profileModalPlayer, setProfileModalPlayer] = reactExports.useState(null);
   const [commentTooltip, setCommentTooltip] = reactExports.useState(null);
   const [updatesList, setUpdatesList] = reactExports.useState([]);
   const [updatesBySlug, setUpdatesBySlug] = reactExports.useState({});
@@ -46723,14 +46640,12 @@ function App() {
   async function updatePlayerProfile(player, options = {}) {
     if (options.reload) {
       await loadData();
-      setProfileModalPlayer(null);
       return;
     }
     setData((current2) => ({
       ...current2,
       players: current2.players.map((existing) => existing.id === player.id ? player : existing)
     }));
-    setProfileModalPlayer(null);
   }
   async function updateStaffProfile(staffMember, options = {}) {
     if (options.reload) {
@@ -46817,14 +46732,6 @@ function App() {
         onClose: () => setSlotModal(null),
         onSaved: upsertSlot,
         onDeleted: removeSlot
-      }
-    ) : null,
-    profileModalPlayer ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ProfileModal,
-      {
-        player: profileModalPlayer,
-        onClose: () => setProfileModalPlayer(null),
-        onSaved: updatePlayerProfile
       }
     ) : null,
     commentTooltip?.visible ? /* @__PURE__ */ jsxRuntimeExports.jsx(

@@ -389,6 +389,27 @@ class ScheduleSlot(models.Model):
             self.end_time_minutes = None
             return
 
+        errors = {}
+        if self.start_time_minutes is None:
+            errors['start_time_minutes'] = 'Для диапазона времени нужно выбрать начало.'
+        elif not 0 <= self.start_time_minutes <= 1440:
+            errors['start_time_minutes'] = 'Время начала должно быть в диапазоне 00:00-24:00.'
+
+        if self.end_time_minutes is None:
+            errors['end_time_minutes'] = 'Для диапазона времени нужно выбрать конец.'
+        elif not 0 <= self.end_time_minutes <= 1440:
+            errors['end_time_minutes'] = 'Время окончания должно быть в диапазоне 00:00-24:00.'
+
+        if (
+            self.start_time_minutes is not None
+            and self.end_time_minutes is not None
+            and self.end_time_minutes <= self.start_time_minutes
+        ):
+            errors['end_time_minutes'] = 'Время окончания должно быть позже начала.'
+
+        if errors:
+            raise ValidationError(errors)
+
 
 class RosterState(models.Model):
     current_week_start = models.DateField('текущая неделя', blank=True, null=True)
@@ -401,12 +422,6 @@ class RosterState(models.Model):
 
     def __str__(self):
         return f'Roster state ({self.current_week_start or "not set"})'
-
-        if self.start_time_minutes is None or self.end_time_minutes is None:
-            raise ValidationError('Для диапазона времени нужно выбрать начало и конец.')
-
-        if self.end_time_minutes <= self.start_time_minutes:
-            raise ValidationError({'end_time_minutes': 'Время окончания должно быть позже начала.'})
 
 
 class DayEventType(models.Model):

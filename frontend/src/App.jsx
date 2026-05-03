@@ -10,7 +10,6 @@ import {
 import { Header, Sidebar } from './components/AppChrome.jsx';
 import { ErrorView, LoadingView } from './components/AppStateViews.jsx';
 import EventModal from './components/modals/EventModal.jsx';
-import ProfileModal from './components/modals/ProfileModal.jsx';
 import OverwatchStatsPage from './components/OverwatchStatsPage.jsx';
 import ProfilePage from './components/profile/ProfilePage.jsx';
 import CommentTooltip from './components/schedule/CommentTooltip.jsx';
@@ -23,7 +22,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [slotModal, setSlotModal] = useState(null);
-  const [profileModalPlayer, setProfileModalPlayer] = useState(null);
   const [commentTooltip, setCommentTooltip] = useState(null);
   const [updatesList, setUpdatesList] = useState([]);
   const [updatesBySlug, setUpdatesBySlug] = useState({});
@@ -227,14 +225,12 @@ export default function App() {
   async function updatePlayerProfile(player, options = {}) {
     if (options.reload) {
       await loadData();
-      setProfileModalPlayer(null);
       return;
     }
     setData((current) => ({
       ...current,
       players: current.players.map((existing) => (existing.id === player.id ? player : existing)),
     }));
-    setProfileModalPlayer(null);
   }
 
   async function updateStaffProfile(staffMember, options = {}) {
@@ -326,13 +322,6 @@ export default function App() {
           onClose={() => setSlotModal(null)}
           onSaved={upsertSlot}
           onDeleted={removeSlot}
-        />
-      ) : null}
-      {profileModalPlayer ? (
-        <ProfileModal
-          player={profileModalPlayer}
-          onClose={() => setProfileModalPlayer(null)}
-          onSaved={updatePlayerProfile}
         />
       ) : null}
       {commentTooltip?.visible ? (

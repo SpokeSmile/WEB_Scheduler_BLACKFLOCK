@@ -24,7 +24,4 @@ urlpatterns = [
     path('api/discord/callback/', api.discord_callback, name='api_discord_callback'),
     path('api/discord/disconnect/', api.discord_disconnect, name='api_discord_disconnect'),
     path('api/logout/', api.logout_view, name='api_logout'),
-    path('slot/new/', views.slot_create, name='slot_create'),
-    path('slot/<int:pk>/edit/', views.slot_edit, name='slot_edit'),
-    path('slot/<int:pk>/delete/', views.slot_delete, name='slot_delete'),
 ]
