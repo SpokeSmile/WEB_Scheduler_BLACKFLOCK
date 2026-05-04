@@ -10,6 +10,9 @@ from .overfast import (
     build_overwatch_stats_dashboard,
     normalize_battle_tag,
     primary_battle_tag,
+    rank_label_from_score,
+    rank_rating_from_score,
+    rank_score,
     refresh_overwatch_stats,
 )
 
@@ -82,6 +85,14 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(normalize_battle_tag('Forin#21436'), 'Forin-21436')
         self.assertEqual(primary_battle_tag(self.player), 'Forin#21436')
 
+    def test_accepts_overfast_ultimate_rank_as_champion(self):
+        rank = {'division': 'ultimate', 'tier': 1}
+
+        score = rank_score(rank)
+
+        self.assertEqual(rank_label_from_score(score), 'Champion 1')
+        self.assertEqual(rank_rating_from_score(score), 5000)
+
     @patch('scheduler.overfast_sync.fetch_overfast_stats')
     @patch('scheduler.overfast_sync.fetch_overfast_summary')
     def test_refresh_creates_competitive_cache(self, mocked_summary, mocked_stats):
@@ -142,6 +153,42 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(dashboard['team']['averageRating'], 3300)
         self.assertEqual(dashboard['topHeroes'][0]['hero'], 'cassidy')
         self.assertEqual(dashboard['topHeroes'][0]['timePlayed'], 3600)
+
+    def test_dashboard_serializes_overfast_ultimate_rank(self):
+        summary = {
+            'competitive': {
+                'pc': {
+                    'season': 22,
+                    'tank': {
+                        'division': 'ultimate',
+                        'tier': 1,
+                        'rank_icon': 'https://example.com/champion-1.png',
+                        'role_icon': 'https://example.com/tank.png',
+                    },
+                    'damage': None,
+                    'support': None,
+                    'open': None,
+                },
+            },
+        }
+        OverwatchStatsCache.objects.create(
+            player=self.player,
+            battle_tag='Forin#21436',
+            overfast_player_id='Forin-21436',
+            mode=OverwatchStatsCache.COMPETITIVE,
+            status=OverwatchStatsCache.STATUS_READY,
+            summary_json=summary,
+            stats_json=OVERFAST_STATS_SAMPLE,
+        )
+
+        dashboard = build_overwatch_stats_dashboard(OverwatchStatsCache.COMPETITIVE)
+
+        player_row = next(row for row in dashboard['players'] if row['id'] == self.player.id)
+        self.assertEqual(player_row['rank']['division'], 'ultimate')
+        self.assertEqual(player_row['rank']['label'], 'Champion 1')
+        self.assertEqual(player_row['rank']['rating'], 5000)
+        self.assertEqual(dashboard['team']['averageRank'], 'Champion 1')
+        self.assertEqual(dashboard['team']['averageRating'], 5000)
 
     def test_stats_api_returns_dashboard(self):
         OverwatchStatsCache.objects.create(

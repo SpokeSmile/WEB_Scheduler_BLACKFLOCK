@@ -9,6 +9,7 @@ from .overfast_metrics import (
     rank_label_from_score,
     rank_rating_from_score,
     rank_score,
+    normalize_rank_division,
     ratio,
     role_key_for_player,
     safe_number,
@@ -24,7 +25,7 @@ def serialize_rank(rank, role=''):
     score = rank_score(rank)
     if score is None:
         return None
-    division = (rank.get('division') or '').lower()
+    division = normalize_rank_division(rank.get('division'))
     tier = rank.get('tier')
     return {
         'division': division,

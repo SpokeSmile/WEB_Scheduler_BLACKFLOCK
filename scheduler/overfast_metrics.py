@@ -1,6 +1,12 @@
 # Pure metric helpers for OverFast data. Keep these deterministic and
 # database-free so they can be tested separately from fetching and cache writes.
-RANK_DIVISIONS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandmaster', 'champion']
+# OverFast exposes the top competitive rank as "ultimate", while the player-
+# facing Overwatch rank name is Champion. Keep the API value canonical so cached
+# payloads are handled correctly, but show the familiar label in the UI.
+RANK_DIVISIONS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandmaster', 'ultimate']
+RANK_DIVISION_ALIASES = {
+    'champion': 'ultimate',
+}
 RANK_LABELS = {
     'bronze': 'Bronze',
     'silver': 'Silver',
@@ -10,6 +16,7 @@ RANK_LABELS = {
     'master': 'Master',
     'grandmaster': 'Grandmaster',
     'champion': 'Champion',
+    'ultimate': 'Champion',
 }
 ROLE_ALIASES = {
     'tank': 'tank',
@@ -32,10 +39,15 @@ def role_key_for_player(player):
     return ''
 
 
+def normalize_rank_division(division):
+    normalized = (division or '').strip().lower()
+    return RANK_DIVISION_ALIASES.get(normalized, normalized)
+
+
 def rank_score(rank):
     if not rank:
         return None
-    division = (rank.get('division') or '').lower()
+    division = normalize_rank_division(rank.get('division'))
     tier = rank.get('tier')
     if division not in RANK_DIVISIONS or not isinstance(tier, int):
         return None
@@ -100,7 +112,9 @@ def rank_distribution(player_rows):
     for row in player_rows:
         rank = row.get('rank')
         if rank:
-            counts[rank['division']] += 1
+            division = normalize_rank_division(rank['division'])
+            if division in counts:
+                counts[division] += 1
     return [
         {'division': division, 'divisionLabel': RANK_LABELS[division], 'count': counts[division]}
         for division in reversed(RANK_DIVISIONS)
