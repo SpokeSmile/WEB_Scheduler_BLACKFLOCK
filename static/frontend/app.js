@@ -45572,12 +45572,10 @@ function PlayerStatsTable({ players }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: "border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Игрок" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Ранг" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "SR" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Основной герой" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Winrate" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Матчей" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "W / L" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Последние игры" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "K/D" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Сред. убийств" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: "px-4 py-3", children: "Средняя смерть" })
@@ -45601,7 +45599,6 @@ function PlayerStatsTable({ players }) {
           player.rank.rankIcon ? /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: "h-5 w-5", src: player.rank.rankIcon, alt: "" }) : null,
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: player.rank.label })
         ] }) : "—" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-bf-cream/42", children: "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady && player.mainHero ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black", children: player.mainHero.heroLabel }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-0.5 text-xs text-bf-cream/42", children: formatHours(player.mainHero.timePlayed) })
@@ -45622,7 +45619,6 @@ function PlayerStatsTable({ players }) {
             "L"
           ] })
         ] }) : "—" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-bf-cream/42", children: "Недоступно" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-black text-emerald-300", children: isReady ? formatDecimal(player.kd, 2) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady ? formatDecimal(player.avgEliminations, 1) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady ? formatDecimal(player.avgDeaths, 1) : "—" })
@@ -45684,7 +45680,7 @@ function OverwatchStatsPage({
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(StatsBanner, { updatedAt: stats?.updatedAt, isRefreshing, onRefresh }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 md:grid-cols-2 xl:grid-cols-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 md:grid-cols-2 xl:grid-cols-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           StatSummaryCard,
           {
@@ -45698,16 +45694,13 @@ function OverwatchStatsPage({
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Check, label: "Процент побед", value: formatPercent(team.winrate), caption: "По загруженным игрокам", tone: "green" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Clock3, label: "Все сыграно", value: formatHours(team.timePlayed), caption: "All-time", tone: "orange" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: ChartColumn, label: "Матчей сыграно", value: formatInteger(team.matches || 0), caption: "Competitive", tone: "blue" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: Swords, label: "Лучшая серия", value: team.bestStreak || "Недоступно", caption: "Нет истории матчей", tone: "muted" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: TriangleAlert, label: "Худшая серия", value: team.worstStreak || "Недоступно", caption: "Нет истории матчей", tone: "red" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(StatSummaryCard, { icon: ChartColumn, label: "Матчей сыграно", value: formatInteger(team.matches || 0), caption: "Competitive", tone: "blue" })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(StatsFilterBar, {}),
       isLoading && !stats ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/18 px-4 py-8 text-center text-sm text-bf-cream/62", children: "Загружаю кэш статистики..." }) : error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-6 text-sm font-semibold text-red-100", children: error }) : stats?.cacheEmpty ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-orange/25 bg-bf-orange/10 px-4 py-6 text-sm text-bf-cream/74", children: "Данные OverFast еще не загружены. Нажмите «Обновить данные», чтобы собрать статистику по BattleTag игроков." }) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerStatsTable, { players })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(StatsCharts, { stats: stats || {} }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-3 text-sm text-bf-cream/42", children: stats?.unavailableMessage || "SR, история последних матчей и серии не доступны в OverFast API." })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(StatsCharts, { stats: stats || {} })
   ] });
 }
 function ProfilePage({ user, profile, profileType, onSaved }) {

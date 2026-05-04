@@ -1,10 +1,8 @@
 import {
-  AlertTriangle,
   BarChart3,
   Check,
   Clock3,
   RefreshCw,
-  Swords,
   Trophy,
 } from 'lucide-react';
 import {
@@ -160,12 +158,10 @@ function PlayerStatsTable({ players }) {
           <tr className="border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42">
             <th className="px-4 py-3">Игрок</th>
             <th className="px-4 py-3">Ранг</th>
-            <th className="px-4 py-3">SR</th>
             <th className="px-4 py-3">Основной герой</th>
             <th className="px-4 py-3">Winrate</th>
             <th className="px-4 py-3">Матчей</th>
             <th className="px-4 py-3">W / L</th>
-            <th className="px-4 py-3">Последние игры</th>
             <th className="px-4 py-3">K/D</th>
             <th className="px-4 py-3">Сред. убийств</th>
             <th className="px-4 py-3">Средняя смерть</th>
@@ -204,7 +200,6 @@ function PlayerStatsTable({ players }) {
                     </div>
                   ) : '—'}
                 </td>
-                <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">—</td>
                 <td className="px-4 py-3 text-sm font-semibold text-slate-100">
                   {isReady && player.mainHero ? (
                     <div>
@@ -233,7 +228,6 @@ function PlayerStatsTable({ players }) {
                     </span>
                   ) : '—'}
                 </td>
-                <td className="px-4 py-3 text-sm font-semibold text-bf-cream/42">Недоступно</td>
                 <td className="px-4 py-3 text-sm font-black text-emerald-300">{isReady ? formatDecimal(player.kd, 2) : '—'}</td>
                 <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatDecimal(player.avgEliminations, 1) : '—'}</td>
                 <td className="px-4 py-3 text-sm font-semibold text-slate-100">{isReady ? formatDecimal(player.avgDeaths, 1) : '—'}</td>
@@ -326,7 +320,7 @@ export default function OverwatchStatsPage({
     <>
       <StatsBanner updatedAt={stats?.updatedAt} isRefreshing={isRefreshing} onRefresh={onRefresh} />
       <section className="glass-panel mt-4 rounded-xl p-4">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           <StatSummaryCard
             icon={Trophy}
             label="Средний рейтинг"
@@ -338,8 +332,6 @@ export default function OverwatchStatsPage({
           <StatSummaryCard icon={Check} label="Процент побед" value={formatPercent(team.winrate)} caption="По загруженным игрокам" tone="green" />
           <StatSummaryCard icon={Clock3} label="Все сыграно" value={formatHours(team.timePlayed)} caption="All-time" tone="orange" />
           <StatSummaryCard icon={BarChart3} label="Матчей сыграно" value={formatInteger(team.matches || 0)} caption="Competitive" tone="blue" />
-          <StatSummaryCard icon={Swords} label="Лучшая серия" value={team.bestStreak || 'Недоступно'} caption="Нет истории матчей" tone="muted" />
-          <StatSummaryCard icon={AlertTriangle} label="Худшая серия" value={team.worstStreak || 'Недоступно'} caption="Нет истории матчей" tone="red" />
         </div>
 
         <StatsFilterBar />
@@ -362,10 +354,6 @@ export default function OverwatchStatsPage({
       </section>
 
       <StatsCharts stats={stats || {}} />
-
-      <div className="mt-4 rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-3 text-sm text-bf-cream/42">
-        {stats?.unavailableMessage || 'SR, история последних матчей и серии не доступны в OverFast API.'}
-      </div>
     </>
   );
 }

@@ -17,8 +17,8 @@ from .overfast_metrics import (
 )
 from .overfast_sync import OVERFAST_MODES, primary_battle_tag
 
-# The frontend consumes this payload directly, so missing OverFast features stay
-# explicit as unavailable values instead of inventing match history, SR or streaks.
+# The frontend consumes this payload directly. Avoid inventing fields that
+# OverFast does not expose, such as match history, SR or win/loss streaks.
 
 
 def serialize_rank(rank, role=''):
@@ -100,7 +100,6 @@ def serialize_player_row(player, cache):
         'error': cache.error if cache else 'Данные еще не загружены.',
         'updatedAt': cache.fetched_at.isoformat() if cache and cache.fetched_at else '',
         'rank': rank,
-        'sr': None,
         'winrate': safe_number(general.get('winrate')),
         'matches': safe_number(general.get('games_played')),
         'wins': wins,
@@ -110,8 +109,6 @@ def serialize_player_row(player, cache):
         'avgEliminations': average_eliminations(general),
         'avgDeaths': safe_number(average.get('deaths')),
         'mainHero': main_hero,
-        'recentGamesAvailable': False,
-        'recentGamesLabel': 'Недоступно',
     }
 
 
@@ -178,8 +175,6 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         'averageRank': rank_label_from_score(average_rank_score) if rank_scores else '—',
         'averageRankScore': round(average_rank_score, 1) if rank_scores else None,
         'averageRating': rank_rating_from_score(average_rank_score) if rank_scores else None,
-        'bestStreak': 'Недоступно',
-        'worstStreak': 'Недоступно',
         'unavailablePlayers': len([row for row in rows if row['status'] != OverwatchStatsCache.STATUS_READY]),
     })
 
@@ -195,5 +190,4 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         'team': team_summary,
         'rankDistribution': rank_distribution(rows),
         'topHeroes': aggregate_top_heroes(selected_caches),
-        'unavailableMessage': 'История матчей, серии и настоящий SR недоступны в OverFast API.',
     }

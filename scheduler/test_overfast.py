@@ -138,7 +138,7 @@ class OverwatchStatsTests(TestCase):
 
         player_row = next(row for row in dashboard['players'] if row['id'] == self.player.id)
         self.assertEqual(player_row['rank']['label'], 'Diamond 2')
-        self.assertEqual(player_row['sr'], None)
+        self.assertNotIn('sr', player_row)
         self.assertEqual(player_row['winrate'], 60.0)
         self.assertEqual(player_row['matches'], 10)
         self.assertEqual(player_row['wins'], 6)
@@ -146,13 +146,16 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(player_row['kd'], 2.0)
         self.assertEqual(player_row['avgEliminations'], 12)
         self.assertEqual(player_row['mainHero']['hero'], 'cassidy')
-        self.assertFalse(player_row['recentGamesAvailable'])
+        self.assertNotIn('recentGamesAvailable', player_row)
         self.assertEqual(dashboard['team']['winrate'], 60.0)
         self.assertEqual(dashboard['team']['matches'], 10)
         self.assertEqual(dashboard['team']['averageRank'], 'Diamond 2')
         self.assertEqual(dashboard['team']['averageRating'], 3300)
+        self.assertNotIn('bestStreak', dashboard['team'])
+        self.assertNotIn('worstStreak', dashboard['team'])
         self.assertEqual(dashboard['topHeroes'][0]['hero'], 'cassidy')
         self.assertEqual(dashboard['topHeroes'][0]['timePlayed'], 3600)
+        self.assertNotIn('unavailableMessage', dashboard)
 
     def test_dashboard_serializes_overfast_ultimate_rank(self):
         summary = {
