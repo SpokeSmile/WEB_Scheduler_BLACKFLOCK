@@ -35,11 +35,54 @@
                 </label>
                 <label>
                     Пароль
-                    {{ form.password }}
+                    <span class="auth-password-field">
+                        {{ form.password }}
+                        <button
+                            class="auth-password-toggle"
+                            type="button"
+                            data-password-toggle
+                            aria-label="Показать пароль"
+                            aria-pressed="false"
+                        >
+                            <svg class="auth-password-icon auth-password-icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M2.06 12.35a1 1 0 0 1 0-.7C3.82 7.42 7.68 4.75 12 4.75s8.18 2.67 9.94 6.9a1 1 0 0 1 0 .7c-1.76 4.23-5.62 6.9-9.94 6.9s-8.18-2.67-9.94-6.9Z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <svg class="auth-password-icon auth-password-icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m3 3 18 18" />
+                                <path d="M10.58 10.58A2 2 0 0 0 12 14a2 2 0 0 0 1.42-.58" />
+                                <path d="M9.88 5.08A8.79 8.79 0 0 1 12 4.75c4.32 0 8.18 2.67 9.94 6.9a1 1 0 0 1 0 .7 12.54 12.54 0 0 1-2.07 3.18" />
+                                <path d="M6.13 6.88a12.33 12.33 0 0 0-4.07 4.77 1 1 0 0 0 0 .7c1.76 4.23 5.62 6.9 9.94 6.9 1.35 0 2.66-.26 3.86-.76" />
+                            </svg>
+                        </button>
+                    </span>
                 </label>
                 <button class="button button-primary button-wide" type="submit">Войти</button>
             </form>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        (() => {
+            const passwordInput = document.getElementById('id_password');
+            const toggle = document.querySelector('[data-password-toggle]');
+
+            if (!passwordInput || !toggle) {
+                return;
+            }
+
+            toggle.addEventListener('click', () => {
+                const shouldShow = passwordInput.type === 'password';
+                passwordInput.type = shouldShow ? 'text' : 'password';
+                toggle.classList.toggle('is-visible', shouldShow);
+                toggle.setAttribute('aria-pressed', shouldShow ? 'true' : 'false');
+                toggle.setAttribute('aria-label', shouldShow ? 'Скрыть пароль' : 'Показать пароль');
+                passwordInput.focus({ preventScroll: true });
+            });
+        })();
+    </script>
 {% endblock %}

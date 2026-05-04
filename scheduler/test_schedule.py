@@ -185,6 +185,8 @@ class ScheduleAccessTests(TestCase):
         response = self.client.get(reverse('login'))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'data-password-toggle')
+        self.assertContains(response, 'aria-label="Показать пароль"')
 
     def test_schedule_shows_player_role(self):
         self.player_one.role = 'Leader'
