@@ -45567,6 +45567,10 @@ function StatsFilterBar() {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/20 px-4 py-2 text-xs font-black uppercase text-bf-cream/35", children: "All-time" })
   ] });
 }
+function HeroIcon({ hero, className = "h-8 w-8" }) {
+  const initial = (hero?.heroLabel || hero?.hero || "?").trim().slice(0, 1).toUpperCase();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `grid shrink-0 place-items-center overflow-hidden rounded-xl border border-bf-cream/10 bg-black/28 ${className}`, children: hero?.heroIconUrl ? /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: "h-full w-full object-cover", src: hero.heroIconUrl, alt: "", loading: "lazy" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-black text-bf-cream/58", children: initial }) });
+}
 function PlayerStatsTable({ players }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 overflow-x-auto rounded-xl border border-bf-cream/10", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { className: "min-w-[1240px] w-full border-collapse bg-[#111925]/86 text-left", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { className: "border-b border-bf-cream/10 bg-[#121d2b] text-[11px] font-black uppercase tracking-wide text-bf-cream/42", children: [
@@ -45599,9 +45603,12 @@ function PlayerStatsTable({ players }) {
           player.rank.rankIcon ? /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: "h-5 w-5", src: player.rank.rankIcon, alt: "" }) : null,
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: player.rank.label })
         ] }) : "—" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady && player.mainHero ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black", children: player.mainHero.heroLabel }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-0.5 text-xs text-bf-cream/42", children: formatHours(player.mainHero.timePlayed) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3 text-sm font-semibold text-slate-100", children: isReady && player.mainHero ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(HeroIcon, { hero: player.mainHero }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate font-black", children: player.mainHero.heroLabel }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-0.5 text-xs text-bf-cream/42", children: formatHours(player.mainHero.timePlayed) })
+          ] })
         ] }) : "—" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: "px-4 py-3", children: isReady ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-[110px]", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black text-slate-100", children: formatPercent(player.winrate) }),
@@ -45659,7 +45666,10 @@ function StatsCharts({ stats }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Часы" })
         ] }),
         topHeroes.map((hero) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-[minmax(0,1fr)_80px_80px_90px] items-center gap-3 rounded-xl bg-black/18 px-3 py-2 text-sm", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate font-black text-slate-100", children: hero.heroLabel }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex min-w-0 items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(HeroIcon, { hero, className: "h-7 w-7" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate font-black text-slate-100", children: hero.heroLabel })
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-black text-emerald-300", children: formatPercent(hero.winrate) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-bf-cream/72", children: formatInteger(hero.matches) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-bf-cream/72", children: formatHours(hero.timePlayed) })

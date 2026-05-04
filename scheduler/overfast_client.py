@@ -1,4 +1,5 @@
 from urllib.parse import quote
+import time
 
 import requests
 
@@ -8,6 +9,11 @@ import requests
 
 OVERFAST_BASE_URL = 'https://overfast-api.tekrop.fr'
 OVERFAST_TIMEOUT = 18
+HERO_PORTRAIT_CACHE_SECONDS = 60 * 60 * 24
+_HERO_PORTRAIT_CACHE = {
+    'expires_at': 0,
+    'items': {},
+}
 
 
 class OverfastError(Exception):
@@ -53,3 +59,28 @@ def fetch_overfast_stats(player_id, mode):
         f'/players/{quote(player_id)}/stats/summary',
         params={'gamemode': mode, 'platform': 'pc'},
     )
+
+
+def fetch_overfast_heroes():
+    return overfast_get('/heroes')
+
+
+def get_hero_portrait_map():
+    now = time.time()
+    cached_items = _HERO_PORTRAIT_CACHE['items']
+    if cached_items and _HERO_PORTRAIT_CACHE['expires_at'] > now:
+        return cached_items
+
+    try:
+        heroes = fetch_overfast_heroes()
+    except OverfastError:
+        return cached_items
+
+    portraits = {
+        hero.get('key'): hero.get('portrait') or ''
+        for hero in heroes
+        if isinstance(hero, dict) and hero.get('key')
+    }
+    _HERO_PORTRAIT_CACHE['items'] = portraits
+    _HERO_PORTRAIT_CACHE['expires_at'] = now + HERO_PORTRAIT_CACHE_SECONDS
+    return portraits

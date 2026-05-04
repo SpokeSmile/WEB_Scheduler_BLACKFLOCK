@@ -57,7 +57,8 @@ def select_rank(summary, player):
     return max(ranked_roles, key=lambda item: item['score'])
 
 
-def main_hero_from_stats(stats):
+def main_hero_from_stats(stats, hero_portraits=None):
+    hero_portraits = hero_portraits or {}
     heroes = stats.get('heroes') or {}
     if not heroes:
         return None
@@ -68,12 +69,13 @@ def main_hero_from_stats(stats):
     return {
         'hero': hero_key,
         'heroLabel': hero_label(hero_key),
+        'heroIconUrl': hero_portraits.get(hero_key, ''),
         'timePlayed': hero_time_played(payload),
         'matches': safe_number(payload.get('games_played')),
     }
 
 
-def serialize_player_row(player, cache):
+def serialize_player_row(player, cache, hero_portraits=None):
     status = cache.status if cache else OverwatchStatsCache.STATUS_ERROR
     stats = cache.stats_json if cache and cache.stats_json else {}
     summary = cache.summary_json if cache and cache.summary_json else {}
@@ -85,7 +87,7 @@ def serialize_player_row(player, cache):
     deaths = safe_number(total.get('deaths'))
     eliminations = safe_number(total.get('eliminations'))
     rank = select_rank(summary, player)
-    main_hero = main_hero_from_stats(stats)
+    main_hero = main_hero_from_stats(stats, hero_portraits)
     connection = player.discord_connection
 
     return {
@@ -112,7 +114,8 @@ def serialize_player_row(player, cache):
     }
 
 
-def aggregate_top_heroes(caches):
+def aggregate_top_heroes(caches, hero_portraits=None):
+    hero_portraits = hero_portraits or {}
     heroes = {}
     for cache in caches:
         if cache.status != OverwatchStatsCache.STATUS_READY:
@@ -140,6 +143,7 @@ def aggregate_top_heroes(caches):
         rows.append({
             'hero': entry['hero'],
             'heroLabel': entry['heroLabel'],
+            'heroIconUrl': hero_portraits.get(entry['hero'], ''),
             'matches': matches,
             'wins': entry['wins'],
             'losses': entry['losses'],
@@ -149,9 +153,10 @@ def aggregate_top_heroes(caches):
     return sorted(rows, key=lambda item: (item['timePlayed'], item['matches'], item['winrate']), reverse=True)[:5]
 
 
-def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
+def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE, hero_portraits=None):
     if mode not in OVERFAST_MODES:
         mode = OverwatchStatsCache.COMPETITIVE
+    hero_portraits = hero_portraits or {}
 
     players = list(Player.objects.select_related('user__discord_connection').order_by('sort_order', 'id'))
     caches = list(
@@ -163,7 +168,7 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
     cache_map = {(cache.player_id, cache.mode): cache for cache in caches}
     selected_caches = [cache for cache in caches if cache.mode == mode]
     rows = [
-        serialize_player_row(player, cache_map.get((player.id, mode)))
+        serialize_player_row(player, cache_map.get((player.id, mode)), hero_portraits)
         for player in players
     ]
     # Team-level cards are weighted by real win/loss counts, not by averaging
@@ -189,5 +194,5 @@ def build_overwatch_stats_dashboard(mode=OverwatchStatsCache.COMPETITIVE):
         'players': rows,
         'team': team_summary,
         'rankDistribution': rank_distribution(rows),
-        'topHeroes': aggregate_top_heroes(selected_caches),
+        'topHeroes': aggregate_top_heroes(selected_caches, hero_portraits),
     }

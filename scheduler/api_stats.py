@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import OverwatchStatsCache
-from .overfast import build_overwatch_stats_dashboard, refresh_overwatch_stats
+from .overfast import build_overwatch_stats_dashboard, get_hero_portrait_map, refresh_overwatch_stats
 
 
 def clean_overwatch_stats_mode(request):
@@ -17,7 +17,7 @@ def clean_overwatch_stats_mode(request):
 @login_required
 def overwatch_stats(request):
     mode = clean_overwatch_stats_mode(request)
-    return JsonResponse({'stats': build_overwatch_stats_dashboard(mode)})
+    return JsonResponse({'stats': build_overwatch_stats_dashboard(mode, get_hero_portrait_map())})
 
 
 @require_POST
@@ -28,5 +28,5 @@ def overwatch_stats_refresh(request):
     return JsonResponse({
         'ok': True,
         'refresh': result,
-        'stats': build_overwatch_stats_dashboard(mode),
+        'stats': build_overwatch_stats_dashboard(mode, get_hero_portrait_map()),
     })

@@ -150,6 +150,19 @@ function StatsFilterBar() {
   );
 }
 
+function HeroIcon({ hero, className = 'h-8 w-8' }) {
+  const initial = (hero?.heroLabel || hero?.hero || '?').trim().slice(0, 1).toUpperCase();
+  return (
+    <span className={`grid shrink-0 place-items-center overflow-hidden rounded-xl border border-bf-cream/10 bg-black/28 ${className}`}>
+      {hero?.heroIconUrl ? (
+        <img className="h-full w-full object-cover" src={hero.heroIconUrl} alt="" loading="lazy" />
+      ) : (
+        <span className="text-xs font-black text-bf-cream/58">{initial}</span>
+      )}
+    </span>
+  );
+}
+
 function PlayerStatsTable({ players }) {
   return (
     <div className="mt-4 overflow-x-auto rounded-xl border border-bf-cream/10">
@@ -202,9 +215,12 @@ function PlayerStatsTable({ players }) {
                 </td>
                 <td className="px-4 py-3 text-sm font-semibold text-slate-100">
                   {isReady && player.mainHero ? (
-                    <div>
-                      <div className="font-black">{player.mainHero.heroLabel}</div>
-                      <div className="mt-0.5 text-xs text-bf-cream/42">{formatHours(player.mainHero.timePlayed)}</div>
+                    <div className="flex items-center gap-2">
+                      <HeroIcon hero={player.mainHero} />
+                      <div className="min-w-0">
+                        <div className="truncate font-black">{player.mainHero.heroLabel}</div>
+                        <div className="mt-0.5 text-xs text-bf-cream/42">{formatHours(player.mainHero.timePlayed)}</div>
+                      </div>
                     </div>
                   ) : '—'}
                 </td>
@@ -289,7 +305,10 @@ function StatsCharts({ stats }) {
             </div>
             {topHeroes.map((hero) => (
               <div key={hero.hero} className="grid grid-cols-[minmax(0,1fr)_80px_80px_90px] items-center gap-3 rounded-xl bg-black/18 px-3 py-2 text-sm">
-                <div className="truncate font-black text-slate-100">{hero.heroLabel}</div>
+                <div className="flex min-w-0 items-center gap-2">
+                  <HeroIcon hero={hero} className="h-7 w-7" />
+                  <span className="truncate font-black text-slate-100">{hero.heroLabel}</span>
+                </div>
                 <div className="font-black text-emerald-300">{formatPercent(hero.winrate)}</div>
                 <div className="font-semibold text-bf-cream/72">{formatInteger(hero.matches)}</div>
                 <div className="font-semibold text-bf-cream/72">{formatHours(hero.timePlayed)}</div>

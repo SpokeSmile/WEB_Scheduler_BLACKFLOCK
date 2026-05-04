@@ -134,7 +134,10 @@ class OverwatchStatsTests(TestCase):
             stats_json=OVERFAST_STATS_SAMPLE,
         )
 
-        dashboard = build_overwatch_stats_dashboard(OverwatchStatsCache.COMPETITIVE)
+        dashboard = build_overwatch_stats_dashboard(
+            OverwatchStatsCache.COMPETITIVE,
+            {'cassidy': 'https://example.com/cassidy.png', 'ana': 'https://example.com/ana.png'},
+        )
 
         player_row = next(row for row in dashboard['players'] if row['id'] == self.player.id)
         self.assertEqual(player_row['rank']['label'], 'Diamond 2')
@@ -146,6 +149,7 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(player_row['kd'], 2.0)
         self.assertEqual(player_row['avgEliminations'], 12)
         self.assertEqual(player_row['mainHero']['hero'], 'cassidy')
+        self.assertEqual(player_row['mainHero']['heroIconUrl'], 'https://example.com/cassidy.png')
         self.assertNotIn('recentGamesAvailable', player_row)
         self.assertEqual(dashboard['team']['winrate'], 60.0)
         self.assertEqual(dashboard['team']['matches'], 10)
@@ -154,6 +158,7 @@ class OverwatchStatsTests(TestCase):
         self.assertNotIn('bestStreak', dashboard['team'])
         self.assertNotIn('worstStreak', dashboard['team'])
         self.assertEqual(dashboard['topHeroes'][0]['hero'], 'cassidy')
+        self.assertEqual(dashboard['topHeroes'][0]['heroIconUrl'], 'https://example.com/cassidy.png')
         self.assertEqual(dashboard['topHeroes'][0]['timePlayed'], 3600)
         self.assertNotIn('unavailableMessage', dashboard)
 
@@ -193,7 +198,9 @@ class OverwatchStatsTests(TestCase):
         self.assertEqual(dashboard['team']['averageRank'], 'Champion 1')
         self.assertEqual(dashboard['team']['averageRating'], 5000)
 
-    def test_stats_api_returns_dashboard(self):
+    @patch('scheduler.api_stats.get_hero_portrait_map')
+    def test_stats_api_returns_dashboard(self, mocked_hero_portraits):
+        mocked_hero_portraits.return_value = {'cassidy': 'https://example.com/cassidy.png'}
         OverwatchStatsCache.objects.create(
             player=self.player,
             battle_tag='Forin#21436',
@@ -211,3 +218,4 @@ class OverwatchStatsTests(TestCase):
         payload = response.json()['stats']
         self.assertEqual(payload['mode'], OverwatchStatsCache.COMPETITIVE)
         self.assertEqual(payload['team']['matches'], 10)
+        self.assertEqual(payload['topHeroes'][0]['heroIconUrl'], 'https://example.com/cassidy.png')
