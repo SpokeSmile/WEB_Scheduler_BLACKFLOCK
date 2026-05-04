@@ -517,12 +517,6 @@ video {
 .inset-0 {
   inset: 0px;
 }
-.right-1 {
-  right: 0.25rem;
-}
-.top-1 {
-  top: 0.25rem;
-}
 .z-0 {
   z-index: 0;
 }
@@ -746,6 +740,9 @@ video {
 }
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .resize {
   resize: both;
@@ -1037,9 +1034,6 @@ video {
 .bg-black\/30 {
   background-color: rgb(0 0 0 / 0.3);
 }
-.bg-black\/40 {
-  background-color: rgb(0 0 0 / 0.4);
-}
 .bg-black\/70 {
   background-color: rgb(0 0 0 / 0.7);
 }
@@ -1098,9 +1092,6 @@ video {
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
-}
-.p-1 {
-  padding: 0.25rem;
 }
 .p-1\.5 {
   padding: 0.375rem;
@@ -1339,9 +1330,6 @@ video {
 .text-bf-cream\/50 {
   color: rgb(232 237 245 / 0.5);
 }
-.text-bf-cream\/55 {
-  color: rgb(232 237 245 / 0.55);
-}
 .text-bf-cream\/60 {
   color: rgb(232 237 245 / 0.6);
 }
@@ -1411,9 +1399,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-.opacity-0 {
-  opacity: 0;
 }
 .opacity-90 {
   opacity: 0.9;
@@ -2070,6 +2055,22 @@ textarea {
   border-color: rgb(216 109 56 / 0.5);
 }
 
+.focus-visible\:outline:focus-visible {
+  outline-style: solid;
+}
+
+.focus-visible\:outline-2:focus-visible {
+  outline-width: 2px;
+}
+
+.focus-visible\:outline-offset-2:focus-visible {
+  outline-offset: 2px;
+}
+
+.focus-visible\:outline-bf-orange:focus-visible {
+  outline-color: #D86D38;
+}
+
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
@@ -2089,10 +2090,6 @@ textarea {
 
 .group:hover .group-hover\:border-bf-orange\/35 {
   border-color: rgb(216 109 56 / 0.35);
-}
-
-.group:hover .group-hover\:opacity-100 {
-  opacity: 1;
 }
 
 @media not all and (min-width: 1024px) {

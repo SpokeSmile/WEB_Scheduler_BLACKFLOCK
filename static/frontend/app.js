@@ -12659,7 +12659,7 @@ const createLucideIcon = (iconName, iconNode) => {
   Component.displayName = toPascalCase(iconName);
   return Component;
 };
-const __iconNode$o = [
+const __iconNode$n = [
   [
     "path",
     {
@@ -12670,8 +12670,8 @@ const __iconNode$o = [
   ["path", { d: "M8 11h8", key: "vwpz6n" }],
   ["path", { d: "M8 7h6", key: "1f0q6e" }]
 ];
-const BookText = createLucideIcon("book-text", __iconNode$o);
-const __iconNode$n = [
+const BookText = createLucideIcon("book-text", __iconNode$n);
+const __iconNode$m = [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
@@ -12683,8 +12683,8 @@ const __iconNode$n = [
   ["path", { d: "M12 18h.01", key: "mhygvu" }],
   ["path", { d: "M16 18h.01", key: "kzsmim" }]
 ];
-const CalendarDays = createLucideIcon("calendar-days", __iconNode$n);
-const __iconNode$m = [
+const CalendarDays = createLucideIcon("calendar-days", __iconNode$m);
+const __iconNode$l = [
   ["path", { d: "M16 19h6", key: "xwg31i" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["path", { d: "M19 16v6", key: "tddt3s" }],
@@ -12692,46 +12692,46 @@ const __iconNode$m = [
   ["path", { d: "M3 10h18", key: "8toen8" }],
   ["path", { d: "M8 2v4", key: "1cmpym" }]
 ];
-const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$m);
-const __iconNode$l = [
+const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$l);
+const __iconNode$k = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$l);
-const __iconNode$k = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$k);
-const __iconNode$j = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$j);
-const __iconNode$i = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode$i);
-const __iconNode$h = [
+const ChartColumn = createLucideIcon("chart-column", __iconNode$k);
+const __iconNode$j = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$j);
+const __iconNode$i = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$i);
+const __iconNode$h = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$h);
+const __iconNode$g = [
   ["path", { d: "M12 6v6h4", key: "135r8i" }],
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]
 ];
-const Clock3 = createLucideIcon("clock-3", __iconNode$h);
-const __iconNode$g = [
+const Clock3 = createLucideIcon("clock-3", __iconNode$g);
+const __iconNode$f = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["line", { x1: "22", x2: "18", y1: "12", y2: "12", key: "l9bcsi" }],
   ["line", { x1: "6", x2: "2", y1: "12", y2: "12", key: "13hhkx" }],
   ["line", { x1: "12", x2: "12", y1: "6", y2: "2", key: "10w3f3" }],
   ["line", { x1: "12", x2: "12", y1: "22", y2: "18", key: "15g9kq" }]
 ];
-const Crosshair = createLucideIcon("crosshair", __iconNode$g);
-const __iconNode$f = [
+const Crosshair = createLucideIcon("crosshair", __iconNode$f);
+const __iconNode$e = [
   ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
   ["path", { d: "M10 14 21 3", key: "gplh6r" }],
   ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
 ];
-const ExternalLink = createLucideIcon("external-link", __iconNode$f);
-const __iconNode$e = [
+const ExternalLink = createLucideIcon("external-link", __iconNode$e);
+const __iconNode$d = [
   ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
   ["path", { d: "M21 12H9", key: "dn1m92" }],
   ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
 ];
-const LogOut = createLucideIcon("log-out", __iconNode$e);
-const __iconNode$d = [
+const LogOut = createLucideIcon("log-out", __iconNode$d);
+const __iconNode$c = [
   [
     "path",
     {
@@ -12743,18 +12743,7 @@ const __iconNode$d = [
   ["path", { d: "M8 21h8", key: "1ev6f3" }],
   ["rect", { x: "2", y: "3", width: "20", height: "14", rx: "2", key: "x3v2xh" }]
 ];
-const MonitorPlay = createLucideIcon("monitor-play", __iconNode$d);
-const __iconNode$c = [
-  [
-    "path",
-    {
-      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
-      key: "1a8usu"
-    }
-  ],
-  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
-];
-const Pencil = createLucideIcon("pencil", __iconNode$c);
+const MonitorPlay = createLucideIcon("monitor-play", __iconNode$c);
 const __iconNode$b = [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
   ["path", { d: "M12 5v14", key: "s699le" }]
@@ -46259,11 +46248,23 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
   const isAllDayStatus = isUnavailable || isFullDayAvailable || isTentative;
   const style = isUnavailable ? EVENT_STYLES.unavailable : isFullDayAvailable ? EVENT_STYLES.full_day_available : isTentative ? EVENT_STYLES.tentative : AVAILABLE_CARD_STYLE;
   const Icon2 = isUnavailable ? EVENT_STYLES.unavailable.icon : isFullDayAvailable ? EVENT_STYLES.full_day_available.icon : isTentative ? EVENT_STYLES.tentative.icon : eventStyle.icon;
+  const editableProps = event.canEdit ? {
+    role: "button",
+    tabIndex: 0,
+    "aria-label": "Редактировать событие",
+    onClick: () => onEdit(event),
+    onKeyDown: (keyboardEvent) => {
+      if (keyboardEvent.key === "Enter" || keyboardEvent.key === " ") {
+        keyboardEvent.preventDefault();
+        onEdit(event);
+      }
+    }
+  } : {};
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     motion.article,
     {
       whileHover: { scale: 1.015 },
-      className: `group relative z-0 max-w-full rounded-xl border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30`,
+      className: `group relative z-0 max-w-full rounded-xl border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30 ${event.canEdit ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bf-orange" : ""}`,
       onMouseEnter: (mouseEvent) => {
         if (event.note) {
           onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect());
@@ -46274,6 +46275,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
           onNoteHoverEnd();
         }
       },
+      ...editableProps,
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex min-w-0 items-center gap-2", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { className: `${style.text} shrink-0`, size: isAllDayStatus ? 16 : 17 }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-w-0 flex-1", children: isAllDayStatus ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -46282,17 +46284,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
         ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `text-[11px] font-black leading-tight ${style.text}`, children: event.timeRange }),
           event.note ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "line-clamp-1 text-[11px] font-medium leading-tight text-bf-cream/60", children: previewNote(event.note) }) }) : null
-        ] }) }),
-        event.canEdit ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            className: "absolute right-1 top-1 rounded-xl border border-bf-cream/10 bg-black/40 p-1 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100",
-            type: "button",
-            onClick: () => onEdit(event),
-            "aria-label": "Редактировать событие",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Pencil, { size: 13 })
-          }
-        ) : null
+        ] }) })
       ] })
     }
   );

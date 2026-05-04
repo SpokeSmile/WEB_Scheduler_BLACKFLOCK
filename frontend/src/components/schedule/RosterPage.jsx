@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { CalendarPlus, ChevronLeft, ChevronRight, Clock3, Pencil, Users } from 'lucide-react';
+import { CalendarPlus, ChevronLeft, ChevronRight, Clock3, Users } from 'lucide-react';
 
 import { Avatar, RoleBadge } from '../common.jsx';
 import {
@@ -118,11 +118,27 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
       : isTentative
         ? EVENT_STYLES.tentative.icon
       : eventStyle.icon;
+  const editableProps = event.canEdit
+    ? {
+        role: 'button',
+        tabIndex: 0,
+        'aria-label': 'Редактировать событие',
+        onClick: () => onEdit(event),
+        onKeyDown: (keyboardEvent) => {
+          if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+            keyboardEvent.preventDefault();
+            onEdit(event);
+          }
+        },
+      }
+    : {};
 
   return (
     <motion.article
       whileHover={{ scale: 1.015 }}
-      className={`group relative z-0 max-w-full rounded-xl border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30`}
+      className={`group relative z-0 max-w-full rounded-xl border ${style.border} ${style.bg} ${style.glow} p-2 transition hover:z-30 ${
+        event.canEdit ? 'cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bf-orange' : ''
+      }`}
       onMouseEnter={(mouseEvent) => {
         if (event.note) {
           onNoteHoverStart(event.note, mouseEvent.currentTarget.getBoundingClientRect());
@@ -133,6 +149,7 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
           onNoteHoverEnd();
         }
       }}
+      {...editableProps}
     >
       <div className="flex min-w-0 items-center gap-2">
         <Icon className={`${style.text} shrink-0`} size={isAllDayStatus ? 16 : 17} />
@@ -163,16 +180,6 @@ function EventCard({ event, onEdit, onNoteHoverStart, onNoteHoverEnd }) {
             </>
           )}
         </div>
-        {event.canEdit ? (
-          <button
-            className="absolute right-1 top-1 rounded-xl border border-bf-cream/10 bg-black/40 p-1 text-bf-cream/55 opacity-0 transition hover:border-bf-orange/40 hover:text-bf-orange group-hover:opacity-100"
-            type="button"
-            onClick={() => onEdit(event)}
-            aria-label="Редактировать событие"
-          >
-            <Pencil size={13} />
-          </button>
-        ) : null}
       </div>
     </motion.article>
   );
