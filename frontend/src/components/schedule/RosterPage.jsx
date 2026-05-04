@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { CalendarPlus, ChevronLeft, ChevronRight, Clock3, Users } from 'lucide-react';
+import { CalendarPlus, ChevronLeft, ChevronRight, Clock3, Copy, Users } from 'lucide-react';
 
 import { Avatar, RoleBadge } from '../common.jsx';
 import {
@@ -17,13 +17,14 @@ function shiftWeek(weekStart, offsetDays) {
   return date.toISOString().slice(0, 10);
 }
 
-function WeekSwitcher({ selectedWeekStart, weekRangeLabel, onWeekChange }) {
+function WeekSwitcher({ selectedWeekStart, weekRangeLabel, canGoPreviousWeek, onWeekChange }) {
   return (
     <div className="inline-grid grid-cols-[44px_minmax(150px,1fr)_44px] items-center overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101826]/90 shadow-[0_10px_26px_rgba(0,0,0,0.18)]">
       <button
-        className="grid h-11 place-items-center border-r border-bf-cream/10 text-bf-cream/72 transition hover:bg-bf-orange/12 hover:text-bf-orange"
+        className="grid h-11 place-items-center border-r border-bf-cream/10 text-bf-cream/72 transition hover:bg-bf-orange/12 hover:text-bf-orange disabled:cursor-not-allowed disabled:text-bf-cream/22 disabled:hover:bg-transparent"
         type="button"
         onClick={() => onWeekChange(shiftWeek(selectedWeekStart, -7))}
+        disabled={!canGoPreviousWeek}
         aria-label="Предыдущая неделя"
       >
         <ChevronLeft size={18} />
@@ -43,7 +44,7 @@ function WeekSwitcher({ selectedWeekStart, weekRangeLabel, onWeekChange }) {
   );
 }
 
-function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd }) {
+function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd, onCopy }) {
   return (
     <section className="glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8">
       <div className="relative z-10 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
@@ -54,20 +55,32 @@ function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd }) {
           </h1>
         </div>
 
-        <div className="relative z-10 justify-self-start lg:justify-self-end">
-          {canAdd ? (
-            <button
-              className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
-              type="button"
-              onClick={() => onAdd(null)}
-            >
-              <CalendarPlus size={20} />
-              Добавить время
-            </button>
-          ) : hasPlayerProfile && !canEditSelectedWeek ? (
-            <span className="rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70">
-              Архивная неделя
-            </span>
+        <div className="relative z-10 flex flex-wrap justify-self-start gap-3 lg:justify-self-end">
+          {hasPlayerProfile ? (
+            <>
+              {canAdd ? (
+                <button
+                  className="inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+                  type="button"
+                  onClick={() => onAdd(null)}
+                >
+                  <CalendarPlus size={20} />
+                  Добавить время
+                </button>
+              ) : !canEditSelectedWeek ? (
+                <span className="rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70">
+                  Архивная неделя
+                </span>
+              ) : null}
+              <button
+                className="inline-flex min-h-11 items-center gap-3 rounded-xl border border-bf-orange/35 bg-bf-orange/12 px-5 font-black text-bf-orange transition hover:-translate-y-0.5 hover:border-bf-orange/60 hover:bg-bf-orange/18"
+                type="button"
+                onClick={onCopy}
+              >
+                <Copy size={19} />
+                Скопировать расписание
+              </button>
+            </>
           ) : (
             <span className="rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70">
               Аккаунт не привязан к игроку
@@ -217,6 +230,7 @@ function RosterTable({
   dayEventTypes,
   selectedWeekStart,
   weekRangeLabel,
+  canGoPreviousWeek,
   canEditSelectedWeek,
   onWeekChange,
   onAdd,
@@ -247,6 +261,7 @@ function RosterTable({
         <WeekSwitcher
           selectedWeekStart={selectedWeekStart}
           weekRangeLabel={weekRangeLabel}
+          canGoPreviousWeek={canGoPreviousWeek}
           onWeekChange={onWeekChange}
         />
       </div>
@@ -360,6 +375,7 @@ export default function RosterPage({
   canEditSelectedWeek,
   selectedWeekStart,
   weekRangeLabel,
+  canGoPreviousWeek,
   days,
   players,
   slots,
@@ -368,6 +384,7 @@ export default function RosterPage({
   lastUpdated,
   onAdd,
   onEdit,
+  onCopy,
   onWeekChange,
   onNoteHoverStart,
   onNoteHoverEnd,
@@ -379,6 +396,7 @@ export default function RosterPage({
         canAdd={canAdd}
         canEditSelectedWeek={canEditSelectedWeek}
         onAdd={onAdd}
+        onCopy={onCopy}
       />
       <RosterTable
         days={days}
@@ -387,6 +405,7 @@ export default function RosterPage({
         dayEventTypes={dayEventTypes}
         selectedWeekStart={selectedWeekStart}
         weekRangeLabel={weekRangeLabel}
+        canGoPreviousWeek={canGoPreviousWeek}
         canEditSelectedWeek={canEditSelectedWeek}
         onWeekChange={onWeekChange}
         onAdd={onAdd}

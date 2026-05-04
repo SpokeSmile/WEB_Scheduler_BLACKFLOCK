@@ -71,6 +71,13 @@ export function deleteSlot(id) {
   });
 }
 
+export function copyWeekSchedule(payload) {
+  return request('/api/slots/copy-week/', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
 export function updateProfile(payload) {
   return request('/api/profile/', {
     method: 'PATCH',

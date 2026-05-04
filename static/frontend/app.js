@@ -12566,6 +12566,12 @@ function deleteSlot(id2) {
     method: "DELETE"
   });
 }
+function copyWeekSchedule(payload) {
+  return request("/api/slots/copy-week/", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+}
 function updateProfile(payload) {
   return request("/api/profile/", {
     method: "PATCH",
@@ -12659,7 +12665,7 @@ const createLucideIcon = (iconName, iconNode) => {
   Component.displayName = toPascalCase(iconName);
   return Component;
 };
-const __iconNode$n = [
+const __iconNode$o = [
   [
     "path",
     {
@@ -12670,8 +12676,8 @@ const __iconNode$n = [
   ["path", { d: "M8 11h8", key: "vwpz6n" }],
   ["path", { d: "M8 7h6", key: "1f0q6e" }]
 ];
-const BookText = createLucideIcon("book-text", __iconNode$n);
-const __iconNode$m = [
+const BookText = createLucideIcon("book-text", __iconNode$o);
+const __iconNode$n = [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
@@ -12683,8 +12689,8 @@ const __iconNode$m = [
   ["path", { d: "M12 18h.01", key: "mhygvu" }],
   ["path", { d: "M16 18h.01", key: "kzsmim" }]
 ];
-const CalendarDays = createLucideIcon("calendar-days", __iconNode$m);
-const __iconNode$l = [
+const CalendarDays = createLucideIcon("calendar-days", __iconNode$n);
+const __iconNode$m = [
   ["path", { d: "M16 19h6", key: "xwg31i" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["path", { d: "M19 16v6", key: "tddt3s" }],
@@ -12692,25 +12698,30 @@ const __iconNode$l = [
   ["path", { d: "M3 10h18", key: "8toen8" }],
   ["path", { d: "M8 2v4", key: "1cmpym" }]
 ];
-const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$l);
-const __iconNode$k = [
+const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$m);
+const __iconNode$l = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$k);
-const __iconNode$j = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$j);
-const __iconNode$i = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$i);
-const __iconNode$h = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode$h);
-const __iconNode$g = [
+const ChartColumn = createLucideIcon("chart-column", __iconNode$l);
+const __iconNode$k = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$k);
+const __iconNode$j = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$j);
+const __iconNode$i = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$i);
+const __iconNode$h = [
   ["path", { d: "M12 6v6h4", key: "135r8i" }],
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]
 ];
-const Clock3 = createLucideIcon("clock-3", __iconNode$g);
+const Clock3 = createLucideIcon("clock-3", __iconNode$h);
+const __iconNode$g = [
+  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
+  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
+];
+const Copy = createLucideIcon("copy", __iconNode$g);
 const __iconNode$f = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["line", { x1: "22", x2: "18", y1: "12", y2: "12", key: "l9bcsi" }],
@@ -20946,6 +20957,144 @@ const featureBundle = {
   ...layout
 };
 const motion = /* @__PURE__ */ createMotionProxy(featureBundle, createDomVisualElement);
+function weekLabel(weeks, weekStart) {
+  return weeks.find((week) => week.weekStart === weekStart)?.label || weekStart || "—";
+}
+function CopyScheduleModal({
+  sourceWeeks,
+  targetWeeks,
+  selectedWeekStart,
+  currentWeekStart,
+  canEditSelectedWeek,
+  onClose,
+  onCopied
+}) {
+  const defaultSourceWeekStart = reactExports.useMemo(() => sourceWeeks.find((week) => week.weekStart === selectedWeekStart)?.weekStart || sourceWeeks[0]?.weekStart || "", [sourceWeeks, selectedWeekStart]);
+  const defaultTargetWeekStart = reactExports.useMemo(() => {
+    const preferredTarget = canEditSelectedWeek ? selectedWeekStart : currentWeekStart;
+    return targetWeeks.find((week) => week.weekStart === preferredTarget)?.weekStart || targetWeeks[0]?.weekStart || "";
+  }, [canEditSelectedWeek, currentWeekStart, selectedWeekStart, targetWeeks]);
+  const [sourceWeekStart, setSourceWeekStart] = reactExports.useState(defaultSourceWeekStart);
+  const [targetWeekStart, setTargetWeekStart] = reactExports.useState(defaultTargetWeekStart);
+  const [isSaving, setIsSaving] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState("");
+  const [success, setSuccess] = reactExports.useState("");
+  const isSameWeek = sourceWeekStart && targetWeekStart && sourceWeekStart === targetWeekStart;
+  const canSubmit = sourceWeekStart && targetWeekStart && !isSameWeek && !isSaving;
+  async function handleSubmit(submitEvent) {
+    submitEvent.preventDefault();
+    if (!canSubmit) return;
+    setIsSaving(true);
+    setError("");
+    setSuccess("");
+    try {
+      const response = await copyWeekSchedule({
+        sourceWeekStart,
+        targetWeekStart
+      });
+      setSuccess(`Скопировано записей: ${response.copiedCount}`);
+      await onCopied(response.targetWeekStart);
+    } catch (copyError) {
+      setError(copyError.message);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    motion.form,
+    {
+      initial: { opacity: 0, y: 24, scale: 0.98 },
+      animate: { opacity: 1, y: 0, scale: 1 },
+      className: "w-full max-w-xl rounded-xl border border-bf-cream/12 bg-[#0d1420] p-6 shadow-panel",
+      onSubmit: handleSubmit,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Schedule copy" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "mt-1 text-2xl font-black uppercase text-slate-100", children: "Скопировать расписание" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: "rounded-xl border border-bf-cream/10 p-2 text-bf-cream/60 transition hover:border-bf-orange/40 hover:text-bf-orange",
+              type: "button",
+              onClick: onClose,
+              "aria-label": "Закрыть",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 20 })
+            }
+          )
+        ] }),
+        sourceWeeks.length ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 grid gap-5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "grid gap-2 text-sm font-black text-bf-cream", children: [
+            "С какой недели",
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "select",
+              {
+                value: sourceWeekStart,
+                onChange: (event) => {
+                  setSourceWeekStart(event.target.value);
+                  setSuccess("");
+                  setError("");
+                },
+                children: sourceWeeks.map((week) => /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: week.weekStart, children: [
+                  week.label,
+                  " · записей: ",
+                  week.slotCount
+                ] }, week.weekStart))
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "grid gap-2 text-sm font-black text-bf-cream", children: [
+            "На какую неделю",
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "select",
+              {
+                value: targetWeekStart,
+                onChange: (event) => {
+                  setTargetWeekStart(event.target.value);
+                  setSuccess("");
+                  setError("");
+                },
+                children: targetWeeks.map((week) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: week.weekStart, children: week.label }, week.weekStart))
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/20 p-3 text-sm text-bf-cream/62", children: [
+            "Записи в неделе ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-black text-bf-cream", children: weekLabel(targetWeeks, targetWeekStart) }),
+            " будут заменены только у вашего профиля."
+          ] }),
+          isSameWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-orange-300/30 bg-orange-500/10 p-3 text-sm text-orange-100", children: "Выберите разные недели для копирования." }) : null,
+          error ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100", children: error }) : null,
+          success ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-emerald-300/30 bg-emerald-500/10 p-3 text-sm font-bold text-emerald-100", children: success }) : null,
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                className: "rounded-xl border border-bf-cream/10 px-5 py-3 font-black text-bf-cream/70 transition hover:border-bf-cream/25 hover:text-bf-cream",
+                type: "button",
+                onClick: onClose,
+                children: "Закрыть"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                className: "inline-flex items-center gap-2 rounded-xl bg-[#f4f7fb] px-5 py-3 font-black text-[#151b26] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45",
+                type: "submit",
+                disabled: !canSubmit,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 18 }),
+                  isSaving ? "Копирую..." : "Скопировать"
+                ]
+              }
+            )
+          ] })
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-6 rounded-xl border border-bf-cream/10 bg-black/20 p-4 text-sm text-bf-cream/65", children: "Нет заполненных недель, которые можно скопировать." })
+      ]
+    }
+  ) });
+}
 const EVENT_STYLES = {
   scrim: {
     icon: Swords,
@@ -46183,14 +46332,15 @@ function shiftWeek(weekStart, offsetDays) {
   date2.setUTCDate(date2.getUTCDate() + offsetDays);
   return date2.toISOString().slice(0, 10);
 }
-function WeekSwitcher({ selectedWeekStart, weekRangeLabel, onWeekChange }) {
+function WeekSwitcher({ selectedWeekStart, weekRangeLabel, canGoPreviousWeek, onWeekChange }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "inline-grid grid-cols-[44px_minmax(150px,1fr)_44px] items-center overflow-hidden rounded-xl border border-bf-cream/10 bg-[#101826]/90 shadow-[0_10px_26px_rgba(0,0,0,0.18)]", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
       {
-        className: "grid h-11 place-items-center border-r border-bf-cream/10 text-bf-cream/72 transition hover:bg-bf-orange/12 hover:text-bf-orange",
+        className: "grid h-11 place-items-center border-r border-bf-cream/10 text-bf-cream/72 transition hover:bg-bf-orange/12 hover:text-bf-orange disabled:cursor-not-allowed disabled:text-bf-cream/22 disabled:hover:bg-transparent",
         type: "button",
         onClick: () => onWeekChange(shiftWeek(selectedWeekStart, -7)),
+        disabled: !canGoPreviousWeek,
         "aria-label": "Предыдущая неделя",
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 18 })
       }
@@ -46208,24 +46358,38 @@ function WeekSwitcher({ selectedWeekStart, weekRangeLabel, onWeekChange }) {
     )
   ] });
 }
-function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd }) {
+function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd, onCopy }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/45 px-6 py-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto]", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 lg:max-w-[440px]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Black Flock team" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl", children: "Weekly roster" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative z-10 justify-self-start lg:justify-self-end", children: canAdd ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "button",
-      {
-        className: "inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]",
-        type: "button",
-        onClick: () => onAdd(null),
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CalendarPlus, { size: 20 }),
-          "Добавить время"
-        ]
-      }
-    ) : hasPlayerProfile && !canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70", children: "Архивная неделя" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70", children: "Аккаунт не привязан к игроку" }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative z-10 flex flex-wrap justify-self-start gap-3 lg:justify-self-end", children: hasPlayerProfile ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      canAdd ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          className: "inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]",
+          type: "button",
+          onClick: () => onAdd(null),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CalendarPlus, { size: 20 }),
+            "Добавить время"
+          ]
+        }
+      ) : !canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70", children: "Архивная неделя" }) : null,
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          className: "inline-flex min-h-11 items-center gap-3 rounded-xl border border-bf-orange/35 bg-bf-orange/12 px-5 font-black text-bf-orange transition hover:-translate-y-0.5 hover:border-bf-orange/60 hover:bg-bf-orange/18",
+          type: "button",
+          onClick: onCopy,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 19 }),
+            "Скопировать расписание"
+          ]
+        }
+      )
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-black/30 px-4 py-3 font-bold text-bf-cream/70", children: "Аккаунт не привязан к игроку" }) })
   ] }) });
 }
 function PlayerRow({ player }) {
@@ -46312,6 +46476,7 @@ function RosterTable({
   dayEventTypes,
   selectedWeekStart,
   weekRangeLabel,
+  canGoPreviousWeek,
   canEditSelectedWeek,
   onWeekChange,
   onAdd,
@@ -46341,6 +46506,7 @@ function RosterTable({
         {
           selectedWeekStart,
           weekRangeLabel,
+          canGoPreviousWeek,
           onWeekChange
         }
       )
@@ -46437,6 +46603,7 @@ function RosterPage({
   canEditSelectedWeek,
   selectedWeekStart,
   weekRangeLabel,
+  canGoPreviousWeek,
   days,
   players,
   slots,
@@ -46445,6 +46612,7 @@ function RosterPage({
   lastUpdated,
   onAdd,
   onEdit,
+  onCopy,
   onWeekChange,
   onNoteHoverStart,
   onNoteHoverEnd
@@ -46456,7 +46624,8 @@ function RosterPage({
         hasPlayerProfile,
         canAdd,
         canEditSelectedWeek,
-        onAdd
+        onAdd,
+        onCopy
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -46468,6 +46637,7 @@ function RosterPage({
         dayEventTypes,
         selectedWeekStart,
         weekRangeLabel,
+        canGoPreviousWeek,
         canEditSelectedWeek,
         onWeekChange,
         onAdd,
@@ -46710,6 +46880,7 @@ function App() {
   const [isLoading, setIsLoading] = reactExports.useState(true);
   const [error, setError] = reactExports.useState("");
   const [slotModal, setSlotModal] = reactExports.useState(null);
+  const [copyModalOpen, setCopyModalOpen] = reactExports.useState(false);
   const [commentTooltip, setCommentTooltip] = reactExports.useState(null);
   const [updatesList, setUpdatesList] = reactExports.useState([]);
   const [updatesBySlug, setUpdatesBySlug] = reactExports.useState({});
@@ -46722,8 +46893,11 @@ function App() {
   const [isLoadingStats, setIsLoadingStats] = reactExports.useState(false);
   const [isRefreshingStats, setIsRefreshingStats] = reactExports.useState(false);
   const [statsError, setStatsError] = reactExports.useState("");
-  async function loadData(weekStart = getScheduleWeekParam()) {
-    setIsLoading(true);
+  async function loadData(weekStart = getScheduleWeekParam(), options = {}) {
+    const shouldShowLoading = options.showLoading !== false;
+    if (shouldShowLoading) {
+      setIsLoading(true);
+    }
     try {
       const response = await bootstrap(weekStart);
       setData(response);
@@ -46734,7 +46908,9 @@ function App() {
     } catch (loadError) {
       setError(loadError.message);
     } finally {
-      setIsLoading(false);
+      if (shouldShowLoading) {
+        setIsLoading(false);
+      }
     }
   }
   reactExports.useEffect(() => {
@@ -46895,6 +47071,10 @@ function App() {
     setScheduleWeekParam(weekStart);
     await loadData(weekStart);
   }
+  async function handleCopyWeekCopied(targetWeekStart) {
+    setScheduleWeekParam(targetWeekStart);
+    await loadData(targetWeekStart, { showLoading: false });
+  }
   async function updatePlayerProfile(player, options = {}) {
     if (options.reload) {
       await loadData();
@@ -46981,6 +47161,7 @@ function App() {
             canEditSelectedWeek: data.canEditSelectedWeek,
             selectedWeekStart: data.selectedWeekStart,
             weekRangeLabel: data.weekRangeLabel,
+            canGoPreviousWeek: data.canGoPreviousWeek,
             days: data.days,
             players: data.players,
             slots: data.slots,
@@ -46989,6 +47170,7 @@ function App() {
             lastUpdated: data.lastUpdated,
             onAdd: (day) => setSlotModal({ day }),
             onEdit: (event) => setSlotModal({ event }),
+            onCopy: () => setCopyModalOpen(true),
             onWeekChange: handleWeekChange,
             onNoteHoverStart: handleNoteHoverStart,
             onNoteHoverEnd: handleNoteHoverEnd
@@ -47006,6 +47188,18 @@ function App() {
         onClose: () => setSlotModal(null),
         onSaved: upsertSlot,
         onDeleted: removeSlot
+      }
+    ) : null,
+    copyModalOpen ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CopyScheduleModal,
+      {
+        sourceWeeks: data.copySourceWeeks || [],
+        targetWeeks: data.copyTargetWeeks || [],
+        selectedWeekStart: data.selectedWeekStart,
+        currentWeekStart: data.currentWeekStart,
+        canEditSelectedWeek: data.canEditSelectedWeek,
+        onClose: () => setCopyModalOpen(false),
+        onCopied: handleCopyWeekCopied
       }
     ) : null,
     commentTooltip?.visible ? /* @__PURE__ */ jsxRuntimeExports.jsx(

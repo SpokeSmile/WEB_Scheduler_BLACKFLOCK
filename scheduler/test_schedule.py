@@ -296,6 +296,10 @@ class ScheduleApiTests(TestCase):
         self.assertIn('currentWeekStart', data)
         self.assertIn('weekRangeLabel', data)
         self.assertTrue(data['canEditSelectedWeek'])
+        self.assertIn('earliestFilledWeekStart', data)
+        self.assertIn('canGoPreviousWeek', data)
+        self.assertIn('copySourceWeeks', data)
+        self.assertIn('copyTargetWeeks', data)
 
     def test_bootstrap_returns_players_in_admin_order(self):
         Player.objects.exclude(pk__in=[self.player_one.pk, self.player_two.pk]).update(sort_order=10)
@@ -347,6 +351,57 @@ class ScheduleApiTests(TestCase):
         self.assertFalse(data['canEditSelectedWeek'])
         self.assertEqual([slot['note'] for slot in data['slots']], ['old week'])
         self.assertEqual(data['days'][0]['date'], '20.04')
+        self.assertEqual(data['earliestFilledWeekStart'], '2026-04-20')
+        self.assertFalse(data['canGoPreviousWeek'])
+
+    def test_bootstrap_clamps_week_before_earliest_team_slot(self):
+        current_week = date(2026, 4, 27)
+        earliest_week = date(2026, 4, 20)
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': current_week})
+        ScheduleSlot.objects.create(
+            player=self.player_two,
+            week_start=earliest_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+            note='team earliest',
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.client.get(reverse('api_bootstrap'), {'week': '2026-04-13'})
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['selectedWeekStart'], '2026-04-20')
+        self.assertEqual(data['earliestFilledWeekStart'], '2026-04-20')
+        self.assertFalse(data['canGoPreviousWeek'])
+        self.assertEqual([slot['note'] for slot in data['slots']], ['team earliest'])
+
+    def test_bootstrap_keeps_current_week_when_only_future_slots_exist(self):
+        current_week = date(2026, 4, 27)
+        future_week = date(2026, 5, 4)
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': current_week})
+        ScheduleSlot.objects.create(
+            player=self.player_two,
+            week_start=future_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+            note='future only',
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.client.get(reverse('api_bootstrap'))
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['selectedWeekStart'], '2026-04-27')
+        self.assertEqual(data['earliestFilledWeekStart'], '2026-04-27')
+        self.assertFalse(data['canGoPreviousWeek'])
 
     def test_bootstrap_filters_day_event_types_by_selected_week(self):
         current_week = date(2026, 4, 27)
@@ -356,6 +411,15 @@ class ScheduleApiTests(TestCase):
             week_start=previous_week,
             day_of_week=ScheduleSlot.MONDAY,
             event_type=ScheduleSlot.SCRIM,
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=previous_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+            note='old week',
         )
         DayEventType.objects.update_or_create(
             week_start=current_week,
@@ -372,6 +436,57 @@ class ScheduleApiTests(TestCase):
         self.assertEqual(len(data['dayEventTypes']), 1)
         self.assertEqual(data['dayEventTypes'][0]['weekStart'], '2026-04-20')
         self.assertEqual(data['dayEventTypes'][0]['eventType'], ScheduleSlot.SCRIM)
+
+    def test_bootstrap_returns_copy_week_options_for_current_player(self):
+        current_week = date(2026, 4, 27)
+        next_week = date(2026, 5, 4)
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': current_week})
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=current_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+            note='source one',
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=current_week,
+            slot_type=ScheduleSlot.TENTATIVE,
+            day_of_week=ScheduleSlot.TUESDAY,
+            note='source two',
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=next_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.WEDNESDAY,
+            start_time_minutes=720,
+            end_time_minutes=840,
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_two,
+            week_start=date(2026, 4, 20),
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.client.get(reverse('api_bootstrap'))
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['earliestFilledWeekStart'], '2026-04-20')
+        self.assertEqual(
+            [(week['weekStart'], week['slotCount']) for week in data['copySourceWeeks']],
+            [('2026-05-04', 1), ('2026-04-27', 2)],
+        )
+        self.assertEqual(data['copyTargetWeeks'][0]['weekStart'], '2026-04-27')
+        self.assertEqual(data['copyTargetWeeks'][-1]['weekStart'], '2026-07-20')
 
     def test_bootstrap_rejects_invalid_week_query(self):
         self.client.login(username='player1', password='secret-pass')
@@ -436,6 +551,116 @@ class ScheduleApiTests(TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertFalse(ScheduleSlot.objects.filter(week_start=date(2026, 4, 20)).exists())
+
+    def test_api_copies_own_week_and_replaces_target_slots(self):
+        current_week = date(2026, 4, 27)
+        source_week = date(2026, 4, 20)
+        target_week = date(2026, 5, 4)
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': current_week})
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=source_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+            note='copy me',
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_two,
+            week_start=source_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.TUESDAY,
+            start_time_minutes=720,
+            end_time_minutes=840,
+            note='do not copy',
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=target_week,
+            slot_type=ScheduleSlot.TENTATIVE,
+            day_of_week=ScheduleSlot.WEDNESDAY,
+            note='replace me',
+        )
+        ScheduleSlot.objects.create(
+            player=self.player_two,
+            week_start=target_week,
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.THURSDAY,
+            start_time_minutes=840,
+            end_time_minutes=960,
+            note='keep other player',
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.post_json('api_slot_copy_week', {
+                'sourceWeekStart': '2026-04-20',
+                'targetWeekStart': '2026-05-04',
+            })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['copiedCount'], 1)
+        copied_slots = list(ScheduleSlot.objects.filter(player=self.player_one, week_start=target_week))
+        self.assertEqual(len(copied_slots), 1)
+        self.assertEqual(copied_slots[0].note, 'copy me')
+        self.assertEqual(copied_slots[0].day_of_week, ScheduleSlot.MONDAY)
+        self.assertTrue(ScheduleSlot.objects.filter(player=self.player_two, week_start=target_week, note='keep other player').exists())
+        self.assertFalse(ScheduleSlot.objects.filter(player=self.player_one, week_start=target_week, note='replace me').exists())
+
+    def test_api_copy_week_rejects_past_target(self):
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': date(2026, 4, 27)})
+        ScheduleSlot.objects.create(
+            player=self.player_one,
+            week_start=date(2026, 4, 27),
+            slot_type=ScheduleSlot.AVAILABLE,
+            day_of_week=ScheduleSlot.MONDAY,
+            start_time_minutes=600,
+            end_time_minutes=720,
+        )
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.post_json('api_slot_copy_week', {
+                'sourceWeekStart': '2026-04-27',
+                'targetWeekStart': '2026-04-20',
+            })
+
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(ScheduleSlot.objects.filter(week_start=date(2026, 4, 20)).exists())
+
+    def test_api_copy_week_rejects_same_week(self):
+        self.client.login(username='player1', password='secret-pass')
+
+        response = self.post_json('api_slot_copy_week', {
+            'sourceWeekStart': '2026-04-27',
+            'targetWeekStart': '2026-04-27',
+        })
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_api_copy_week_rejects_source_without_own_slots(self):
+        RosterState.objects.update_or_create(pk=1, defaults={'current_week_start': date(2026, 4, 27)})
+        self.client.login(username='player1', password='secret-pass')
+
+        with patch('scheduler.roster.timezone.localdate', return_value=date(2026, 4, 30)):
+            response = self.post_json('api_slot_copy_week', {
+                'sourceWeekStart': '2026-04-20',
+                'targetWeekStart': '2026-04-27',
+            })
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_api_copy_week_requires_player_profile(self):
+        user = User.objects.create_user(username='viewer', password='secret-pass')
+        self.client.login(username='viewer', password='secret-pass')
+
+        response = self.post_json('api_slot_copy_week', {
+            'sourceWeekStart': '2026-04-20',
+            'targetWeekStart': '2026-04-27',
+        })
+
+        self.assertEqual(response.status_code, 403)
 
     def test_api_allows_available_without_day_event_type(self):
         self.client.login(username='player1', password='secret-pass')

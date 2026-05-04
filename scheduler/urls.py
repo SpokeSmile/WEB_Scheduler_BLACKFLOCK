@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/overwatch-stats/', api.overwatch_stats, name='api_overwatch_stats'),
     path('api/overwatch-stats/refresh/', api.overwatch_stats_refresh, name='api_overwatch_stats_refresh'),
     path('api/slots/', api.slot_create, name='api_slot_create'),
+    path('api/slots/copy-week/', api.slot_copy_week, name='api_slot_copy_week'),
     path('api/slots/<int:pk>/', api.slot_update, name='api_slot_update'),
     path('api/slots/<int:pk>/delete/', api.slot_delete, name='api_slot_delete'),
     path('api/profile/', api.profile_update, name='api_profile_update'),

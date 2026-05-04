@@ -1,8 +1,9 @@
 from datetime import date, datetime, timedelta
 
+from django.db.models import Min
 from django.utils import timezone
 
-from .models import RosterState
+from .models import RosterState, ScheduleSlot
 
 # Weekly roster helpers. Older weeks are retained as history, so advancing the
 # active week must never delete ScheduleSlot rows.
@@ -71,6 +72,14 @@ def get_current_week_start():
     ensure_current_roster_week()
     state = RosterState.objects.filter(pk=1).first()
     return state.current_week_start if state and state.current_week_start else week_start_for()
+
+
+def get_earliest_filled_week_start(fallback_week_start=None):
+    fallback_week_start = fallback_week_start or get_current_week_start()
+    earliest_week = ScheduleSlot.objects.aggregate(value=Min('week_start'))['value']
+    if earliest_week and earliest_week < fallback_week_start:
+        return earliest_week
+    return fallback_week_start
 
 
 def is_week_editable(week_start, current_week_start=None):

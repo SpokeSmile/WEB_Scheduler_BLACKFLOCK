@@ -723,6 +723,9 @@ video {
 .max-w-md {
   max-width: 28rem;
 }
+.max-w-xl {
+  max-width: 36rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -924,11 +927,17 @@ video {
 .border-emerald-300\/20 {
   border-color: rgb(110 231 183 / 0.2);
 }
+.border-emerald-300\/30 {
+  border-color: rgb(110 231 183 / 0.3);
+}
 .border-emerald-300\/50 {
   border-color: rgb(110 231 183 / 0.5);
 }
 .border-emerald-400\/25 {
   border-color: rgb(52 211 153 / 0.25);
+}
+.border-orange-300\/30 {
+  border-color: rgb(253 186 116 / 0.3);
 }
 .border-orange-300\/50 {
   border-color: rgb(253 186 116 / 0.5);
@@ -1046,6 +1055,9 @@ video {
 }
 .bg-emerald-500\/15 {
   background-color: rgb(16 185 129 / 0.15);
+}
+.bg-orange-500\/10 {
+  background-color: rgb(249 115 22 / 0.1);
 }
 .bg-orange-500\/15 {
   background-color: rgb(249 115 22 / 0.15);
@@ -1321,6 +1333,10 @@ video {
 .text-amber-100\/75 {
   color: rgb(254 243 199 / 0.75);
 }
+.text-bf-cream {
+  --tw-text-opacity: 1;
+  color: rgb(232 237 245 / var(--tw-text-opacity, 1));
+}
 .text-bf-cream\/35 {
   color: rgb(232 237 245 / 0.35);
 }
@@ -1332,6 +1348,9 @@ video {
 }
 .text-bf-cream\/60 {
   color: rgb(232 237 245 / 0.6);
+}
+.text-bf-cream\/65 {
+  color: rgb(232 237 245 / 0.65);
 }
 .text-bf-cream\/70 {
   color: rgb(232 237 245 / 0.7);
@@ -1996,6 +2015,10 @@ textarea {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:border-bf-cream\/25:hover {
+  border-color: rgb(232 237 245 / 0.25);
+}
+
 .hover\:border-bf-orange\/25:hover {
   border-color: rgb(216 109 56 / 0.25);
 }
@@ -2006,6 +2029,10 @@ textarea {
 
 .hover\:border-bf-orange\/40:hover {
   border-color: rgb(216 109 56 / 0.4);
+}
+
+.hover\:border-bf-orange\/60:hover {
+  border-color: rgb(216 109 56 / 0.6);
 }
 
 .hover\:bg-\[\#ff812e\]:hover {
@@ -2028,6 +2055,11 @@ textarea {
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-bf-cream:hover {
+  --tw-text-opacity: 1;
+  color: rgb(232 237 245 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-bf-orange:hover {
@@ -2086,6 +2118,10 @@ textarea {
 .disabled\:hover\:translate-y-0:hover:disabled {
   --tw-translate-y: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.disabled\:hover\:bg-transparent:hover:disabled {
+  background-color: transparent;
 }
 
 .group:hover .group-hover\:border-bf-orange\/35 {

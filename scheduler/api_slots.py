@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST
@@ -8,7 +9,7 @@ from .api_utils import form_errors_payload, parse_body
 from .forms import ScheduleSlotForm
 from .models import DayEventType, ScheduleSlot
 from .profile_lookup import get_current_player
-from .roster import get_current_week_start, is_week_editable, parse_week_start
+from .roster import get_current_week_start, is_week_editable, parse_week_start, week_range_label
 
 
 def form_data_from_payload(payload):
@@ -30,6 +31,16 @@ def week_start_from_payload(payload):
 
 def readonly_week_response():
     return JsonResponse({'error': 'Прошлые недели доступны только для просмотра.'}, status=403)
+
+
+def required_week_start_from_payload(payload, key):
+    raw_week_start = payload.get(key)
+    if not raw_week_start:
+        raise ValueError
+    selected_week_start = parse_week_start(raw_week_start)
+    if selected_week_start is None:
+        raise ValueError
+    return selected_week_start
 
 
 @require_POST
@@ -68,6 +79,62 @@ def slot_create(request):
     }
 
     return JsonResponse({'slot': serialize_slot(slot, current_player, day_event_map)}, status=201)
+
+
+@require_POST
+@login_required
+def slot_copy_week(request):
+    current_player = get_current_player(request.user)
+    if current_player is None:
+        return JsonResponse({'error': 'Аккаунт не привязан к игроку.'}, status=403)
+
+    payload = parse_body(request)
+    if payload is None:
+        return JsonResponse({'error': 'Некорректный JSON.'}, status=400)
+
+    try:
+        source_week_start = required_week_start_from_payload(payload, 'sourceWeekStart')
+        target_week_start = required_week_start_from_payload(payload, 'targetWeekStart')
+    except ValueError:
+        return JsonResponse({'error': 'Некорректная неделя.'}, status=400)
+
+    if source_week_start == target_week_start:
+        return JsonResponse({'error': 'Выберите разные недели для копирования.'}, status=400)
+
+    if not is_week_editable(target_week_start):
+        return readonly_week_response()
+
+    source_slots = list(
+        ScheduleSlot.objects
+        .filter(player=current_player, week_start=source_week_start)
+        .order_by('day_of_week', 'start_time_minutes', 'id')
+    )
+    if not source_slots:
+        return JsonResponse({'error': 'В выбранной неделе нет ваших записей.'}, status=400)
+
+    copied_slots = [
+        ScheduleSlot(
+            player=current_player,
+            week_start=target_week_start,
+            slot_type=slot.slot_type,
+            day_of_week=slot.day_of_week,
+            start_time_minutes=slot.start_time_minutes,
+            end_time_minutes=slot.end_time_minutes,
+            note=slot.note,
+        )
+        for slot in source_slots
+    ]
+
+    with transaction.atomic():
+        ScheduleSlot.objects.filter(player=current_player, week_start=target_week_start).delete()
+        ScheduleSlot.objects.bulk_create(copied_slots)
+
+    return JsonResponse({
+        'ok': True,
+        'copiedCount': len(copied_slots),
+        'targetWeekStart': target_week_start.isoformat(),
+        'targetWeekRangeLabel': week_range_label(target_week_start),
+    })
 
 
 @require_http_methods(['PATCH', 'POST'])

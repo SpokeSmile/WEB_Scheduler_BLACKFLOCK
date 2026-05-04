@@ -10,6 +10,7 @@ import {
 import { Header, Sidebar } from './components/AppChrome.jsx';
 import { ErrorView, LoadingView } from './components/AppStateViews.jsx';
 import MainPage from './components/MainPage.jsx';
+import CopyScheduleModal from './components/modals/CopyScheduleModal.jsx';
 import EventModal from './components/modals/EventModal.jsx';
 import OverwatchStatsPage from './components/OverwatchStatsPage.jsx';
 import ProfilePage from './components/profile/ProfilePage.jsx';
@@ -38,6 +39,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [slotModal, setSlotModal] = useState(null);
+  const [copyModalOpen, setCopyModalOpen] = useState(false);
   const [commentTooltip, setCommentTooltip] = useState(null);
   const [updatesList, setUpdatesList] = useState([]);
   const [updatesBySlug, setUpdatesBySlug] = useState({});
@@ -51,8 +53,11 @@ export default function App() {
   const [isRefreshingStats, setIsRefreshingStats] = useState(false);
   const [statsError, setStatsError] = useState('');
 
-  async function loadData(weekStart = getScheduleWeekParam()) {
-    setIsLoading(true);
+  async function loadData(weekStart = getScheduleWeekParam(), options = {}) {
+    const shouldShowLoading = options.showLoading !== false;
+    if (shouldShowLoading) {
+      setIsLoading(true);
+    }
     try {
       const response = await bootstrap(weekStart);
       setData(response);
@@ -63,7 +68,9 @@ export default function App() {
     } catch (loadError) {
       setError(loadError.message);
     } finally {
-      setIsLoading(false);
+      if (shouldShowLoading) {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -252,6 +259,11 @@ export default function App() {
     await loadData(weekStart);
   }
 
+  async function handleCopyWeekCopied(targetWeekStart) {
+    setScheduleWeekParam(targetWeekStart);
+    await loadData(targetWeekStart, { showLoading: false });
+  }
+
   async function updatePlayerProfile(player, options = {}) {
     if (options.reload) {
       await loadData();
@@ -342,6 +354,7 @@ export default function App() {
                 canEditSelectedWeek={data.canEditSelectedWeek}
                 selectedWeekStart={data.selectedWeekStart}
                 weekRangeLabel={data.weekRangeLabel}
+                canGoPreviousWeek={data.canGoPreviousWeek}
                 days={data.days}
                 players={data.players}
                 slots={data.slots}
@@ -350,6 +363,7 @@ export default function App() {
                 lastUpdated={data.lastUpdated}
                 onAdd={(day) => setSlotModal({ day })}
                 onEdit={(event) => setSlotModal({ event })}
+                onCopy={() => setCopyModalOpen(true)}
                 onWeekChange={handleWeekChange}
                 onNoteHoverStart={handleNoteHoverStart}
                 onNoteHoverEnd={handleNoteHoverEnd}
@@ -367,6 +381,17 @@ export default function App() {
           onClose={() => setSlotModal(null)}
           onSaved={upsertSlot}
           onDeleted={removeSlot}
+        />
+      ) : null}
+      {copyModalOpen ? (
+        <CopyScheduleModal
+          sourceWeeks={data.copySourceWeeks || []}
+          targetWeeks={data.copyTargetWeeks || []}
+          selectedWeekStart={data.selectedWeekStart}
+          currentWeekStart={data.currentWeekStart}
+          canEditSelectedWeek={data.canEditSelectedWeek}
+          onClose={() => setCopyModalOpen(false)}
+          onCopied={handleCopyWeekCopied}
         />
       ) : null}
       {commentTooltip?.visible ? (
