@@ -185,6 +185,8 @@ class ScheduleAccessTests(TestCase):
         response = self.client.get(reverse('login'))
 
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<span>Your</span>', html=True)
+        self.assertContains(response, 'data-clock="local"')
         self.assertContains(response, 'data-password-toggle')
         self.assertContains(response, 'aria-label="Показать пароль"')
 

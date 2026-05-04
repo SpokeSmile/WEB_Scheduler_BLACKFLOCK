@@ -1643,15 +1643,15 @@ textarea {
   padding: 0 18px;
 }
 
-.top-header-clock:last-child {
+.top-header-clock-active {
   background: rgba(244, 247, 251, 0.96);
 }
 
-.top-header-clock:last-child .top-header-clock-label {
+.top-header-clock-active .top-header-clock-label {
   color: rgba(23, 30, 42, 0.58);
 }
 
-.top-header-clock:last-child .top-header-clock-value {
+.top-header-clock-active .top-header-clock-value {
   color: #151b26;
 }
 

@@ -5,18 +5,23 @@ import { logout } from '../api.js';
 import { Avatar } from './common.jsx';
 
 function formatClock(timeZone) {
-  return new Intl.DateTimeFormat('ru-RU', {
+  const options = {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
-    timeZone,
-  }).format(new Date());
+  };
+
+  if (timeZone) {
+    options.timeZone = timeZone;
+  }
+
+  return new Intl.DateTimeFormat('ru-RU', options).format(new Date());
 }
 
 function useClocks() {
   const [clocks, setClocks] = useState({
     utc: '--:--',
-    moscow: '--:--',
+    local: '--:--',
     cest: '--:--',
   });
 
@@ -24,7 +29,7 @@ function useClocks() {
     const update = () => {
       setClocks({
         utc: formatClock('UTC'),
-        moscow: formatClock('Europe/Moscow'),
+        local: formatClock(),
         cest: formatClock('Etc/GMT-2'),
       });
     };
@@ -55,11 +60,11 @@ export function Header({ user }) {
 
       <div className="top-header-clocks">
         {[
-          ['UTC', clocks.utc],
-          ['Moscow', clocks.moscow],
-          ['CEST', clocks.cest],
-        ].map(([label, value]) => (
-          <div key={label} className="top-header-clock">
+          ['UTC', clocks.utc, false],
+          ['Your', clocks.local, true],
+          ['CEST', clocks.cest, false],
+        ].map(([label, value, isActive]) => (
+          <div key={label} className={`top-header-clock ${isActive ? 'top-header-clock-active' : ''}`}>
             <div className="top-header-clock-label">{label}</div>
             <div className="top-header-clock-value">{value}</div>
           </div>

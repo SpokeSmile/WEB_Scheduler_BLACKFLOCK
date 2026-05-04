@@ -140,17 +140,20 @@ textarea {
     letter-spacing: 0;
 }
 
-.clock-pill:last-child {
-    border-right: 0;
+.clock-pill-active {
     background: rgba(244, 247, 251, 0.96);
 }
 
-.clock-pill:last-child span {
+.clock-pill-active span {
     color: rgba(23, 30, 42, 0.58);
 }
 
-.clock-pill:last-child strong {
+.clock-pill-active strong {
     color: #151b26;
+}
+
+.clock-pill:last-child {
+    border-right: 0;
 }
 
 .topbar-actions {

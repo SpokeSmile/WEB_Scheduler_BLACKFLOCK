@@ -12907,24 +12907,27 @@ function DiscordClouds({ displayTag }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex flex-wrap gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full border border-bf-cream/10 bg-bf-steel/18 px-3 py-1 text-sm font-semibold text-slate-100", children: displayTag }) });
 }
 function formatClock(timeZone) {
-  return new Intl.DateTimeFormat("ru-RU", {
+  const options = {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
-    timeZone
-  }).format(/* @__PURE__ */ new Date());
+    hour12: false
+  };
+  if (timeZone) {
+    options.timeZone = timeZone;
+  }
+  return new Intl.DateTimeFormat("ru-RU", options).format(/* @__PURE__ */ new Date());
 }
 function useClocks() {
   const [clocks, setClocks] = reactExports.useState({
     utc: "--:--",
-    moscow: "--:--",
+    local: "--:--",
     cest: "--:--"
   });
   reactExports.useEffect(() => {
     const update = () => {
       setClocks({
         utc: formatClock("UTC"),
-        moscow: formatClock("Europe/Moscow"),
+        local: formatClock(),
         cest: formatClock("Etc/GMT-2")
       });
     };
@@ -12947,10 +12950,10 @@ function Header({ user }) {
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Black Flock" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "top-header-clocks", children: [
-      ["UTC", clocks.utc],
-      ["Moscow", clocks.moscow],
-      ["CEST", clocks.cest]
-    ].map(([label, value]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "top-header-clock", children: [
+      ["UTC", clocks.utc, false],
+      ["Your", clocks.local, true],
+      ["CEST", clocks.cest, false]
+    ].map(([label, value, isActive]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `top-header-clock ${isActive ? "top-header-clock-active" : ""}`, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "top-header-clock-label", children: label }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "top-header-clock-value", children: value })
     ] }, label)) }),

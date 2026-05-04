@@ -2,21 +2,17 @@ const clockFormatters = {
     utc: new Intl.DateTimeFormat('ru-RU', {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
         hour12: false,
         timeZone: 'UTC',
     }),
-    moscow: new Intl.DateTimeFormat('ru-RU', {
+    local: new Intl.DateTimeFormat('ru-RU', {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
         hour12: false,
-        timeZone: 'Europe/Moscow',
     }),
     cest: new Intl.DateTimeFormat('ru-RU', {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
         hour12: false,
         timeZone: 'Etc/GMT-2',
     }),
