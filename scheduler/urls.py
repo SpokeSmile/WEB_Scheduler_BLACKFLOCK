@@ -4,6 +4,7 @@ from . import api
 from . import views
 
 urlpatterns = [
+    path('main/', views.main_view, name='main'),
     path('', views.schedule_view, name='schedule'),
     path('team/', views.team_view, name='team'),
     path('profile/', views.profile_view, name='profile'),

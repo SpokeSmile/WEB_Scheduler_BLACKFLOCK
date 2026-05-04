@@ -654,6 +654,9 @@ video {
 .min-h-11 {
   min-height: 2.75rem;
 }
+.min-h-14 {
+  min-height: 3.5rem;
+}
 .min-h-36 {
   min-height: 9rem;
 }
@@ -912,8 +915,14 @@ video {
 .border-bf-orange\/30 {
   border-color: rgb(216 109 56 / 0.3);
 }
+.border-bf-orange\/35 {
+  border-color: rgb(216 109 56 / 0.35);
+}
 .border-bf-orange\/45 {
   border-color: rgb(216 109 56 / 0.45);
+}
+.border-bf-orange\/55 {
+  border-color: rgb(216 109 56 / 0.55);
 }
 .border-emerald-300\/20 {
   border-color: rgb(110 231 183 / 0.2);
@@ -1163,6 +1172,10 @@ video {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -1260,6 +1273,9 @@ video {
 }
 .leading-none {
   line-height: 1;
+}
+.leading-relaxed {
+  line-height: 1.625;
 }
 .leading-tight {
   line-height: 1.25;
@@ -1468,6 +1484,11 @@ video {
 .shadow-\[0_10px_26px_rgba\(0\2c 0\2c 0\2c 0\.18\)\] {
   --tw-shadow: 0 10px 26px rgba(0,0,0,0.18);
   --tw-shadow-colored: 0 10px 26px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-\[0_14px_30px_rgba\(243\2c 112\2c 30\2c 0\.18\)\] {
+  --tw-shadow: 0 14px 30px rgba(243,112,30,0.18);
+  --tw-shadow-colored: 0 14px 30px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .shadow-\[0_8px_18px_rgba\(0\2c 0\2c 0\2c 0\.14\)\] {
@@ -2066,6 +2087,10 @@ textarea {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.group:hover .group-hover\:border-bf-orange\/35 {
+  border-color: rgb(216 109 56 / 0.35);
+}
+
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
 }
@@ -2123,6 +2148,10 @@ textarea {
 
 @media (min-width: 640px) {
 
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .sm\:grid-cols-\[minmax\(0\2c 1fr\)_auto\] {
     grid-template-columns: minmax(0,1fr) auto;
   }
@@ -2155,6 +2184,10 @@ textarea {
 
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-\[1\.25fr_0\.75fr\] {
+    grid-template-columns: 1.25fr 0.75fr;
   }
 
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_220px\] {
@@ -2197,6 +2230,10 @@ textarea {
     width: min(1700px, calc(100% - 32px));
   }
 
+  .xl\:max-w-\[720px\] {
+    max-width: 720px;
+  }
+
   .xl\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2215,6 +2252,14 @@ textarea {
 
   .xl\:grid-cols-\[minmax\(0\2c 1\.2fr\)_minmax\(0\2c 1fr\)\] {
     grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+  }
+
+  .xl\:grid-cols-\[minmax\(0\2c 1fr\)_380px\] {
+    grid-template-columns: minmax(0,1fr) 380px;
+  }
+
+  .xl\:items-center {
+    align-items: center;
   }
 
   .xl\:self-start {

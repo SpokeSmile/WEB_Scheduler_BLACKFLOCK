@@ -167,6 +167,20 @@ class ScheduleAccessTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn(reverse('login'), response.url)
 
+    def test_hidden_main_page_requires_login(self):
+        response = self.client.get(reverse('main'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+    def test_hidden_main_page_renders_spa_for_logged_in_user(self):
+        self.client.login(username='player1', password='secret-pass')
+
+        response = self.client.get(reverse('main'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'root')
+
     def test_login_page_renders_for_anonymous_user(self):
         response = self.client.get(reverse('login'))
 

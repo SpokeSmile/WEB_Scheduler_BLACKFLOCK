@@ -7,6 +7,13 @@ from .roster import ensure_current_roster_week
 
 @ensure_csrf_cookie
 @login_required
+def main_view(request):
+    ensure_current_roster_week()
+    return render(request, 'scheduler/app.html')
+
+
+@ensure_csrf_cookie
+@login_required
 def schedule_view(request):
     ensure_current_roster_week()
     return render(request, 'scheduler/app.html')

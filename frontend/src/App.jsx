@@ -9,6 +9,7 @@ import {
 } from './api.js';
 import { Header, Sidebar } from './components/AppChrome.jsx';
 import { ErrorView, LoadingView } from './components/AppStateViews.jsx';
+import MainPage from './components/MainPage.jsx';
 import EventModal from './components/modals/EventModal.jsx';
 import OverwatchStatsPage from './components/OverwatchStatsPage.jsx';
 import ProfilePage from './components/profile/ProfilePage.jsx';
@@ -167,6 +168,7 @@ export default function App() {
   }, [commentTooltip]);
 
   const pathname = window.location.pathname;
+  const isMainPage = pathname.startsWith('/main');
   const isUpdatesPage = pathname.startsWith('/updates');
   const isStatsPage = pathname.startsWith('/stats');
 
@@ -297,7 +299,15 @@ export default function App() {
         <Sidebar pathname={pathname} />
         <div className="min-w-0">
           <Header user={data.user} />
-          {isProfilePage ? (
+          {isMainPage ? (
+            <MainPage
+              players={data.players}
+              staffMembers={data.staffMembers}
+              slots={data.slots}
+              weekRangeLabel={data.weekRangeLabel}
+              user={data.user}
+            />
+          ) : isProfilePage ? (
             <ProfilePage
               user={data.user}
               profile={currentProfile}

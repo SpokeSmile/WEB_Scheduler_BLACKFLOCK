@@ -94,7 +94,7 @@ export function Sidebar({ pathname }) {
       href: '/',
       label: 'Расписание',
       icon: Clock3,
-      isActive: !pathname.startsWith('/team') && !pathname.startsWith('/profile') && !pathname.startsWith('/updates') && !pathname.startsWith('/stats'),
+      isActive: !pathname.startsWith('/main') && !pathname.startsWith('/team') && !pathname.startsWith('/profile') && !pathname.startsWith('/updates') && !pathname.startsWith('/stats'),
     },
     {
       href: '/team/',

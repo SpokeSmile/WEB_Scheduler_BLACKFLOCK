@@ -12659,7 +12659,7 @@ const createLucideIcon = (iconName, iconNode) => {
   Component.displayName = toPascalCase(iconName);
   return Component;
 };
-const __iconNode$k = [
+const __iconNode$o = [
   [
     "path",
     {
@@ -12670,8 +12670,21 @@ const __iconNode$k = [
   ["path", { d: "M8 11h8", key: "vwpz6n" }],
   ["path", { d: "M8 7h6", key: "1f0q6e" }]
 ];
-const BookText = createLucideIcon("book-text", __iconNode$k);
-const __iconNode$j = [
+const BookText = createLucideIcon("book-text", __iconNode$o);
+const __iconNode$n = [
+  ["path", { d: "M8 2v4", key: "1cmpym" }],
+  ["path", { d: "M16 2v4", key: "4m81vk" }],
+  ["rect", { width: "18", height: "18", x: "3", y: "4", rx: "2", key: "1hopcy" }],
+  ["path", { d: "M3 10h18", key: "8toen8" }],
+  ["path", { d: "M8 14h.01", key: "6423bh" }],
+  ["path", { d: "M12 14h.01", key: "1etili" }],
+  ["path", { d: "M16 14h.01", key: "1gbofw" }],
+  ["path", { d: "M8 18h.01", key: "lrp35t" }],
+  ["path", { d: "M12 18h.01", key: "mhygvu" }],
+  ["path", { d: "M16 18h.01", key: "kzsmim" }]
+];
+const CalendarDays = createLucideIcon("calendar-days", __iconNode$n);
+const __iconNode$m = [
   ["path", { d: "M16 19h6", key: "xwg31i" }],
   ["path", { d: "M16 2v4", key: "4m81vk" }],
   ["path", { d: "M19 16v6", key: "tddt3s" }],
@@ -12679,46 +12692,46 @@ const __iconNode$j = [
   ["path", { d: "M3 10h18", key: "8toen8" }],
   ["path", { d: "M8 2v4", key: "1cmpym" }]
 ];
-const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$j);
-const __iconNode$i = [
+const CalendarPlus = createLucideIcon("calendar-plus", __iconNode$m);
+const __iconNode$l = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$i);
-const __iconNode$h = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-const Check = createLucideIcon("check", __iconNode$h);
-const __iconNode$g = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
-const ChevronRight = createLucideIcon("chevron-right", __iconNode$g);
-const __iconNode$f = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode$f);
-const __iconNode$e = [
+const ChartColumn = createLucideIcon("chart-column", __iconNode$l);
+const __iconNode$k = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+const Check = createLucideIcon("check", __iconNode$k);
+const __iconNode$j = [["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]];
+const ChevronRight = createLucideIcon("chevron-right", __iconNode$j);
+const __iconNode$i = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$i);
+const __iconNode$h = [
   ["path", { d: "M12 6v6h4", key: "135r8i" }],
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]
 ];
-const Clock3 = createLucideIcon("clock-3", __iconNode$e);
-const __iconNode$d = [
+const Clock3 = createLucideIcon("clock-3", __iconNode$h);
+const __iconNode$g = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["line", { x1: "22", x2: "18", y1: "12", y2: "12", key: "l9bcsi" }],
   ["line", { x1: "6", x2: "2", y1: "12", y2: "12", key: "13hhkx" }],
   ["line", { x1: "12", x2: "12", y1: "6", y2: "2", key: "10w3f3" }],
   ["line", { x1: "12", x2: "12", y1: "22", y2: "18", key: "15g9kq" }]
 ];
-const Crosshair = createLucideIcon("crosshair", __iconNode$d);
-const __iconNode$c = [
+const Crosshair = createLucideIcon("crosshair", __iconNode$g);
+const __iconNode$f = [
   ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
   ["path", { d: "M10 14 21 3", key: "gplh6r" }],
   ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
 ];
-const ExternalLink = createLucideIcon("external-link", __iconNode$c);
-const __iconNode$b = [
+const ExternalLink = createLucideIcon("external-link", __iconNode$f);
+const __iconNode$e = [
   ["path", { d: "m16 17 5-5-5-5", key: "1bji2h" }],
   ["path", { d: "M21 12H9", key: "dn1m92" }],
   ["path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4", key: "1uf3rs" }]
 ];
-const LogOut = createLucideIcon("log-out", __iconNode$b);
-const __iconNode$a = [
+const LogOut = createLucideIcon("log-out", __iconNode$e);
+const __iconNode$d = [
   [
     "path",
     {
@@ -12730,8 +12743,8 @@ const __iconNode$a = [
   ["path", { d: "M8 21h8", key: "1ev6f3" }],
   ["rect", { x: "2", y: "3", width: "20", height: "14", rx: "2", key: "x3v2xh" }]
 ];
-const MonitorPlay = createLucideIcon("monitor-play", __iconNode$a);
-const __iconNode$9 = [
+const MonitorPlay = createLucideIcon("monitor-play", __iconNode$d);
+const __iconNode$c = [
   [
     "path",
     {
@@ -12741,15 +12754,20 @@ const __iconNode$9 = [
   ],
   ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
 ];
-const Pencil = createLucideIcon("pencil", __iconNode$9);
-const __iconNode$8 = [
+const Pencil = createLucideIcon("pencil", __iconNode$c);
+const __iconNode$b = [
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
+];
+const Plus = createLucideIcon("plus", __iconNode$b);
+const __iconNode$a = [
   ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
   ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
   ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
   ["path", { d: "M8 16H3v5", key: "1cv678" }]
 ];
-const RefreshCw = createLucideIcon("refresh-cw", __iconNode$8);
-const __iconNode$7 = [
+const RefreshCw = createLucideIcon("refresh-cw", __iconNode$a);
+const __iconNode$9 = [
   [
     "path",
     {
@@ -12760,8 +12778,8 @@ const __iconNode$7 = [
   ["path", { d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7", key: "1ydtos" }],
   ["path", { d: "M7 3v4a1 1 0 0 0 1 1h7", key: "t51u73" }]
 ];
-const Save = createLucideIcon("save", __iconNode$7);
-const __iconNode$6 = [
+const Save = createLucideIcon("save", __iconNode$9);
+const __iconNode$8 = [
   [
     "path",
     {
@@ -12771,8 +12789,19 @@ const __iconNode$6 = [
   ],
   ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
 ];
-const Settings = createLucideIcon("settings", __iconNode$6);
-const __iconNode$5 = [
+const Settings = createLucideIcon("settings", __iconNode$8);
+const __iconNode$7 = [
+  [
+    "path",
+    {
+      d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+      key: "oel41y"
+    }
+  ],
+  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+];
+const ShieldCheck = createLucideIcon("shield-check", __iconNode$7);
+const __iconNode$6 = [
   ["polyline", { points: "14.5 17.5 3 6 3 3 6 3 17.5 14.5", key: "1hfsw2" }],
   ["line", { x1: "13", x2: "19", y1: "19", y2: "13", key: "1vrmhu" }],
   ["line", { x1: "16", x2: "20", y1: "16", y2: "20", key: "1bron3" }],
@@ -12782,16 +12811,16 @@ const __iconNode$5 = [
   ["line", { x1: "7", x2: "4", y1: "17", y2: "20", key: "pidxm4" }],
   ["line", { x1: "3", x2: "5", y1: "19", y2: "21", key: "1pehsh" }]
 ];
-const Swords = createLucideIcon("swords", __iconNode$5);
-const __iconNode$4 = [
+const Swords = createLucideIcon("swords", __iconNode$6);
+const __iconNode$5 = [
   ["path", { d: "M10 11v6", key: "nco0om" }],
   ["path", { d: "M14 11v6", key: "outv1u" }],
   ["path", { d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6", key: "miytrc" }],
   ["path", { d: "M3 6h18", key: "d0wm0j" }],
   ["path", { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2", key: "e791ji" }]
 ];
-const Trash2 = createLucideIcon("trash-2", __iconNode$4);
-const __iconNode$3 = [
+const Trash2 = createLucideIcon("trash-2", __iconNode$5);
+const __iconNode$4 = [
   [
     "path",
     {
@@ -12802,8 +12831,8 @@ const __iconNode$3 = [
   ["path", { d: "M12 9v4", key: "juzpu7" }],
   ["path", { d: "M12 17h.01", key: "p32p05" }]
 ];
-const TriangleAlert = createLucideIcon("triangle-alert", __iconNode$3);
-const __iconNode$2 = [
+const TriangleAlert = createLucideIcon("triangle-alert", __iconNode$4);
+const __iconNode$3 = [
   ["path", { d: "M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978", key: "1n3hpd" }],
   ["path", { d: "M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978", key: "rfe1zi" }],
   ["path", { d: "M18 9h1.5a1 1 0 0 0 0-5H18", key: "7xy6bh" }],
@@ -12811,7 +12840,14 @@ const __iconNode$2 = [
   ["path", { d: "M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z", key: "1mhfuq" }],
   ["path", { d: "M6 9H4.5a1 1 0 0 1 0-5H6", key: "tex48p" }]
 ];
-const Trophy = createLucideIcon("trophy", __iconNode$2);
+const Trophy = createLucideIcon("trophy", __iconNode$3);
+const __iconNode$2 = [
+  ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
+  ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }],
+  ["line", { x1: "19", x2: "19", y1: "8", y2: "14", key: "1bvyxn" }],
+  ["line", { x1: "22", x2: "16", y1: "11", y2: "11", key: "1shjgl" }]
+];
+const UserPlus = createLucideIcon("user-plus", __iconNode$2);
 const __iconNode$1 = [
   ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
   ["path", { d: "M16 3.128a4 4 0 0 1 0 7.744", key: "16gr8j" }],
@@ -12952,7 +12988,7 @@ function Sidebar({ pathname }) {
       href: "/",
       label: "Расписание",
       icon: Clock3,
-      isActive: !pathname.startsWith("/team") && !pathname.startsWith("/profile") && !pathname.startsWith("/updates") && !pathname.startsWith("/stats")
+      isActive: !pathname.startsWith("/main") && !pathname.startsWith("/team") && !pathname.startsWith("/profile") && !pathname.startsWith("/updates") && !pathname.startsWith("/stats")
     },
     {
       href: "/team/",
@@ -13012,6 +13048,136 @@ function ErrorView({ error, onRetry }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-bf-cream/60", children: error }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "mt-5 rounded-xl bg-bf-orange px-5 py-3 font-black text-black", type: "button", onClick: onRetry, children: "Повторить" })
   ] }) });
+}
+function HubButton({ as = "button", href = "", icon: Icon2, label, caption, variant = "secondary", onClick }) {
+  const className = {
+    primary: "border-bf-orange/55 bg-bf-orange text-white shadow-[0_14px_30px_rgba(243,112,30,0.18)] hover:bg-[#ff812e]",
+    secondary: "border-bf-cream/10 bg-black/24 text-slate-100 hover:border-bf-orange/35 hover:bg-bf-orange/10"
+  }[variant];
+  const content = /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-current/20 bg-black/18", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 19 }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "min-w-0 text-left", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block text-sm font-black uppercase leading-tight", children: label }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "mt-0.5 block text-xs font-semibold opacity-58", children: caption })
+    ] })
+  ] });
+  if (as === "a") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: `inline-flex min-h-14 items-center gap-3 rounded-xl border px-4 transition ${className}`, href, children: content });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: `inline-flex min-h-14 items-center gap-3 rounded-xl border px-4 transition ${className}`, type: "button", onClick, children: content });
+}
+function SummaryTile({ icon: Icon2, label, value, caption }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/22 p-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid h-10 w-10 place-items-center rounded-xl border border-bf-orange/20 bg-bf-orange/10 text-bf-orange", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 19 }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] font-black uppercase tracking-wide text-bf-cream/42", children: label }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-2xl font-black text-slate-100", children: value })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-xs font-semibold text-bf-cream/44", children: caption })
+  ] });
+}
+function QuickCard({ href, icon: Icon2, label, caption }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "a",
+    {
+      className: "group rounded-xl border border-bf-cream/10 bg-black/18 p-4 text-decoration-none transition hover:-translate-y-0.5 hover:border-bf-orange/35 hover:bg-bf-orange/10",
+      href,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid h-10 w-10 place-items-center rounded-xl border border-bf-cream/10 bg-black/24 text-bf-orange transition group-hover:border-bf-orange/35", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 18 }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-slate-100", children: label }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-xs font-semibold leading-relaxed text-bf-cream/48", children: caption })
+        ] })
+      ] })
+    }
+  );
+}
+function MainPage({ players, staffMembers, slots, weekRangeLabel, user }) {
+  const [notice, setNotice] = reactExports.useState("Функции создания и присоединения к командам скоро будут доступны.");
+  const summary = reactExports.useMemo(() => {
+    const filledPlayers = new Set((slots || []).map((slot) => slot.playerId)).size;
+    const connectedProfiles = [...players || [], ...staffMembers || []].filter((profile) => profile.discordConnected).length;
+    return {
+      players: players?.length || 0,
+      staff: staffMembers?.length || 0,
+      filledPlayers,
+      connectedProfiles
+    };
+  }, [players, staffMembers, slots]);
+  function showComingSoon(action) {
+    setNotice(`${action} пока в подготовке. Сейчас можно пользоваться расписанием, составом, статистикой и профилем.`);
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "glass-panel hero-banner relative mt-4 overflow-hidden rounded-xl border-bf-orange/35 px-6 py-7 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10 grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px] xl:items-center", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-bf-orange", children: "Black Flock" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "mt-2 text-5xl font-black uppercase leading-none text-slate-100 max-md:text-4xl", children: "Team Hub" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 max-w-2xl text-sm font-semibold leading-relaxed text-bf-cream/62", children: "Центр управления командой: расписание, состав, статистика, профили игроков и будущие командные инструменты в одном месте." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 sm:grid-cols-2 xl:max-w-[720px]", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            HubButton,
+            {
+              icon: Plus,
+              label: "Создать новую команду",
+              caption: "Настройка состава и доступа",
+              variant: "primary",
+              onClick: () => showComingSoon("Создание команды")
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            HubButton,
+            {
+              icon: UserPlus,
+              label: "Присоединиться",
+              caption: "Вход по приглашению",
+              onClick: () => showComingSoon("Присоединение к команде")
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-orange/18 bg-bf-orange/10 px-4 py-3 text-sm font-semibold text-bf-cream/72", children: notice })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl border border-bf-cream/10 bg-black/24 p-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { className: "h-12 w-12 rounded-full border border-bf-cream/10 object-contain", src: "/static/img/Logo.png", alt: "" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase text-slate-100", children: "Black Flock Team" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs font-semibold text-bf-cream/48", children: [
+              "Аккаунт: ",
+              user.username
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SummaryTile, { icon: Users, label: "Игроки", value: summary.players, caption: `${summary.staff} в организаторском составе` }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SummaryTile, { icon: CalendarDays, label: "Неделя", value: weekRangeLabel || "—", caption: `${summary.filledPlayers} игроков уже заполнили время` }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SummaryTile, { icon: ShieldCheck, label: "Discord", value: summary.connectedProfiles, caption: "Профилей подключено через Discord" })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mt-4 grid gap-4 lg:grid-cols-[1.25fr_0.75fr]", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-sm font-black uppercase text-slate-100", children: "Быстрые действия" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 md:grid-cols-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(QuickCard, { href: "/", icon: Clock3, label: "Открыть расписание", caption: "Неделя, время игроков и типы активностей." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(QuickCard, { href: "/team/", icon: Users, label: "Посмотреть состав", caption: "Игровые профили, BattleTag, Discord и роли." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(QuickCard, { href: "/stats/", icon: ChartColumn, label: "Статистика команды", caption: "OverFast данные по BattleTag игроков." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(QuickCard, { href: "/profile/", icon: Settings, label: "Настройки профиля", caption: "Имя, BattleTag, пароль и Discord Connect." })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-xl p-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-sm font-black uppercase text-slate-100", children: "Следующие функции" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid gap-3 text-sm font-semibold text-bf-cream/58", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 p-3", children: "Создание нескольких команд и переключение между ними." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 p-3", children: "Приглашения игроков по ссылке или коду доступа." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-xl border border-bf-cream/10 bg-black/18 p-3", children: "Роли доступа для владельца, менеджера, тренера и игроков." })
+        ] })
+      ] })
+    ] })
+  ] });
 }
 const LayoutGroupContext = reactExports.createContext({});
 function useConstant(init) {
@@ -46667,6 +46833,7 @@ function App() {
     };
   }, [commentTooltip]);
   const pathname = window.location.pathname;
+  const isMainPage = pathname.startsWith("/main");
   const isUpdatesPage = pathname.startsWith("/updates");
   const isStatsPage = pathname.startsWith("/stats");
   reactExports.useEffect(() => {
@@ -46774,7 +46941,16 @@ function App() {
       /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, { pathname }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Header, { user: data.user }),
-        isProfilePage ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        isMainPage ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MainPage,
+          {
+            players: data.players,
+            staffMembers: data.staffMembers,
+            slots: data.slots,
+            weekRangeLabel: data.weekRangeLabel,
+            user: data.user
+          }
+        ) : isProfilePage ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           ProfilePage,
           {
             user: data.user,
