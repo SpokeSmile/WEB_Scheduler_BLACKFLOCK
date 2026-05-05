@@ -238,53 +238,53 @@ textarea {
   border-radius: 12px;
   pointer-events: none;
   background:
-    linear-gradient(90deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top left / 54px 1px no-repeat,
-    linear-gradient(180deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top right / 1px 54px no-repeat,
-    linear-gradient(270deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom right / 54px 1px no-repeat,
-    linear-gradient(0deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom left / 1px 54px no-repeat;
+    linear-gradient(90deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top left / 92px 1px no-repeat,
+    linear-gradient(180deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top right / 1px 92px no-repeat,
+    linear-gradient(270deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom right / 92px 1px no-repeat,
+    linear-gradient(0deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom left / 1px 92px no-repeat;
   filter: drop-shadow(0 0 7px rgba(255, 117, 38, 0.62));
-  animation: day-fire-shimmer 2.4s linear infinite;
+  animation: day-fire-shimmer 4.8s linear infinite;
 }
 
 @keyframes day-fire-shimmer {
   0% {
     background-position:
-      -54px top,
-      right -54px,
-      calc(100% + 54px) bottom,
-      left calc(100% + 54px);
+      -92px top,
+      right -92px,
+      calc(100% + 92px) bottom,
+      left calc(100% + 92px);
   }
 
   25% {
     background-position:
-      calc(100% + 54px) top,
-      right -54px,
-      calc(100% + 54px) bottom,
-      left calc(100% + 54px);
+      calc(100% + 92px) top,
+      right -92px,
+      calc(100% + 92px) bottom,
+      left calc(100% + 92px);
   }
 
   50% {
     background-position:
-      calc(100% + 54px) top,
-      right calc(100% + 54px),
-      calc(100% + 54px) bottom,
-      left calc(100% + 54px);
+      calc(100% + 92px) top,
+      right calc(100% + 92px),
+      calc(100% + 92px) bottom,
+      left calc(100% + 92px);
   }
 
   75% {
     background-position:
-      calc(100% + 54px) top,
-      right calc(100% + 54px),
-      -54px bottom,
-      left calc(100% + 54px);
+      calc(100% + 92px) top,
+      right calc(100% + 92px),
+      -92px bottom,
+      left calc(100% + 92px);
   }
 
   100% {
     background-position:
-      calc(100% + 54px) top,
-      right calc(100% + 54px),
-      -54px bottom,
-      left -54px;
+      calc(100% + 92px) top,
+      right calc(100% + 92px),
+      -92px bottom,
+      left -92px;
   }
 }
 
