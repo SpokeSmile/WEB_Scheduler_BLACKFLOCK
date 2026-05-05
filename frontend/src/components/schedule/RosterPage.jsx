@@ -411,7 +411,10 @@ function RosterTable({
             </div>
           ))}
         </div>
-        <div className="mt-3 grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-xl border border-bf-cream/10 bg-[#121b29]/90 shadow-[0_12px_28px_rgba(0,0,0,0.18)]">
+      </div>
+
+      <div className="mt-3 overflow-x-auto">
+        <div className="grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-xl border border-bf-cream/10 bg-[#121b29]/90 shadow-[0_12px_28px_rgba(0,0,0,0.18)]">
           <div className="grid min-h-[76px] content-center border-r border-bf-cream/10 px-4 py-3">
             <div className="text-sm font-black uppercase leading-tight text-slate-100">
               Доступность игроков
