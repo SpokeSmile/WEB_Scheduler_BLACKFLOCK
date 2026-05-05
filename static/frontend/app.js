@@ -46380,7 +46380,7 @@ function HeroBanner({ hasPlayerProfile, canAdd, canEditSelectedWeek, onAdd, onCo
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
-          className: "inline-flex min-h-11 items-center gap-3 rounded-xl border border-bf-orange/35 bg-bf-orange/12 px-5 font-black text-bf-orange transition hover:-translate-y-0.5 hover:border-bf-orange/60 hover:bg-bf-orange/18",
+          className: "inline-flex min-h-11 items-center gap-3 rounded-xl bg-[#f4f7fb] px-6 font-black text-[#151b26] shadow-[0_8px_18px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_10px_22px_rgba(0,0,0,0.18)]",
           type: "button",
           onClick: onCopy,
           children: [
@@ -46524,7 +46524,7 @@ function RosterTable({
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: "grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-2.5 pt-4 pb-3 text-center last:border-r-0",
+            className: `grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-2.5 pt-4 pb-3 text-center last:border-r-0 ${day.isToday ? "day-header-today" : ""}`,
             children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid justify-items-center gap-1.5", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black text-slate-100", children: day.label }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-semibold text-bf-cream/52", children: day.date }),

@@ -351,6 +351,7 @@ class ScheduleApiTests(TestCase):
         self.assertFalse(data['canEditSelectedWeek'])
         self.assertEqual([slot['note'] for slot in data['slots']], ['old week'])
         self.assertEqual(data['days'][0]['date'], '20.04')
+        self.assertFalse(data['days'][0]['isToday'])
         self.assertEqual(data['earliestFilledWeekStart'], '2026-04-20')
         self.assertFalse(data['canGoPreviousWeek'])
 
@@ -402,6 +403,7 @@ class ScheduleApiTests(TestCase):
         self.assertEqual(data['selectedWeekStart'], '2026-04-27')
         self.assertEqual(data['earliestFilledWeekStart'], '2026-04-27')
         self.assertFalse(data['canGoPreviousWeek'])
+        self.assertTrue(data['days'][3]['isToday'])
 
     def test_bootstrap_filters_day_event_types_by_selected_week(self):
         current_week = date(2026, 4, 27)

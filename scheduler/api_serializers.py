@@ -51,8 +51,8 @@ def discord_payload(connection):
 
 
 def build_days(week_start=None):
+    today = timezone.localdate()
     if week_start is None:
-        today = timezone.localdate()
         week_start = today - timedelta(days=today.weekday())
 
     return [
@@ -60,6 +60,7 @@ def build_days(week_start=None):
             'value': value,
             'label': label,
             'date': (week_start + timedelta(days=value)).strftime('%d.%m'),
+            'isToday': week_start + timedelta(days=value) == today,
         }
         for value, label in ScheduleSlot.DAY_CHOICES
     ]
