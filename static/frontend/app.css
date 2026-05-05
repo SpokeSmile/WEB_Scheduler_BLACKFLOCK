@@ -1738,6 +1738,7 @@ textarea {
 .day-header-today {
   position: relative;
   z-index: 2;
+  overflow: hidden;
   box-shadow: none;
 }
 
@@ -1749,21 +1750,64 @@ textarea {
   border-radius: 12px;
   pointer-events: none;
   box-shadow:
-    0 0 10px rgba(255, 117, 38, 0.34),
+    0 0 10px rgba(255, 117, 38, 0.22),
     inset 0 0 8px rgba(255, 117, 38, 0.16);
-  animation: day-fire-ring 1.8s ease-in-out infinite;
 }
 
-@keyframes day-fire-ring {
-  0%,
-  100% {
-    opacity: 0.54;
-    transform: scale(0.985);
+.day-header-today::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 12px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top left / 54px 1px no-repeat,
+    linear-gradient(180deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) top right / 1px 54px no-repeat,
+    linear-gradient(270deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.8) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom right / 54px 1px no-repeat,
+    linear-gradient(0deg, transparent 0%, rgba(255, 191, 112, 0.14) 40%, rgba(255, 117, 38, 0.72) 50%, rgba(255, 191, 112, 0.14) 60%, transparent 100%) bottom left / 1px 54px no-repeat;
+  filter: drop-shadow(0 0 7px rgba(255, 117, 38, 0.62));
+  animation: day-fire-shimmer 2.4s linear infinite;
+}
+
+@keyframes day-fire-shimmer {
+  0% {
+    background-position:
+      -54px top,
+      right -54px,
+      calc(100% + 54px) bottom,
+      left calc(100% + 54px);
   }
 
-  45% {
-    opacity: 1;
-    transform: scale(1);
+  25% {
+    background-position:
+      calc(100% + 54px) top,
+      right -54px,
+      calc(100% + 54px) bottom,
+      left calc(100% + 54px);
+  }
+
+  50% {
+    background-position:
+      calc(100% + 54px) top,
+      right calc(100% + 54px),
+      calc(100% + 54px) bottom,
+      left calc(100% + 54px);
+  }
+
+  75% {
+    background-position:
+      calc(100% + 54px) top,
+      right calc(100% + 54px),
+      -54px bottom,
+      left calc(100% + 54px);
+  }
+
+  100% {
+    background-position:
+      calc(100% + 54px) top,
+      right calc(100% + 54px),
+      -54px bottom,
+      left -54px;
   }
 }
 
