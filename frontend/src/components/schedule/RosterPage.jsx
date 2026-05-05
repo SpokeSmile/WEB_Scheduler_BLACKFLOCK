@@ -223,6 +223,30 @@ function Legend({ eventTypes }) {
   );
 }
 
+const AVAILABILITY_TONE_STYLES = {
+  high: {
+    track: 'bg-emerald-400/18',
+    fill: 'bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.28)]',
+    text: 'text-emerald-100',
+  },
+  mid: {
+    track: 'bg-amber-400/18',
+    fill: 'bg-amber-300 shadow-[0_0_18px_rgba(252,211,77,0.24)]',
+    text: 'text-amber-100',
+  },
+  low: {
+    track: 'bg-red-500/18',
+    fill: 'bg-red-400 shadow-[0_0_18px_rgba(248,113,113,0.22)]',
+    text: 'text-red-100',
+  },
+};
+
+function availabilityTone(ratio) {
+  if (ratio >= 0.75) return 'high';
+  if (ratio >= 0.5) return 'mid';
+  return 'low';
+}
+
 function RosterTable({
   days,
   players,
@@ -250,6 +274,31 @@ function RosterTable({
     });
     return grouped;
   }, [slots]);
+
+  const availabilityByDay = useMemo(() => {
+    const playerIds = new Set(players.map((player) => player.id));
+    const totalPlayers = playerIds.size;
+
+    return days.map((day) => {
+      const availablePlayerIds = new Set();
+      slots.forEach((slot) => {
+        const isAvailable = slot.slotType === 'available' || slot.slotType === 'full_day_available';
+        if (slot.dayOfWeek === day.value && isAvailable && playerIds.has(slot.playerId)) {
+          availablePlayerIds.add(slot.playerId);
+        }
+      });
+
+      const availableCount = availablePlayerIds.size;
+      const ratio = totalPlayers ? availableCount / totalPlayers : 0;
+      return {
+        ...day,
+        availableCount,
+        totalPlayers,
+        ratio,
+        tone: availabilityTone(ratio),
+      };
+    });
+  }, [days, players, slots]);
 
   return (
     <section className="glass-panel mt-4 rounded-xl p-4">
@@ -361,6 +410,34 @@ function RosterTable({
               })}
             </div>
           ))}
+        </div>
+        <div className="mt-3 grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-xl border border-bf-cream/10 bg-[#121b29]/90 shadow-[0_12px_28px_rgba(0,0,0,0.18)]">
+          <div className="grid min-h-[76px] content-center border-r border-bf-cream/10 px-4 py-3">
+            <div className="text-sm font-black uppercase leading-tight text-slate-100">
+              Доступность игроков
+            </div>
+            <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.08em] text-bf-cream/42">
+              По дням недели
+            </div>
+          </div>
+          {availabilityByDay.map((day) => {
+            const toneStyle = AVAILABILITY_TONE_STYLES[day.tone];
+            const fillWidth = day.totalPlayers ? `${Math.max(day.ratio * 100, day.availableCount ? 8 : 0)}%` : '0%';
+
+            return (
+              <div key={day.value} className="grid min-h-[76px] content-center gap-2 border-r border-bf-cream/10 px-3 py-3 text-center last:border-r-0">
+                <div className={`h-4 overflow-hidden rounded-full ${toneStyle.track}`}>
+                  <div
+                    className={`h-full rounded-full transition-[width] duration-300 ${toneStyle.fill}`}
+                    style={{ width: fillWidth }}
+                  />
+                </div>
+                <div className={`text-xl font-black tabular-nums leading-none ${toneStyle.text}`}>
+                  {day.availableCount}/{day.totalPlayers}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

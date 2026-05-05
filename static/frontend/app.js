@@ -46469,6 +46469,28 @@ function Legend({ eventTypes }) {
     }) })
   ] });
 }
+const AVAILABILITY_TONE_STYLES = {
+  high: {
+    track: "bg-emerald-400/18",
+    fill: "bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.28)]",
+    text: "text-emerald-100"
+  },
+  mid: {
+    track: "bg-amber-400/18",
+    fill: "bg-amber-300 shadow-[0_0_18px_rgba(252,211,77,0.24)]",
+    text: "text-amber-100"
+  },
+  low: {
+    track: "bg-red-500/18",
+    fill: "bg-red-400 shadow-[0_0_18px_rgba(248,113,113,0.22)]",
+    text: "text-red-100"
+  }
+};
+function availabilityTone(ratio) {
+  if (ratio >= 0.75) return "high";
+  if (ratio >= 0.5) return "mid";
+  return "low";
+}
 function RosterTable({
   days,
   players,
@@ -46495,6 +46517,28 @@ function RosterTable({
     });
     return grouped;
   }, [slots]);
+  const availabilityByDay = reactExports.useMemo(() => {
+    const playerIds = new Set(players.map((player) => player.id));
+    const totalPlayers = playerIds.size;
+    return days.map((day) => {
+      const availablePlayerIds = /* @__PURE__ */ new Set();
+      slots.forEach((slot) => {
+        const isAvailable = slot.slotType === "available" || slot.slotType === "full_day_available";
+        if (slot.dayOfWeek === day.value && isAvailable && playerIds.has(slot.playerId)) {
+          availablePlayerIds.add(slot.playerId);
+        }
+      });
+      const availableCount = availablePlayerIds.size;
+      const ratio = totalPlayers ? availableCount / totalPlayers : 0;
+      return {
+        ...day,
+        availableCount,
+        totalPlayers,
+        ratio,
+        tone: availabilityTone(ratio)
+      };
+    });
+  }, [days, players, slots]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "glass-panel mt-4 rounded-xl p-4", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-3 flex items-center justify-between gap-4 max-md:flex-col max-md:items-stretch", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-lg font-black uppercase text-slate-100", children: [
@@ -46511,86 +46555,112 @@ function RosterTable({
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "roster-scroll overflow-x-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-xl border border-bf-cream/10 bg-[#182231]/75", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-4 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 font-black uppercase text-slate-100", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { size: 19, className: "text-bf-orange" }),
-        "Игроки"
-      ] }) }),
-      days.map((day) => {
-        const dayEvent = dayEventMap.get(day.value);
-        const hasDayType = Boolean(dayEvent?.eventType);
-        const style = EVENT_STYLES[dayEvent?.eventType] || EVENT_STYLES.fallback;
-        const Icon2 = style.icon;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: `grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-2.5 pt-4 pb-3 text-center last:border-r-0 ${day.isToday ? "day-header-today" : ""}`,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid justify-items-center gap-1.5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black text-slate-100", children: day.label }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-semibold text-bf-cream/52", children: day.date }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "div",
-                {
-                  className: `mt-1 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${hasDayType ? `${style.border} ${style.bg} ${style.text}` : "border-bf-cream/10 bg-[#202b40]/70 text-bf-cream/35"}`,
-                  title: hasDayType ? "Тип события задан админом для всего дня" : "Админ не выбрал тип события для этого дня",
-                  children: [
-                    hasDayType ? /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 12 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Clock3, { size: 12 }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate", children: hasDayType ? dayEvent.eventLabel : "No type" })
-                  ]
-                }
-              )
-            ] })
-          },
-          day.value
-        );
-      }),
-      players.map((player) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contents", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-[60px] border-b border-r border-bf-cream/10 bg-[#151f2e]/78", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerRow, { player }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "roster-scroll overflow-x-auto", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-visible rounded-xl border border-bf-cream/10 bg-[#182231]/75", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid min-h-[84px] content-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-4 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 font-black uppercase text-slate-100", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Users, { size: 19, className: "text-bf-orange" }),
+          "Игроки"
+        ] }) }),
         days.map((day) => {
-          const cellSlots = slotsByCell.get(`${player.id}:${day.value}`) || [];
-          const isUnavailable = cellSlots.some((slot) => slot.slotType === "unavailable");
-          const isFullDayAvailable = cellSlots.some((slot) => slot.slotType === "full_day_available");
-          const isTentative = cellSlots.some((slot) => slot.slotType === "tentative");
+          const dayEvent = dayEventMap.get(day.value);
+          const hasDayType = Boolean(dayEvent?.eventType);
+          const style = EVENT_STYLES[dayEvent?.eventType] || EVENT_STYLES.fallback;
+          const Icon2 = style.icon;
           return /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: `relative flex min-h-[60px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${isUnavailable ? "bg-[#4d202d]/78" : isFullDayAvailable ? "bg-[#17382f]/78" : isTentative ? "bg-[#3f2c22]/78" : "bg-[#151f2e]/82"}`,
-              children: cellSlots.length ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid w-full gap-1.5", children: [
-                cellSlots.map((slot) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  EventCard,
+              className: `grid min-h-[84px] place-items-center border-b border-r border-bf-cream/10 bg-[#151f2e]/78 px-2.5 pt-4 pb-3 text-center last:border-r-0 ${day.isToday ? "day-header-today" : ""}`,
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid justify-items-center gap-1.5", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black text-slate-100", children: day.label }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-semibold text-bf-cream/52", children: day.date }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
                   {
-                    event: slot,
-                    onEdit,
-                    onNoteHoverStart,
-                    onNoteHoverEnd
-                  },
-                  slot.id
-                )),
-                player.canEdit && canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    className: `mt-1 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-black ${hasDayType ? `${style.border} ${style.bg} ${style.text}` : "border-bf-cream/10 bg-[#202b40]/70 text-bf-cream/35"}`,
+                    title: hasDayType ? "Тип события задан админом для всего дня" : "Админ не выбрал тип события для этого дня",
+                    children: [
+                      hasDayType ? /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 12 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Clock3, { size: 12 }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate", children: hasDayType ? dayEvent.eventLabel : "No type" })
+                    ]
+                  }
+                )
+              ] })
+            },
+            day.value
+          );
+        }),
+        players.map((player) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "contents", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-[60px] border-b border-r border-bf-cream/10 bg-[#151f2e]/78", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PlayerRow, { player }) }),
+          days.map((day) => {
+            const cellSlots = slotsByCell.get(`${player.id}:${day.value}`) || [];
+            const isUnavailable = cellSlots.some((slot) => slot.slotType === "unavailable");
+            const isFullDayAvailable = cellSlots.some((slot) => slot.slotType === "full_day_available");
+            const isTentative = cellSlots.some((slot) => slot.slotType === "tentative");
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: `relative flex min-h-[60px] items-center border-b border-r border-bf-cream/10 p-1.5 last:border-r-0 ${isUnavailable ? "bg-[#4d202d]/78" : isFullDayAvailable ? "bg-[#17382f]/78" : isTentative ? "bg-[#3f2c22]/78" : "bg-[#151f2e]/82"}`,
+                children: cellSlots.length ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid w-full gap-1.5", children: [
+                  cellSlots.map((slot) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    EventCard,
+                    {
+                      event: slot,
+                      onEdit,
+                      onNoteHoverStart,
+                      onNoteHoverEnd
+                    },
+                    slot.id
+                  )),
+                  player.canEdit && canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      className: "justify-self-end text-[11px] font-black text-bf-cream/45 transition hover:text-bf-orange",
+                      type: "button",
+                      onClick: () => onAdd(day.value),
+                      children: "+ запись"
+                    }
+                  ) : null
+                ] }) : player.canEdit && canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "button",
                   {
-                    className: "justify-self-end text-[11px] font-black text-bf-cream/45 transition hover:text-bf-orange",
+                    className: "grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/28 transition hover:scale-105 hover:text-bf-orange",
                     type: "button",
                     onClick: () => onAdd(day.value),
-                    children: "+ запись"
+                    "aria-label": `Добавить запись на ${day.label}`,
+                    children: "+"
                   }
-                ) : null
-              ] }) : player.canEdit && canEditSelectedWeek ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  className: "grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/28 transition hover:scale-105 hover:text-bf-orange",
-                  type: "button",
-                  onClick: () => onAdd(day.value),
-                  "aria-label": `Добавить запись на ${day.label}`,
-                  children: "+"
-                }
-              ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/18", children: "+" })
-            },
-            `${player.id}-${day.value}`
-          );
+                ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid min-h-9 w-full place-items-center text-2xl font-light text-bf-cream/18", children: "+" })
+              },
+              `${player.id}-${day.value}`
+            );
+          })
+        ] }, player.id))
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 grid min-w-[1180px] grid-cols-[180px_repeat(7,minmax(134px,1fr))] overflow-hidden rounded-xl border border-bf-cream/10 bg-[#121b29]/90 shadow-[0_12px_28px_rgba(0,0,0,0.18)]", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid min-h-[76px] content-center border-r border-bf-cream/10 px-4 py-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-black uppercase leading-tight text-slate-100", children: "Доступность игроков" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-[10px] font-bold uppercase tracking-[0.08em] text-bf-cream/42", children: "По дням недели" })
+        ] }),
+        availabilityByDay.map((day) => {
+          const toneStyle = AVAILABILITY_TONE_STYLES[day.tone];
+          const fillWidth = day.totalPlayers ? `${Math.max(day.ratio * 100, day.availableCount ? 8 : 0)}%` : "0%";
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid min-h-[76px] content-center gap-2 border-r border-bf-cream/10 px-3 py-3 text-center last:border-r-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `h-4 overflow-hidden rounded-full ${toneStyle.track}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: `h-full rounded-full transition-[width] duration-300 ${toneStyle.fill}`,
+                style: { width: fillWidth }
+              }
+            ) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `text-xl font-black tabular-nums leading-none ${toneStyle.text}`, children: [
+              day.availableCount,
+              "/",
+              day.totalPlayers
+            ] })
+          ] }, day.value);
         })
-      ] }, player.id))
-    ] }) }),
+      ] })
+    ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "mt-4 flex justify-end gap-4 border-t border-bf-cream/10 pt-4 text-sm text-bf-cream/35", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
       "Дата последнего обновления: ",
       lastUpdated
